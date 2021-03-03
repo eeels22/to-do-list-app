@@ -4,6 +4,7 @@ import java.util.List;
 
 /**
  * Models a collection of tasks that can be sorted by date and project.
+ *
  * @author En-Chi Liu
  * @version 1.0
  */
@@ -14,7 +15,7 @@ public class TaskList implements Serializable {
         taskList = new ArrayList<>();
     }
 
-    public void createTask(){
+    public void createTask() {
         Task task = new Task();
     }
 
