@@ -8,15 +8,35 @@ import java.util.Scanner;
  */
 public class Parser {
     Scanner reader;
+    String inputLine;
 
     public Parser() {
         reader = new Scanner(System.in);
     }
 
-    public String getCommand() {
+    public void getCommand() {
         String inputLine;
         inputLine = reader.nextLine();
-        return inputLine;
+        this.inputLine = inputLine;
+    }
+
+    public void generateMainResponse() {
+        switch(inputLine) {
+            case "1":
+                // show task list
+                break;
+            case "2":
+                // add task
+                break;
+            case "3":
+                // edit task
+                break;
+            case "4":
+                // save and quit
+                break;
+
+        }
+
     }
 
 

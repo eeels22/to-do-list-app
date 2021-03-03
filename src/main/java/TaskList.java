@@ -15,12 +15,27 @@ public class TaskList implements Serializable {
         taskList = new ArrayList<>();
     }
 
-    public void createTask() {
-        Task task = new Task();
-    }
+//    public void createTask() {
+//        Task task = new Task();
+//    }
 
-    private void addTaskToTaskList(Task task) {
+    public void addTaskToTaskList(Task task) {
         taskList.add(task);
     }
+
+    @Override
+    public String toString() {
+        StringBuilder taskListStringBuilder = new StringBuilder();
+
+        for (Task task : taskList) {
+            String taskString = task.toString();
+            taskListStringBuilder.append(taskString);
+        }
+
+        return taskListStringBuilder.toString();
+
+    }
+
+
 
 }

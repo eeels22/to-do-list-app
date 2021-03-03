@@ -12,20 +12,16 @@ public class Task {
     private boolean isDone = false;
     private String project = "";
 
-
-    public Task() {
-    }
-
     public Task(String title, LocalDate dueDate, String project) {
         this.title = title;
         this.dueDate = dueDate;
         this.project = project;
     }
 
-    public Task(String title, LocalDate dueDate) {
-        this.title = title;
-        this.dueDate = dueDate;
-    }
+//    public Task(String title, LocalDate dueDate) {
+//        this.title = title;
+//        this.dueDate = dueDate;
+//    }
 
     public void setTitle(String title) {
         if (title != null && !title.isEmpty()) {
@@ -63,7 +59,7 @@ public class Task {
 
     @Override
     public String toString() {
-        return "\nTask: " + title + "\nDue: " + dueDate + "\nStatus: " + statusToString() + "\nProject: " + projectToString();
+        return "\nTask: " + title + "\nDue: " + dueDate + "\nStatus: " + statusToString() + "\nProject: " + projectToString() + "\n";
     }
 
     private String statusToString() {

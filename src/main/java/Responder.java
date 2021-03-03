@@ -1,5 +1,5 @@
 /**
- * The Responder class is responsible for printing information to the terminal.
+ * The Responder is responsible for printing information to the terminal.
  *
  * @author En-Chi Liu
  * @version 1.0
@@ -20,6 +20,9 @@ public class Responder {
         System.out.println("Welcome to Jotter! Let's get organised.\n");
     }
 
+    /**
+     * Prints the top-level menu options.
+     */
     public void printMainOptions() {
         System.out.println("Please select an option:");
         System.out.println("(1) Show task list");
@@ -28,9 +31,32 @@ public class Responder {
         System.out.println("(4) Save and quit\n");
     }
 
-//    public void printHelp() {
-//        System.out.println("Help is here.");
-//    }
+    /**
+     * Prints each task in the task list in default order.
+     */
+    public void printTaskList(TaskList taskList) {
+        System.out.println(taskList);
+    }
+
+    /**
+     * Prints each task in the task list in ascending title order.
+     */
+
+
+    /**
+     * Prints each task in the task list in descending title order.
+     */
+
+
+    /**
+     * Prints each task in the task list in ascending project order.
+     */
+
+
+    /**
+     * Prints each task in the task list in descending project order.
+     */
+
 
     /**
      * Prints a goodbye message.

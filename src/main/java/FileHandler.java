@@ -2,6 +2,7 @@ import java.io.*;
 
 /**
  * The FileHandler is responsible for saving and loading task lists to and from file.
+ *
  * @author En-Chi Liu
  * @version 1.0
  */
@@ -9,9 +10,13 @@ import java.io.*;
 public class FileHandler {
 
     private TaskList taskList;
-    private String path = "src/";
+    private String path = "src/main/resources/";
 
-
+    /**
+     * Saves the task list to a file.
+     *
+     * @throws IOException
+     */
     public void saveTaskListToFile(TaskList taskList) {
 
         try {
@@ -28,6 +33,11 @@ public class FileHandler {
         }
     }
 
+    /**
+     * Loads a task list from a file.
+     *
+     * @throws IOException
+     */
     public TaskList loadTaskListFromFile() {
 
         try {
