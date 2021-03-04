@@ -14,9 +14,9 @@ Generate the jar file with Gradle's build command.
 ```bash
 gradle build
 ```
-The jar file will be generated in `build/libs` wich can be run by a Java environment
+The jar file will be generated in `build/libs`. Run it using the command:
 ```bash
-java -jar build/libs/NAMEOFAPP.jar
+java -jar build/libs/to-do-list-app-1.0-SNAPSHOT.jar
 ```
 
 ## Using this app
