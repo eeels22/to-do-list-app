@@ -1,7 +1,8 @@
 # Jotter: to do list app
+Welcome to Jotter, a simple to do list app that you can run from the command line.
 
 ## Getting started
-This application can be run directly via Gradle or via a generated jar file.
+Jotter can be run directly via Gradle or via a generated jar file.
 
 ### Run with Gradle
 In the root folder, start the aplication with:
