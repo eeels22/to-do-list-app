@@ -7,12 +7,6 @@
 public class Responder {
 
     /**
-     *
-     */
-    public Responder() {
-    }
-
-    /**
      * Prints the welcome message when the app is started.
      */
     public void printWelcome() {
@@ -29,6 +23,15 @@ public class Responder {
         System.out.println("(2) Add a new task");
         System.out.println("(3) Edit an existing task");
         System.out.println("(4) Save and quit\n");
+        System.out.print(">  ");
+    }
+
+    /**
+     * Prints instructions for adding a new task.
+     */
+
+    public static void printInstructionsToAddTask() {
+        System.out.println("Enter the task title:");
     }
 
     /**
