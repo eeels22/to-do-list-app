@@ -12,6 +12,9 @@ public class Task {
     private boolean isDone = false;
     private String project = "";
 
+    /**
+     * Instantiates a task with a title, due date and associated project.
+     */
     public Task(String title, LocalDate dueDate, String project) {
         this.title = title;
         this.dueDate = dueDate;
@@ -57,11 +60,19 @@ public class Task {
         return this.project;
     }
 
+    /**
+     * Produces a String representation of the task details
+     * @return a String with details of the task on separate lines
+     */
     @Override
     public String toString() {
         return "\nTask: " + title + "\nDue: " + dueDate + "\nStatus: " + statusToString() + "\nProject: " + projectToString() + "\n";
     }
 
+    /**
+     * Produces a String representation of the task details
+     * @return task status as 'done' or 'to do'
+     */
     private String statusToString() {
         return isDone ? "done" : "to do";
     }
