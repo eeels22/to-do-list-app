@@ -26,8 +26,12 @@ public class Task {
 //        this.dueDate = dueDate;
 //    }
 
+    public boolean isStringValid(String string) {
+        return title != null && !title.isEmpty();
+    }
+
     public void setTitle(String title) {
-        if (title != null && !title.isEmpty()) {
+        if(isStringValid(title)) {
             this.title = title;
         }
     }
@@ -41,7 +45,9 @@ public class Task {
     }
 
     public void setProject(String project) {
-        this.project = project;
+        if(isStringValid(project)){
+            this.project = project;
+        }
     }
 
     public String getTitle() {
