@@ -5,7 +5,7 @@ Welcome to Jotter, a simple to do list app that you can run from the command lin
 Jotter can be run directly via Gradle or via a generated jar file.
 
 ### Run with Gradle
-In the root folder, start the aplication with:
+In the root folder, start Jotter with the following command:
 ```bash
 gradle run --console plain
 ```
@@ -23,13 +23,13 @@ java -jar build/libs/to-do-list-app-1.0-SNAPSHOT.jar
 
 You can add tasks and give them a title, due date and a project that it belongs to.
 
-1: welcome screen  //save screenshots in own folder and embed
+1: Starting screenshots to be added
 ![Adding a task](screenshots/FILENAME.png)
 
 
 Plans changed? No problem, you can edit or remove tasks.
 
-2: welcome screen  //save screenshots in own folder and embed
+2: Edit task screenshot to be added
 ![Editing a task](screenshots/FILENAME2.png)
 
 
