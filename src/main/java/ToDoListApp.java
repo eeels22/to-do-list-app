@@ -10,7 +10,7 @@ import java.time.LocalDate;
  */
 public class ToDoListApp {
     private Responder responder;
-    private Parser parser;
+    public static Parser parser;
     private TaskList taskList;
 
     /**
@@ -27,7 +27,7 @@ public class ToDoListApp {
         toToListApp.start();
 
 
-//        String command = toToListApp.parser.getCommand();
+//        String command = toToListApp.parser.getNextLine();
 //        toToListApp.parser.generateMainResponse(command);
 //        Task t1 = new Task("Eat chocolate", LocalDate.of(2021, 05, 12), "Stay alive");
 //        Task t2 = new Task("Eat soup", LocalDate.of(2021, 12, 12), "Stay alive");
@@ -50,6 +50,7 @@ public class ToDoListApp {
         // while (usingApp) {
         // if they choose to quit, set usingApp to false
         // else
+        // break;
         // }
 
         // responder.printGoodbye();
@@ -59,5 +60,32 @@ public class ToDoListApp {
     /**
      * Load taskList from file
      */
+
+    /**
+     * Load taskList from file
+     */
+    public void generateMainResponse(int mainOptionChosen) {
+        switch (mainOptionChosen) {
+            case 1:
+                // show task list
+                System.out.println("Should show task list");
+                // print options: default order, sort by title, sort by project
+                break;
+            case 2:
+                taskList.createTask();
+                break;
+            case 3:
+                // edit task
+                System.out.println("What would you like to edit?");
+                // print options: edit title, edit due date, mark as done, remove task
+                break;
+            case 4:
+                // save and quit
+                System.out.println("Should save and quit");
+                break;
+            default:
+                break;
+        }
+    }
 
 }
