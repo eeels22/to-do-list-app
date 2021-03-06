@@ -1,4 +1,6 @@
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,12 +17,34 @@ public class TaskList implements Serializable {
         tasks = new ArrayList<>();
     }
 
-//    public void createTask() {
-//        Task task = new Task();
-//    }
-
-    public void addTaskToTaskList(Task task) {
+    /**
+     * Creates a new task with title, due date and associated project and adds it to to the task list.
+     */
+    public void createTask() {
+        Task task = new Task();
+        editTitle(task);
+        editDueDate(task);
+        editProject(task);
         tasks.add(task);
+    }
+
+    public void editTitle(Task task) {
+        System.out.println("Enter the task title:");
+        String title = ToDoListApp.parser.getNextLine();
+        task.setTitle(title);
+    }
+
+    public void editDueDate(Task task) {
+        System.out.println("Enter the due date in the format YYYY-MM-DD:");
+        String dateString = ToDoListApp.parser.getNextLine();
+        LocalDate dueDate = LocalDate.parse(dateString, DateTimeFormatter.ISO_LOCAL_DATE);
+        task.setDueDate(dueDate);
+    }
+
+    public void editProject(Task task) {
+        System.out.println("Enter the project that this task belong to or \"none\" if not applicable:");
+        String project = ToDoListApp.parser.getNextLine();
+        task.setProject(project);
     }
 
     @Override
@@ -33,9 +57,7 @@ public class TaskList implements Serializable {
         }
 
         return taskListStringBuilder.toString();
-
     }
-
 
 
 }
