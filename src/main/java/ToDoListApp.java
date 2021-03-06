@@ -1,5 +1,3 @@
-import java.time.LocalDate;
-
 /**
  * This class implements a to do list application.
  * It is the top level class in this project.
@@ -64,7 +62,7 @@ public class ToDoListApp {
     /**
      * Load taskList from file
      */
-    public void generateMainResponse(int mainOptionChosen) {
+    public void generateMainMenuResponse(int mainOptionChosen) {
         switch (mainOptionChosen) {
             case 1:
                 // show task list
