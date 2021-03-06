@@ -10,10 +10,16 @@ public class Task {
     private String title;
     private LocalDate dueDate;
     private boolean isDone = false;
-    private String project = "";
+    private String project;
 
     /**
-     * Instantiates a task with a title, due date and associated project.
+     * Default task constructor.
+     */
+    public Task() {
+    }
+
+    /**
+     * Constructs a task with a title, due date and associated project.
      */
     public Task(String title, LocalDate dueDate, String project) {
         this.title = title;
@@ -21,45 +27,42 @@ public class Task {
         this.project = project;
     }
 
-//    public Task(String title, LocalDate dueDate) {
-//        this.title = title;
-//        this.dueDate = dueDate;
-//    }
-
-    public boolean isStringValid(String string) {
+    /**
+     * Checks for a valid String input.
+     *
+     * @return true if String is valid.
+     */
+    private boolean isStringValid(String string) {
         return title != null && !title.isEmpty();
-    }
-
-    public void setTitle(String title) {
-        if(isStringValid(title)) {
-            this.title = title;
-        }
-    }
-
-    public void setDueDate(LocalDate dueDate) {
-        this.dueDate = dueDate;
-    }
-
-    public void setDone(boolean done) {
-        isDone = done;
-    }
-
-    public void setProject(String project) {
-        if(isStringValid(project)){
-            this.project = project;
-        }
     }
 
     public String getTitle() {
         return this.title;
     }
 
+    /**
+     * Assigns the task title if it is valid.
+     */
+    public void setTitle(String title) {
+        if (isStringValid(title)) {
+            this.title = title;
+        }
+    }
+
     public LocalDate getDueDate() {
         return this.dueDate;
     }
 
+    public void setDueDate(LocalDate dueDate) {
+        this.dueDate = dueDate;
+    }
+
     public boolean getStatus() {
         return this.isDone;
+    }
+
+    public void setStatus(boolean doneOrNot) {
+        isDone = doneOrNot;
     }
 
     public String getProject() {
@@ -67,7 +70,17 @@ public class Task {
     }
 
     /**
+     * Assigns the task to a project if it is valid.
+     */
+    public void setProject(String project) {
+        if (isStringValid(project)) {
+            this.project = project;
+        }
+    }
+
+    /**
      * Produces a String representation of the task details
+     *
      * @return a String with details of the task on separate lines
      */
     @Override
@@ -76,13 +89,19 @@ public class Task {
     }
 
     /**
-     * Produces a String representation of the task details
-     * @return task status as 'done' or 'to do'
+     * Produces a String representation of the task status
+     *
+     * @return task status String as "done" or "to do"
      */
     private String statusToString() {
         return isDone ? "done" : "to do";
     }
 
+    /**
+     * Produces a String representation of the task project
+     *
+     * @return the name of the project associated with the task or "not assigned"
+     */
     private String projectToString() {
         return (project.isEmpty()) ? "not assigned" : project;
     }
