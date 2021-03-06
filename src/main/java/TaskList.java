@@ -9,10 +9,10 @@ import java.util.List;
  * @version 1.0
  */
 public class TaskList implements Serializable {
-    private List<Task> taskList;
+    private ArrayList<Task> tasks;
 
     public TaskList() {
-        taskList = new ArrayList<>();
+        tasks = new ArrayList<>();
     }
 
 //    public void createTask() {
@@ -20,14 +20,14 @@ public class TaskList implements Serializable {
 //    }
 
     public void addTaskToTaskList(Task task) {
-        taskList.add(task);
+        tasks.add(task);
     }
 
     @Override
     public String toString() {
         StringBuilder taskListStringBuilder = new StringBuilder();
 
-        for (Task task : taskList) {
+        for (Task task : tasks) {
             String taskString = task.toString();
             taskListStringBuilder.append(taskString);
         }
