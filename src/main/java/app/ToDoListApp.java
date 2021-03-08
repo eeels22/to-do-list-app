@@ -90,6 +90,8 @@ public class ToDoListApp {
      * Generates the app's response to the main menu selection
      */
     public void generateMainMenuResponse(int mainOptionChosen) {
+        // shift the cursor after calling nextInt (https://www.geeksforgeeks.org/why-is-scanner-skipping-nextline-after-use-of-other-next-functions/)
+        parser.getNextLine();
         switch (mainOptionChosen) {
             case 1:
                 // show task list

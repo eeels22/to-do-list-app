@@ -42,7 +42,6 @@ public class Task {
         return title != null && !title.isEmpty();
     }
 
-
     /**
      *
      * @return the title field of this Task
@@ -62,6 +61,9 @@ public class Task {
         }
     }
 
+    /**
+     * Prompts the user to enter a new title and updates the task's title with it.
+     */
     public void editTitle() {
         System.out.println("Enter the task title:");
         System.out.print(">  ");
