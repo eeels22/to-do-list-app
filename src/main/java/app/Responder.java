@@ -11,14 +11,17 @@ public class Responder {
      * Prints the welcome message when the app is started.
      */
     public void printWelcome() {
-
-        System.out.println("Welcome to Jotter! Let's get organised.\n");
+        System.out.println("***************************************");
+        System.out.println("WELCOME TO JOTTER! Let's get organised.");
+        System.out.println("***************************************");
     }
 
     /**
      * Prints the top-level menu options.
      */
     public void printMainOptions() {
+        System.out.println("\nMAIN MENU OPTIONS");
+        System.out.println("=================");
         System.out.println("Please select an option:");
         System.out.println("(1) Show task list");
         System.out.println("(2) Add a new task");
