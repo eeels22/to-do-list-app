@@ -79,7 +79,7 @@ public class ToDoListApp {
     /**
      * Load taskList from file
      *
-     * UDPATE THIS
+     * UPDATE THIS
      */
     public TaskList loadFromFile() {
         // placeholder
@@ -101,9 +101,20 @@ public class ToDoListApp {
                 taskList.addTask();
                 break;
             case 3:
-                // edit task
-                System.out.println("What would you like to edit?");
-                // print options: edit title, edit due date, mark as done, remove task
+                // ask user which edit operation to perform
+                // options: edit task details, mark as done, or remove task
+                responder.printEditOptions();
+                    //  a) edit title, dueDate or project
+                        // 1. check if there is an existing task to edit - check size of ArrayList tasks
+                        // 2. if a task exists, prompt for the title of task to be edited. - getTask
+                        // 3. Edit the fields
+                    //  b) mark as done
+                        //
+                    //  c) remove
+                        //
+
+
+
                 break;
             case 4:
                 // save and quit

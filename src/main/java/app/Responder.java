@@ -31,6 +31,19 @@ public class Responder {
     }
 
     /**
+     * Prints the three different options to edit a task.
+     */
+    public void printEditOptions() {
+        System.out.println("\nEDITING OPTIONS");
+        System.out.println("=================");
+        System.out.println("Please select an option:");
+        System.out.println("(1) Edit task details");
+        System.out.println("(2) Mark a task as done");
+        System.out.println("(3) Remove a task\n");
+        System.out.print(">  ");
+    }
+
+    /**
      * Prints instructions for adding a new task.
      */
 
