@@ -19,9 +19,9 @@ public class Task {
      * Default task constructor.
      */
     public Task() {
-        title = "Not specified";
+        title = "not specified";
         isDone = false;
-        project = "Not assigned";
+        project = "not assigned";
     }
 
     /**
@@ -82,6 +82,7 @@ public class Task {
      */
     public void editDueDate() {
         System.out.println("Enter the due date in the format YYYY-MM-DD:");
+        System.out.print(">  ");
         // add try - catch
         String dateString = ToDoListApp.parser.getNextLine();
         LocalDate dueDate = LocalDate.parse(dateString, DateTimeFormatter.ISO_LOCAL_DATE);
@@ -116,6 +117,7 @@ public class Task {
      */
     public void editProject() {
         System.out.println("Enter the project that this task belong to or \"none\" if not applicable:");
+        System.out.print(">  ");
         String project = ToDoListApp.parser.getNextLine();
         setProject(project);
     }
