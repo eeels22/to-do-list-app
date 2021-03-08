@@ -16,6 +16,9 @@ dependencies {
 
 test {
     useJUnitPlatform()
+    testLogging {
+        events 'PASSED', 'SKIPPED', 'FAILED'
+    }
 }
 
 //May need to include this if 'gradle run' command has an error - see video README.md by Kwabena 6m23s
