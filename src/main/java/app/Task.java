@@ -1,4 +1,7 @@
+package app;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 
 /**
  * Models a task with a task title, due date, status and project.
@@ -9,13 +12,16 @@ import java.time.LocalDate;
 public class Task {
     private String title;
     private LocalDate dueDate;
-    private boolean isDone = false;
+    private boolean isDone;
     private String project;
 
     /**
      * Default task constructor.
      */
     public Task() {
+        title = "Not specified";
+        isDone = false;
+        project = "Not assigned";
     }
 
     /**
@@ -36,6 +42,11 @@ public class Task {
         return title != null && !title.isEmpty();
     }
 
+
+    /**
+     *
+     * @return the title field of this Task
+     */
     public String getTitle() {
         return this.title;
     }
@@ -46,7 +57,16 @@ public class Task {
     public void setTitle(String title) {
         if (isStringValid(title)) {
             this.title = title;
+        } else {
+            System.out.println("Please enter a valid title.");
         }
+    }
+
+    public void editTitle() {
+        System.out.println("Enter the task title:");
+        System.out.print(">  ");
+        String title = ToDoListApp.parser.getNextLine();
+        this.setTitle(title);
     }
 
     public LocalDate getDueDate() {
@@ -55,6 +75,17 @@ public class Task {
 
     public void setDueDate(LocalDate dueDate) {
         this.dueDate = dueDate;
+    }
+
+    /**
+     * Updates the task´s due date.
+     */
+    public void editDueDate() {
+        System.out.println("Enter the due date in the format YYYY-MM-DD:");
+        // add try - catch
+        String dateString = ToDoListApp.parser.getNextLine();
+        LocalDate dueDate = LocalDate.parse(dateString, DateTimeFormatter.ISO_LOCAL_DATE);
+        setDueDate(dueDate);
     }
 
     public boolean getStatus() {
@@ -75,7 +106,18 @@ public class Task {
     public void setProject(String project) {
         if (isStringValid(project)) {
             this.project = project;
+        } else{
+            System.out.println("Please enter a valid project name or \"none\"");
         }
+    }
+
+    /**
+     * Update the project that the task belongs to.
+     */
+    public void editProject() {
+        System.out.println("Enter the project that this task belong to or \"none\" if not applicable:");
+        String project = ToDoListApp.parser.getNextLine();
+        setProject(project);
     }
 
     /**
@@ -85,7 +127,7 @@ public class Task {
      */
     @Override
     public String toString() {
-        return "\nTask: " + title + "\nDue: " + dueDate + "\nStatus: " + statusToString() + "\nProject: " + projectToString() + "\n";
+        return "Task: " + title + "\nDue: " + dueDate + "\nStatus: " + statusToString() + "\nProject: " + project + "\n";
     }
 
     /**
@@ -97,13 +139,17 @@ public class Task {
         return isDone ? "done" : "to do";
     }
 
-    /**
-     * Produces a String representation of the task project
-     *
-     * @return the name of the project associated with the task or "not assigned"
-     */
-    private String projectToString() {
-        return (project.isEmpty()) ? "not assigned" : project;
-    }
+//    /**
+//     * Produces a String representation of the task project
+//     *
+//     * @return the name of the project associated with the task or "not assigned"
+//     */
+//    private String projectToString() {
+//        return (project.isEmpty()) ? "not assigned" : project;
+//    }
+
+
+
+
 
 }

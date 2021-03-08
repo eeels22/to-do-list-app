@@ -1,3 +1,7 @@
+package app;
+
+import java.time.LocalDate;
+
 /**
  * This class implements a to do list application.
  * It is the top level class in this project.
@@ -22,16 +26,31 @@ public class ToDoListApp {
 
     public static void main(String[] args) {
         ToDoListApp toToListApp = new ToDoListApp();
-        toToListApp.start();
+
+//        toToListApp.start();
+//        toToListApp.taskList.createTask();
+//        System.out.println(toToListApp.taskList.toString());
 
 
 //        String command = toToListApp.parser.getNextLine();
 //        toToListApp.parser.generateMainResponse(command);
-//        Task t1 = new Task("Eat chocolate", LocalDate.of(2021, 05, 12), "Stay alive");
-//        Task t2 = new Task("Eat soup", LocalDate.of(2021, 12, 12), "Stay alive");
-//        TaskList taskList1 = new TaskList();
-//        taskList1.addTaskToTaskList(t1);
-//        taskList1.addTaskToTaskList(t2);
+        Task t1 = new Task("Eat chocolate", LocalDate.of(2021, 05, 12), "Stay alive");
+
+//        System.out.println("Title is: " + t1.getTitle());
+//        t1.editTitle();
+//        System.out.println("New title is: " + t1.getTitle());
+
+//        System.out.println("Due date is: " + t1.getDueDate());
+//        t1.editDueDate();
+//        System.out.println("New due date is: " + t1.getDueDate());
+
+//        System.out.println("Project is: " + t1.getProject());
+//        t1.editProject();
+//        System.out.println("New project is: " + t1.getProject());
+
+        Task t2 = new Task("Eat soup", LocalDate.of(2021, 12, 12), "Stay alive");
+        TaskList taskList1 = new TaskList();
+        taskList1.addTask();
 //        toToListApp.responder.printTaskList(taskList1);
 
 
@@ -45,6 +64,8 @@ public class ToDoListApp {
         boolean usingApp = true;
         responder.printWelcome();
         responder.printMainOptions();
+
+        //generateMainMenuResponse(parser.getNextInt());
         // while (usingApp) {
         // if they choose to quit, set usingApp to false
         // else
@@ -70,7 +91,7 @@ public class ToDoListApp {
                 // print options: default order, sort by title, sort by project
                 break;
             case 2:
-                taskList.createTask();
+                //taskList.addTask();
                 break;
             case 3:
                 // edit task

@@ -1,3 +1,5 @@
+package app;
+
 import java.util.Scanner;
 
 /**
@@ -7,13 +9,13 @@ import java.util.Scanner;
  * @version 1.0
  */
 public class Parser {
-    private Scanner reader;
+    private static Scanner reader;
 
     public Parser() {
         reader = new Scanner(System.in);
     }
 
-    public String getNextLine() {
+    public static String getNextLine() {
         return reader.nextLine();
     }
 
@@ -22,6 +24,5 @@ public class Parser {
     }
 
 
-
-    }
+}
 

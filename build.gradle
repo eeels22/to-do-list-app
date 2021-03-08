@@ -1,5 +1,7 @@
 plugins {
     id 'java'
+    id 'idea'
+    id 'eclipse'
     id 'application'
 }
 
@@ -27,13 +29,13 @@ test {
 //}
 
 application {
-    mainClass.set("ToDoListApp")
+    mainClass.set("app.ToDoListApp")
 }
 
 jar {
     manifest {
         attributes(
-                'Main-Class': 'ToDoListApp'
+                'Main-Class': 'app.ToDoListApp'
         )
     }
 }

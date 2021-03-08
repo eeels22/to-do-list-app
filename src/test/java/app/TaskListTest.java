@@ -1,4 +1,6 @@
+package app;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
@@ -12,9 +14,10 @@ class TaskListTest {
     }
 
     @Test
+    @Disabled
     void createTask() {
         TaskList taskList1 = new TaskList();
-        taskList1.createTask();
+        //taskList1.addTask();
 
     }
 

@@ -1,3 +1,5 @@
+package app;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
@@ -36,9 +38,13 @@ public class TaskTest {
         assertEquals("Eat dinner", task1.getTitle());
     }
 
-    // how to check method that requires user input?
+    // how to check method that requires user input?  --> set the input yourself. Goal is not to get that Scanner works.
     @Test
+    @Disabled
     void editTitle() {
+        Task task1 = new Task();
+        task1.setTitle("Learn JUnit5");
+        assertEquals("Learn JUnit5", task1.getTitle());
     }
 
     @Test
@@ -51,7 +57,7 @@ public class TaskTest {
     void setDueDate() {
         Task task1 = new Task("Eat lunch", LocalDate.of(2021, 11, 20), "Stay alive");
         task1.setDueDate(LocalDate.of(2021, 11, 15));
-        assertEquals(LocalDate.of(2021, 11,  15), task1.getDueDate());
+        assertEquals(LocalDate.of(2021, 11, 15), task1.getDueDate());
     }
 
     // how to check method that requires user input?
