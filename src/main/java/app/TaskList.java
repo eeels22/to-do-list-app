@@ -21,10 +21,14 @@ public class TaskList implements Serializable {
      * Creates a new task with title, due date and associated project and adds it to to the task list.
      */
     public void addTask() {
+        System.out.println("\nADDING A NEW TASK");
+        System.out.println("=================");
         Task task1 = new Task();
         task1.editTitle();
         task1.editDueDate();
         task1.editProject();
+        System.out.println("\nNEW TASK ADDED");
+        System.out.println("==============");
         System.out.println(task1.toString());
         tasks.add(task1);
     }
