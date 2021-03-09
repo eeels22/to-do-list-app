@@ -2,6 +2,9 @@ package app;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 /**
@@ -50,7 +53,7 @@ public class TaskList implements Serializable {
     /**
      * Remove a given task from the task list
      * @param taskToRemove the task to be removed
-     * @return true if removal was successul or false if unsuccessful
+     * @return true if removal was successful or false if unsuccessful
      */
     public boolean removeTask(Task taskToRemove){
         // Remove the given task frm the ArrayList of tasks
@@ -61,7 +64,7 @@ public class TaskList implements Serializable {
     }
 
     /**
-     *
+     * @return the task list
      */
     public ArrayList<Task> getTasks() {
         return tasks;
@@ -83,11 +86,16 @@ public class TaskList implements Serializable {
     }
 
     /**
-     *
+     * Returns details of each task in the list or a message to say it is empty.
+     * @return details of the task list as a String
      */
     @Override
     public String toString() {
         StringBuilder taskListStringBuilder = new StringBuilder();
+
+        if (tasks.size() == 0) {
+            return "Your task list is empty.";
+        }
 
         for (Task task : tasks) {
             String taskString = task.toString();
@@ -97,5 +105,53 @@ public class TaskList implements Serializable {
         return taskListStringBuilder.toString();
     }
 
+    /**
+     * Sort the tasks by ascending title
+     * @return an ArrayList of tasks in ascending title order
+     */
+    public ArrayList<Task> sortByTitleAscending () {
+
+        List<Task> sortedTasks = tasks.stream()
+                .sorted(Comparator.comparing(Task::getTitle,
+                        String.CASE_INSENSITIVE_ORDER))
+                .collect(Collectors.toList());
+        return (ArrayList<Task>) sortedTasks;
+    }
+
+    /**
+     * Sort the tasks by descending title
+     * @return an ArrayList of tasks in descending title order
+     */
+    public ArrayList<Task> sortByTitleDescending () {
+        List<Task> sortedTasks = tasks.stream()
+                .sorted(Comparator.comparing(Task::getTitle,
+                        String.CASE_INSENSITIVE_ORDER).reversed())
+                .collect(Collectors.toList());
+        return (ArrayList<Task>) sortedTasks;
+    }
+
+    /**
+     * Sort the tasks by ascending project
+     * @return an ArrayList of tasks in ascending project order
+     */
+    public ArrayList<Task> sortByProjectAscending () {
+        List<Task> sortedTasks = tasks.stream()
+                .sorted(Comparator.comparing(Task::getProject,
+                        String.CASE_INSENSITIVE_ORDER))
+                .collect(Collectors.toList());
+        return (ArrayList<Task>) sortedTasks;
+    }
+
+    /**
+     * Sort the tasks by descending project
+     * @return an ArrayList of tasks in descending project order
+     */
+    public ArrayList<Task> sortByProjectDescending () {
+        List<Task> sortedTasks = tasks.stream()
+                .sorted(Comparator.comparing(Task::getProject,
+                        String.CASE_INSENSITIVE_ORDER).reversed())
+                .collect(Collectors.toList());
+        return (ArrayList<Task>) sortedTasks;
+    }
 
 }

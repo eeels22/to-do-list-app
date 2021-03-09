@@ -1,7 +1,5 @@
 package app;
 
-import java.time.LocalDate;
-
 /**
  * This class implements a to do list application.
  * It is the top level class in this project.
@@ -27,6 +25,8 @@ public class ToDoListApp {
     public static void main(String[] args) {
         ToDoListApp toToListApp = new ToDoListApp();
         toToListApp.start();
+
+
 //        System.out.println(toToListApp.taskList.toString());
 //        toToListApp.taskList.addTask();
 //        System.out.println(toToListApp.taskList.toString());
@@ -63,9 +63,7 @@ public class ToDoListApp {
     public void start() {
         boolean usingApp = true;
         responder.printWelcome();
-        responder.printMainOptions();
-
-        generateMainMenuResponse(parser.getNextInt());
+        displayMainMenuAndRespond();
         // while (usingApp) {
         // if they choose to quit, set usingApp to false
         // else
@@ -75,6 +73,14 @@ public class ToDoListApp {
         // responder.printGoodbye();
 
     }
+    /**
+     * Prints the main menu options and responds according to the user's choice
+     */
+    public void displayMainMenuAndRespond() {
+        responder.printMainOptions();
+        generateMainMenuResponse(parser.getNextInt());
+    }
+
 
     /**
      * Load taskList from file
@@ -87,20 +93,38 @@ public class ToDoListApp {
     }
 
     /**
+     * Returns the task list
+     */
+    public TaskList getTaskList() {
+        return taskList;
+    }
+
+    /**
      * Generates the app's response to the main menu selection
+     *
+     * @param mainOptionChosen the user's chosen menu option
      */
     public void generateMainMenuResponse(int mainOptionChosen) {
-        // shift the cursor after calling nextInt (https://www.geeksforgeeks.org/why-is-scanner-skipping-nextline-after-use-of-other-next-functions/)
+        // shift the cursor to the next line so it reads the next input correctly
         parser.getNextLine();
         switch (mainOptionChosen) {
-            case 1:
-                // show task list
-                // print options: default order, sort by title, sort by project
+            case 1: // show task list
+                // ask user order to view tasks
+                // options: in order of creation, by title, by project
+                    // a) in order of creation
+                    System.out.println("\nYOUR TASK LIST");
+                    System.out.println("==============");
+                    System.out.println("\n" + taskList.toString());
+                    displayMainMenuAndRespond();
+                    // b) by title
+                    // c) by project
+
                 break;
-            case 2:
+            case 2: // add a new task
                 taskList.addTask();
+                displayMainMenuAndRespond();
                 break;
-            case 3:
+            case 3: // edit an existing task
                 // ask user which edit operation to perform
                 // options: edit task details, mark as done, or remove task
                 responder.printEditOptions();
@@ -112,12 +136,9 @@ public class ToDoListApp {
                         //
                     //  c) remove
                         //
-
-
-
+                displayMainMenuAndRespond();
                 break;
-            case 4:
-                // save and quit
+            case 4: // save and quit
                 System.out.println("Should save and quit");
                 break;
             default:
