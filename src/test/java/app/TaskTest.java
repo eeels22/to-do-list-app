@@ -1,5 +1,6 @@
 package app;
 import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
@@ -15,24 +16,27 @@ import static org.junit.jupiter.api.Assertions.*;
 public class TaskTest {
 
     @Test
+    @DisplayName("Create a new task with a title, due due and project")
     void createNewTaskWithTitleDueDueAndProject() {
         Task task1 = new Task("Eat lunch", LocalDate.of(2021, 11, 20), "Stay alive");
 
         assertAll(() -> assertEquals("Eat lunch", task1.getTitle()),
                 () -> assertEquals(LocalDate.of(2021, 11, 20), task1.getDueDate()),
                 () -> assertEquals("Stay alive", task1.getProject()),
-                () -> assertFalse(task1.getStatus()));
+                () -> assertEquals(false, task1.getStatus()));
     }
 
 
     @Test
-    void getTitle() {
+    @DisplayName("Get title successfully")
+    void getTitleSuccessfully() {
         Task task1 = new Task("Eat lunch", LocalDate.of(2021, 11, 20), "Stay alive");
         assertEquals("Eat lunch", task1.getTitle());
     }
 
     @Test
-    void setTitle() {
+    @DisplayName("Set title successfully")
+    void setTitleSuccessfully() {
         Task task1 = new Task("Eat lunch", LocalDate.of(2021, 11, 20), "Stay alive");
         task1.setTitle("Eat dinner");
         assertEquals("Eat dinner", task1.getTitle());
@@ -48,13 +52,16 @@ public class TaskTest {
     }
 
     @Test
-    void getDueDate() {
+    @DisplayName("Get due date successfully")
+    void getDueDateSuccessfully() {
         Task task1 = new Task("Eat lunch", LocalDate.of(2021, 11, 20), "Stay alive");
-        assertEquals(LocalDate.of(2021, 11, 20), task1.getDueDate());
+        LocalDate expectedLocalDate = LocalDate.of(2021, 11, 20);
+        assertEquals(expectedLocalDate, task1.getDueDate());
     }
 
     @Test
-    void setDueDate() {
+    @DisplayName("Set due date successfully")
+    void setDueDateSuccessfully() {
         Task task1 = new Task("Eat lunch", LocalDate.of(2021, 11, 20), "Stay alive");
         task1.setDueDate(LocalDate.of(2021, 11, 15));
         assertEquals(LocalDate.of(2021, 11, 15), task1.getDueDate());
@@ -67,40 +74,46 @@ public class TaskTest {
     }
 
     @Test
+    @DisplayName("Get status should return false (to do)")
     void getStatusShouldReturnFalse() {
         Task task1 = new Task("Eat lunch", LocalDate.of(2021, 11, 20), "Stay alive");
-        assertFalse(task1.getStatus());
+        assertEquals(false, task1.getStatus());
     }
 
     @Test
+    @DisplayName("Get status should return true (done)")
     void getStatusShouldReturnTrue() {
         Task task1 = new Task("Eat lunch", LocalDate.of(2021, 11, 20), "Stay alive");
         task1.setStatus(true);
-        assertTrue(task1.getStatus());
+        assertEquals(true, task1.getStatus());
     }
 
     @Test
+    @DisplayName("Set status to true (done)")
     void setStatusToTrue() {
         Task task1 = new Task("Eat lunch", LocalDate.of(2021, 11, 20), "Stay alive");
         task1.setStatus(true);
-        assertTrue(task1.getStatus());
+        assertEquals(true, task1.getStatus());
     }
 
     @Test
+    @DisplayName("Set status to false (done)")
     void setStatusToFalse() {
         Task task1 = new Task("Eat lunch", LocalDate.of(2021, 11, 20), "Stay alive");
         task1.setStatus(false);
-        assertFalse(task1.getStatus());
+        assertEquals(false, task1.getStatus());
     }
 
     @Test
-    void getProject() {
+    @DisplayName("Get project successfully")
+    void getProjectSuccessfully() {
         Task task1 = new Task("Eat lunch", LocalDate.of(2021, 11, 20), "Stay alive");
         assertEquals("Stay alive", task1.getProject());
     }
 
     @Test
-    void setProject() {
+    @DisplayName("Set project successfully")
+    void setProjectSuccessfully() {
         Task task1 = new Task("Eat lunch", LocalDate.of(2021, 11, 20), "Stay alive");
         task1.setProject("Healthy eating habits");
         assertEquals("Healthy eating habits", task1.getProject());
@@ -112,6 +125,7 @@ public class TaskTest {
     }
 
     @Test
+    @DisplayName("Test toString method")
     void testToString() {
         Task task1 = new Task("Eat lunch", LocalDate.of(2021, 11, 20), "Stay alive");
         assertEquals("Task: Eat lunch\nDue: 2021-11-20\nStatus: to do\nProject: Stay alive\n", task1.toString());
