@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 public class TaskList implements Serializable {
     private ArrayList<Task> tasks;
 
-    public TaskList() {
+    public TaskList() { //todo load from file
         tasks = new ArrayList<>();
     }
 
@@ -38,28 +38,30 @@ public class TaskList implements Serializable {
 
     /**
      * Get the task to be edited by finding its title.
-     * @param title the title of the task to be edited
+     * @param index the title of the task to be edited
      * @return the task to be edited
      */
-    public Task getTask(String title){
-        // Given the task title, retrieve the task from the task list
-        // Loop through the list until a match is found
-        // If no match, print error message
-
-        return new Task(); // placeholder
-
+    public Task getTask(int index){
+        if (index < 0 || index > tasks.size() - 1) {
+            System.out.println("Invalid selection, please try again.");
+        }
+        return tasks.get(1); // placeholder
     }
 
     /**
      * Remove a given task from the task list
-     * @param taskToRemove the task to be removed
-     * @return true if removal was successful or false if unsuccessful
+     * @param index the index of the task to remove
      */
-    public boolean removeTask(Task taskToRemove){
-        // Remove the given task frm the ArrayList of tasks
-        // retu
-
-        return false; // placeholder
+    public void removeTask(int index){
+        try {
+            tasks.remove(index);
+        }
+        catch (IndexOutOfBoundsException indexOutOfBoundsException) {
+            System.out.println("Invalid selection, please try again.");
+        }
+        catch (UnsupportedOperationException unsupportedOperationException){
+            System.out.println("Something went wrong: " + unsupportedOperationException);
+        }
 
     }
 
@@ -92,16 +94,12 @@ public class TaskList implements Serializable {
     @Override
     public String toString() {
         StringBuilder taskListStringBuilder = new StringBuilder();
-
         if (tasks.size() == 0) {
             return "Your task list is empty.";
         }
-
         for (Task task : tasks) {
-            String taskString = task.toString();
-            taskListStringBuilder.append(taskString);
+            taskListStringBuilder.append(task.toString());
         }
-
         return taskListStringBuilder.toString();
     }
 

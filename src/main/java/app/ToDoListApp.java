@@ -26,34 +26,6 @@ public class ToDoListApp {
         ToDoListApp toToListApp = new ToDoListApp();
         toToListApp.start();
 
-
-//        System.out.println(toToListApp.taskList.toString());
-//        toToListApp.taskList.addTask();
-//        System.out.println(toToListApp.taskList.toString());
-
-
-//        String command = toToListApp.parser.getNextLine();
-//        toToListApp.parser.generateMainResponse(command);
-//        Task t1 = new Task("Eat chocolate", LocalDate.of(2021, 05, 12), "Stay alive");
-
-//        System.out.println("Title is: " + t1.getTitle());
-//        t1.editTitle();
-//        System.out.println("New title is: " + t1.getTitle());
-
-//        System.out.println("Due date is: " + t1.getDueDate());
-//        t1.editDueDate();
-//        System.out.println("New due date is: " + t1.getDueDate());
-
-//        System.out.println("Project is: " + t1.getProject());
-//        t1.editProject();
-//        System.out.println("New project is: " + t1.getProject());
-
-//        Task t2 = new Task("Eat soup", LocalDate.of(2021, 12, 12), "Stay alive");
-//        TaskList taskList1 = new TaskList();
-//        taskList1.addTask();
-//        toToListApp.responder.printTaskList(taskList1);
-
-
     }
 
     /**
@@ -77,8 +49,16 @@ public class ToDoListApp {
      * Prints the main menu options and responds according to the user's choice
      */
     public void displayMainMenuAndRespond() {
-        responder.printMainOptions();
+        responder.printMainMenu();
         generateMainMenuResponse(parser.getNextInt());
+    }
+
+    /**
+     * Prints the main menu options and responds according to the user's choice
+     */
+    public void displayViewTaskListMenuAndRespond() {
+        responder.printViewTaskListMenu();
+        generateShowTaskListMenuResponse(parser.getNextInt());
     }
 
 
@@ -108,35 +88,24 @@ public class ToDoListApp {
         // shift the cursor to the next line so it reads the next input correctly
         parser.getNextLine();
         switch (mainOptionChosen) {
-            case 1: // show task list
-                // ask user order to view tasks
-                // options: in order of creation, by title, by project
-                    // a) in order of creation
-                    System.out.println("\nYOUR TASK LIST");
-                    System.out.println("==============");
-                    System.out.println("\n" + taskList.toString());
-                    displayMainMenuAndRespond();
-                    // b) by title
-                    // c) by project
-
+            case 1: // view task list
+                displayViewTaskListMenuAndRespond();
                 break;
             case 2: // add a new task
                 taskList.addTask();
-                displayMainMenuAndRespond();
                 break;
             case 3: // edit an existing task
                 // ask user which edit operation to perform
                 // options: edit task details, mark as done, or remove task
                 responder.printEditOptions();
-                    //  a) edit title, dueDate or project
-                        // 1. check if there is an existing task to edit - check size of ArrayList tasks
-                        // 2. if a task exists, prompt for the title of task to be edited. - getTask
-                        // 3. Edit the fields
-                    //  b) mark as done
-                        //
-                    //  c) remove
-                        //
-                displayMainMenuAndRespond();
+                //  a) edit title, dueDate or project
+                // 1. check if there is an existing task to edit - check size of ArrayList tasks
+                // 2. if a task exists, prompt for the title of task to be edited. - getTask
+                // 3. Edit the fields
+                //  b) mark as done
+                //
+                //  c) remove
+                //
                 break;
             case 4: // save and quit
                 System.out.println("Should save and quit");
@@ -144,6 +113,38 @@ public class ToDoListApp {
             default:
                 // error message and prompt reprint again?
                 break;
+        }
+    }
+
+        public void generateShowTaskListMenuResponse(int showOptionChosen) {
+            // shift the cursor to the next line so it reads the next input correctly
+            parser.getNextLine();
+            switch (showOptionChosen) {
+                case 1:
+                    // in order of creation
+                    System.out.println("\n" + taskList.toString());
+                    break;
+                case 2:
+                    // by title ascending
+                    // sort list
+                    System.out.println("\n" + taskList.toString());
+                    break;
+                case 3:
+                    // by title descending
+                    System.out.println("\n" + taskList.toString());
+                    break;
+                case 4:
+                    // by project ascending
+                    System.out.println("\n" + taskList.toString());
+                    break;
+                case 5:
+                    // by project descending
+                    System.out.println("\n" + taskList.toString());
+                    break;
+                default:
+                    responder.printInvalidInputMessage();
+                    break;
+
         }
     }
 

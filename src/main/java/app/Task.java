@@ -1,4 +1,5 @@
 package app;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -9,7 +10,7 @@ import java.time.format.DateTimeFormatter;
  * @author En-Chi Liu
  * @version 1.0
  */
-public class Task {
+public class Task implements Serializable {
     private String title;
     private LocalDate dueDate;
     private boolean isDone;
@@ -43,7 +44,7 @@ public class Task {
     }
 
     /**
-     *
+     * Return the task title
      * @return the title field of this Task
      */
     public String getTitle() {
@@ -151,6 +152,16 @@ public class Task {
 //    private String projectToString() {
 //        return (project.isEmpty()) ? "not assigned" : project;
 //    }
+
+        /*@Override
+    public int hashCode() {
+        return Objects.hash(title, project, date, ..//);
+    }*/
+
+            /*@Override
+    public boolean equals() {
+        return isEqual;
+    }*/
 
 
 

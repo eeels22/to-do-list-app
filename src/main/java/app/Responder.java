@@ -19,11 +19,11 @@ public class Responder {
     /**
      * Prints the top-level menu options.
      */
-    public void printMainOptions() {
-        System.out.println("\nMAIN MENU OPTIONS");
+    public void printMainMenu() {
+        System.out.println("\nMAIN MENU");
         System.out.println("=================");
         System.out.println("Please select an option:");
-        System.out.println("(1) Show task list");
+        System.out.println("(1) View task list");
         System.out.println("(2) Add a new task");
         System.out.println("(3) Edit an existing task");
         System.out.println("(4) Save and quit\n");
@@ -31,10 +31,25 @@ public class Responder {
     }
 
     /**
+     * Prints the menu for options to show the task list.
+     */
+    public void printViewTaskListMenu() {
+        System.out.println("\nVIEW TASK LIST MENU");
+        System.out.println("=================");
+        System.out.println("How would you like to view the task list?");
+        System.out.println("(1) Default order");
+        System.out.println("(2) By title (ascending)");
+        System.out.println("(3) By title (descending)");
+        System.out.println("(4) By project (ascending)");
+        System.out.println("(5) By project (descending)\n");
+        System.out.print(">  ");
+    }
+
+    /**
      * Prints the three different options to edit a task.
      */
     public void printEditOptions() {
-        System.out.println("\nEDITING OPTIONS");
+        System.out.println("\nEDIT OPTIONS");
         System.out.println("=================");
         System.out.println("Please select an option:");
         System.out.println("(1) Edit task details");
@@ -42,6 +57,25 @@ public class Responder {
         System.out.println("(3) Remove a task\n");
         System.out.print(">  ");
     }
+
+    /**
+     * Prints the task list header
+     */
+    public void printTaskListHeader() {
+        System.out.println("\nYOUR TASK LIST");
+        System.out.println("==============");
+    }
+
+    /**
+     * Prints error message regarding an invalid input
+     */
+    public void printInvalidInputMessage() {
+        System.out.println("\nInvalid input, please try again.");
+    }
+
+
+
+
 
 
     /**
