@@ -21,8 +21,8 @@ public class TaskComparator implements Comparator<Task>
     public int compare(Task task1, Task task2)
     {
         switch (type) {
-            case 1: // compare title
-                return task1.getTitle().compareTo(task2.getTitle());
+            case 1: // compare due date
+                return task1.getDueDate().compareTo(task2.getDueDate());
             case 2: // compare project
                 return task1.getProject().compareTo(task2.getProject());
             default:

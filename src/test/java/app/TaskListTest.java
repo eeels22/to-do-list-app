@@ -34,7 +34,7 @@ class TaskListTest {
     }
 
     @Test
-    void sortListByTitleAscending() {
+    void sortListByDueDateAscending() {
         TaskList tasksToSort = new TaskList();
         tasksToSort.getTasks().add(new Task("Read about Streams", LocalDate.of(2021, 05, 12), "Learn Java"));
         tasksToSort.getTasks().add(new Task("Eat lunch", LocalDate.of(2021, 11, 20), "Stay alive"));
@@ -46,14 +46,14 @@ class TaskListTest {
     }
 
     @Test
-    void sortListByTitleDescending() {
+    void sortListByDueDateDescending() {
         TaskList tasksToSort = new TaskList();
         tasksToSort.getTasks().add(new Task("Read about Streams", LocalDate.of(2021, 05, 12), "Learn Java"));
         tasksToSort.getTasks().add(new Task("Eat lunch", LocalDate.of(2021, 11, 20), "Stay alive"));
         tasksToSort.getTasks().add(new Task("Call parents", LocalDate.of(2021, 04, 19), "Family"));
         ArrayList<Task> sortedTasks = (ArrayList<Task>) tasksToSort.sortList(1, true);
         String actualProject = sortedTasks.get(0).getTitle();
-        String expectedProject = "Read about Streams";
+        String expectedProject = "Eat lunch";
         assertEquals(expectedProject, actualProject);
     }
 
