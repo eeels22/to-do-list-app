@@ -29,7 +29,7 @@ public class FileHandler {
     /**
      * Saves the task list to a file. Prints an error message if an exception is caught.
      */
-    public void saveTaskListToFile(TaskList taskList) {
+    public void saveTaskListToFile() {
 
         try {
             FileOutputStream fileOutputStream = new FileOutputStream(path + fileName);
@@ -48,7 +48,6 @@ public class FileHandler {
     /**
      * Loads a task list from a file. Prints an error message if an exception is caught.
      *
-     * @throws IOException
      */
     public TaskList loadTaskListFromFile() {
 

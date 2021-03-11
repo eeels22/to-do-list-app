@@ -20,10 +20,10 @@ public class TaskTest {
     void createNewTaskWithTitleDueDueAndProject() {
         Task task1 = new Task("Eat lunch", LocalDate.of(2021, 11, 20), "Stay alive");
 
-        assertAll(() -> assertEquals("Eat lunch", task1.getTitle()),
-                () -> assertEquals(LocalDate.of(2021, 11, 20), task1.getDueDate()),
-                () -> assertEquals("Stay alive", task1.getProject()),
-                () -> assertEquals(false, task1.getStatus()));
+        assertEquals("Eat lunch", task1.getTitle());
+        assertEquals(LocalDate.of(2021, 11, 20), task1.getDueDate());
+        assertEquals("Stay alive", task1.getProject());
+        assertFalse(task1.getStatus());
     }
 
 
@@ -77,7 +77,7 @@ public class TaskTest {
     @DisplayName("Get status should return false (to do)")
     void getStatusShouldReturnFalse() {
         Task task1 = new Task("Eat lunch", LocalDate.of(2021, 11, 20), "Stay alive");
-        assertEquals(false, task1.getStatus());
+        assertFalse(task1.getStatus());
     }
 
     @Test
@@ -85,7 +85,7 @@ public class TaskTest {
     void getStatusShouldReturnTrue() {
         Task task1 = new Task("Eat lunch", LocalDate.of(2021, 11, 20), "Stay alive");
         task1.setStatus(true);
-        assertEquals(true, task1.getStatus());
+        assertTrue(task1.getStatus());
     }
 
     @Test
@@ -93,7 +93,7 @@ public class TaskTest {
     void setStatusToTrue() {
         Task task1 = new Task("Eat lunch", LocalDate.of(2021, 11, 20), "Stay alive");
         task1.setStatus(true);
-        assertEquals(true, task1.getStatus());
+        assertTrue(task1.getStatus());
     }
 
     @Test
@@ -101,7 +101,7 @@ public class TaskTest {
     void setStatusToFalse() {
         Task task1 = new Task("Eat lunch", LocalDate.of(2021, 11, 20), "Stay alive");
         task1.setStatus(false);
-        assertEquals(false, task1.getStatus());
+        assertFalse(task1.getStatus());
     }
 
     @Test
@@ -119,7 +119,7 @@ public class TaskTest {
         assertEquals("Healthy eating habits", task1.getProject());
     }
 
-    // how to check method that requires user input?
+    // todo how to check method that requires user input?
     @Test
     void editProject() {
     }
@@ -129,5 +129,64 @@ public class TaskTest {
     void testToString() {
         Task task1 = new Task("Eat lunch", LocalDate.of(2021, 11, 20), "Stay alive");
         assertEquals("Task: Eat lunch\nDue: 2021-11-20\nStatus: to do\nProject: Stay alive\n", task1.toString());
+    }
+
+    @Test
+    @DisplayName("Two tasks should be equal ")
+    void testEqualsShouldBeTrue() {
+        Task task = new Task("Eat lunch", LocalDate.of(2021, 11, 20), "Stay alive");
+        boolean isEqualShouldBeTrue = task.equals(new Task("Eat lunch", LocalDate.of(2021, 11, 20), "Stay alive"));
+        assertTrue(isEqualShouldBeTrue);
+    }
+
+    @Test
+    @DisplayName("Two tasks should not be equal due to titles not matching")
+    void testEqualsShouldBeFalseTitleNotMatching() {
+        Task task = new Task("Eat lunch", LocalDate.of(2021, 11, 20), "Stay alive");
+        boolean isEqualShouldBeFalse = task.equals(new Task("Watch TV", LocalDate.of(2021, 11, 20), "Stay alive"));
+        assertFalse(isEqualShouldBeFalse);
+    }
+
+    @Test
+    @DisplayName("Two tasks should not be equal due to dates not matching")
+    void testEqualsShouldBeFalseDateNotMatching() {
+        Task task = new Task("Eat lunch", LocalDate.of(2021, 11, 20), "Stay alive");
+        boolean isEqualShouldBeFalse = task.equals(new Task("Eat lunch", LocalDate.of(2022, 9, 20), "Stay alive"));
+        assertFalse(isEqualShouldBeFalse);
+    }
+
+    @Test
+    @DisplayName("Two tasks should not be equal due to projects not matching")
+    void testEqualsShouldBeFalseProjectNotMatching() {
+        Task task = new Task("Eat lunch", LocalDate.of(2021, 11, 20), "Stay alive");
+        boolean isEqualShouldBeFalse = task.equals(new Task("Eat lunch", LocalDate.of(2021, 11, 20), "Feeding"));
+        assertFalse(isEqualShouldBeFalse);
+    }
+
+    @Test
+    @DisplayName("Two tasks should not be equal due to statuses not matching")
+    void testEqualsShouldBeFalseStatusNotMatching() {
+        Task task = new Task("Eat lunch", LocalDate.of(2021, 11, 20), "Stay alive");
+        task.setStatus(true);
+        boolean isEqualShouldBeFalse = task.equals(new Task("Eat lunch", LocalDate.of(2021, 11, 20), "Stay alive"));
+        assertFalse(isEqualShouldBeFalse);
+    }
+
+    @Test
+    @DisplayName("Hash codes should match as all fields are equal")
+    void testHashCodeShouldMatch() {
+        Task task1 = new Task("Eat lunch", LocalDate.of(2021, 11, 20), "Stay alive");
+        Task task2 = new Task("Eat lunch", LocalDate.of(2021, 11, 20), "Stay alive");
+        boolean shouldMatch = task1.hashCode() == task2.hashCode();
+        assertTrue(shouldMatch);
+    }
+
+    @Test
+    @DisplayName("Hash codes should not match as not all fields are equal")
+    void testHashCodeShouldNotMatch() {
+        Task task1 = new Task("Eat lunch", LocalDate.of(2021, 11, 20), "Stay alive");
+        Task task2 = new Task("Make lunch", LocalDate.of(2021, 11, 20), "Stay alive");
+        boolean shouldNotMatch = task1.hashCode() == task2.hashCode();
+        assertFalse(shouldNotMatch);
     }
 }

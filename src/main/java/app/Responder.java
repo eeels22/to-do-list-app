@@ -17,6 +17,13 @@ public class Responder {
     }
 
     /**
+     * Prints the desired string.
+     */
+    public void print(String printString) {
+        System.out.println(printString);
+    }
+
+    /**
      * Prints the top-level menu options.
      */
     public void printMainMenu() {
@@ -38,8 +45,8 @@ public class Responder {
         System.out.println("===================");
         System.out.println("How would you like to view the task list?");
         System.out.println("(1) Default order");
-        System.out.println("(2) By title (ascending)");
-        System.out.println("(3) By title (descending)");
+        System.out.println("(2) By due date (ascending)");
+        System.out.println("(3) By due date (descending)");
         System.out.println("(4) By project (ascending)");
         System.out.println("(5) By project (descending)\n");
         System.out.print(">  ");

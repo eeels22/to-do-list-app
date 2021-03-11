@@ -108,6 +108,8 @@ public class ToDoListApp {
                 //
                 break;
             case 4: // save and quit
+                FileHandler fileHandler = new FileHandler(taskList);
+                fileHandler.saveTaskListToFile();
                 System.out.println("Should save and quit");
                 break;
             default:
@@ -125,12 +127,12 @@ public class ToDoListApp {
                     System.out.println("\n" + taskList.toString());
                     break;
                 case 2:
-                    // by title ascending
+                    // by due date ascending
                     // sort list
                     System.out.println("\n" + taskList.sortList(1, false));
                     break;
                 case 3:
-                    // by title descending
+                    // by due date descending
                     System.out.println("\n" + taskList.sortList(1, true));
                    break;
                 case 4:

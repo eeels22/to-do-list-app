@@ -3,7 +3,7 @@ package app;
 import java.util.Comparator;
 
 /**
- * Compares tasks by title or project.
+ * Defines comparators for the Task class by due date or project.
  *
  * @author En-Chi Liu
  * @version 1.0

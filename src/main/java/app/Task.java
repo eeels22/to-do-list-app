@@ -2,6 +2,7 @@ package app;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Objects;
 
 
 /**
@@ -153,15 +154,31 @@ public class Task implements Serializable {
 //        return (project.isEmpty()) ? "not assigned" : project;
 //    }
 
-        /*@Override
+    /**
+     * Checks if a given task's fields matches those of this task.
+     * @param taskObject the task to compare to the current task
+     * @return true if all fields are the same, false if not.
+     */
+    @Override
+    public boolean equals( Object taskObject ) {
+        if ( this == taskObject ) return true;
+        if ( taskObject == null || getClass() != taskObject.getClass() ) return false;
+        Task task = (Task) taskObject;
+        boolean sameTitle = title.equals(task.title);
+        boolean sameDueDate = dueDate.equals(task.dueDate);
+        boolean sameStatus = isDone == task.isDone;
+        boolean sameProject = project.equals(task.project);
+        return sameTitle && sameDueDate && sameStatus && sameProject;
+    }
+    /**
+     * Produces a String representation of the task status
+     *
+     * @return task status String as "done" or "to do"
+     */
+    @Override
     public int hashCode() {
-        return Objects.hash(title, project, date, ..//);
-    }*/
-
-            /*@Override
-    public boolean equals() {
-        return isEqual;
-    }*/
+        return Objects.hash(title, dueDate, isDone, project);
+    }
 
 
 
