@@ -1,5 +1,7 @@
 package app;
 
+import java.time.LocalDate;
+
 /**
  * This class implements a to do list application.
  * It is the top level class in this project.
@@ -26,6 +28,11 @@ public class ToDoListApp {
         ToDoListApp toToListApp = new ToDoListApp();
         toToListApp.start();
 
+//        TaskList taskList = new TaskList();
+//        taskList.addTaskAndInitializeField("Eat good", LocalDate.of(2021, 04, 12), "Stay alive");
+//        taskList.addTaskAndInitializeField("Make tea", LocalDate.of(2021, 04, 15), "Be zen");
+//        System.out.println(taskList);
+
     }
 
     /**
@@ -35,6 +42,7 @@ public class ToDoListApp {
     public void start() {
         boolean usingApp = true;
         responder.printWelcome();
+
         displayMainMenuAndRespond();
         // while (usingApp) {
         // if they choose to quit, set usingApp to false
@@ -95,17 +103,12 @@ public class ToDoListApp {
                 taskList.addTask();
                 break;
             case 3: // edit an existing task
-                // ask user which edit operation to perform
-                // options: edit task details, mark as done, or remove task
+                // determine which task they want to edit
+                System.out.println(taskList.getAllTitles());
+                int taskToEdit = parser.getNextInt();
+                // determine which operation they want to do (edit details, mark as done, remove)
                 responder.printEditOptions();
-                //  a) edit title, dueDate or project
-                // 1. check if there is an existing task to edit - check size of ArrayList tasks
-                // 2. if a task exists, prompt for the title of task to be edited. - getTask
-                // 3. Edit the fields
-                //  b) mark as done
-                //
-                //  c) remove
-                //
+                generateEditOptionsResponse(parser.getNextInt(), taskList.getTask(taskToEdit));
                 break;
             case 4: // save and quit
                 FileHandler fileHandler = new FileHandler(taskList);
@@ -118,18 +121,41 @@ public class ToDoListApp {
         }
     }
 
-        public void generateShowTaskListMenuResponse(int viewOptionChosen) {
+    private void generateEditOptionsResponse(int editOptionChosen, Task taskToEdit) {
+        // shift the cursor
+        parser.getNextLine();
+        switch (editOptionChosen) {
+            case 1: // Edit task details
+                // 1. check if there is an existing task to edit - check size of ArrayList tasks
+                // 2. if a task exists, prompt for the title of task to be edited. - getTask
+                // 3. Edit the fields
+
+                break;
+            case 2: // Mark a task as done
+
+                break;
+            case 3: // Remove a task
+
+                break;
+            default:
+                responder.printInvalidInputMessage();
+                break;
+        }
+    }
+
+    public void generateShowTaskListMenuResponse(int viewOptionChosen) {
             // shift the cursor
             parser.getNextLine();
             switch (viewOptionChosen) {
                 case 1:
-                    // default order
+                    // todo skip default order
                     System.out.println("\n" + taskList.toString());
                     break;
                 case 2:
                     // by due date ascending
                     // sort list
-                    System.out.println("\n" + taskList.sortList(1, false));
+                    taskList.sortList(1, false);
+                    System.out.println("\n" + taskList.toString());
                     break;
                 case 3:
                     // by due date descending
@@ -146,7 +172,6 @@ public class ToDoListApp {
                 default:
                     responder.printInvalidInputMessage();
                     break;
-
         }
     }
 

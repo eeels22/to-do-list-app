@@ -80,11 +80,6 @@ public class Responder {
         System.out.println("\nInvalid input, please try again.");
     }
 
-
-
-
-
-
     /**
      * Prints instructions for adding a new task.
      */
@@ -99,26 +94,6 @@ public class Responder {
     public void printTaskList(TaskList taskList) {
         System.out.println(taskList);
     }
-
-    /**
-     * Prints each task in the task list in ascending title order.
-     */
-
-
-    /**
-     * Prints each task in the task list in descending title order.
-     */
-
-
-    /**
-     * Prints each task in the task list in ascending project order.
-     */
-
-
-    /**
-     * Prints each task in the task list in descending project order.
-     */
-
 
     /**
      * Prints a goodbye message.

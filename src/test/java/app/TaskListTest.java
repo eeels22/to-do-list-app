@@ -80,4 +80,9 @@ class TaskListTest {
         String expectedProject = "Stay alive";
         assertEquals(expectedProject, actualProject);
     }
+
+    @Test
+    void getAllTitles() {
+
+    }
 }

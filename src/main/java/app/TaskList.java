@@ -1,6 +1,7 @@
 package app;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -20,7 +21,7 @@ public class TaskList implements Serializable {
     }
 
     /**
-     * Creates a new task with title, due date and associated project and adds it to to the task list.
+     * Creates a new default task, prompts user for the title, due date and associated project and adds it to to the task list.
      */
     public void addTask() {
         System.out.println("\nADDING A NEW TASK");
@@ -36,6 +37,14 @@ public class TaskList implements Serializable {
     }
 
     /**
+     * Creates a new task with title, due date and associated project and adds it to to the task list.
+     */
+    public void addTaskAndInitializeField(String title, LocalDate dueDate, String project) {
+        Task task1 = new Task(title, dueDate, project);
+        tasks.add(task1);
+    }
+
+    /**
      * Get the task to be edited by finding its title.
      *
      * @param index the title of the task to be edited
@@ -45,7 +54,7 @@ public class TaskList implements Serializable {
         if (index < 0 || index > tasks.size() - 1) {
             System.out.println("Invalid selection, please try again.");
         }
-        return tasks.get(1); // placeholder
+        return tasks.get(index); // placeholder
     }
 
     /**
@@ -97,11 +106,30 @@ public class TaskList implements Serializable {
         StringBuilder taskListStringBuilder = new StringBuilder();
         if (tasks.size() == 0) {
             return "Your task list is empty.";
+        } else {
+            for (Task task : tasks) {
+                taskListStringBuilder.append("\n" + task.toString());
+            }
+            return taskListStringBuilder.toString();
         }
-        for (Task task : tasks) {
-            taskListStringBuilder.append(task.toString());
+    }
+
+    /**
+     * Returns all titles of tasks in the list.
+     *
+     * @return all task titles as a String
+     */
+    public String getAllTitles() {
+        StringBuilder taskTitles = new StringBuilder();
+        if (tasks.size() == 0) {
+            return "Your task list is empty.";
+        } else {
+            for (int index = 0; index < tasks.size(); index++) {
+                int menuNumber = index + 1;
+                taskTitles.append("\n(" + menuNumber + ") " + tasks.get(index).getTitle());
+            }
+            return taskTitles.toString();
         }
-        return taskListStringBuilder.toString();
     }
 
     /**
@@ -109,18 +137,17 @@ public class TaskList implements Serializable {
      *
      * @param type       what field to sort on
      * @param descending whether or not to use descending order
-     * @return a list of tasks in the desired order
+     * @return the task list in the desired order
      */
-    public List<Task> sortList(int type, boolean descending) {
+    public ArrayList<Task> sortList(int type, boolean descending) {
         TaskComparator comparator = new TaskComparator(type);
 
-        List<Task> sortedTasks = tasks;
-        Collections.sort(sortedTasks, comparator);
+        Collections.sort(tasks, comparator);
 
         if (descending)
-            Collections.reverse(sortedTasks);
+            Collections.reverse(tasks);
 
-        return sortedTasks;
+        return tasks;
     }
 
 }
