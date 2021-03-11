@@ -21,7 +21,7 @@ public class Responder {
      */
     public void printMainMenu() {
         System.out.println("\nMAIN MENU");
-        System.out.println("=================");
+        System.out.println("=========");
         System.out.println("Please select an option:");
         System.out.println("(1) View task list");
         System.out.println("(2) Add a new task");
@@ -35,7 +35,7 @@ public class Responder {
      */
     public void printViewTaskListMenu() {
         System.out.println("\nVIEW TASK LIST MENU");
-        System.out.println("=================");
+        System.out.println("===================");
         System.out.println("How would you like to view the task list?");
         System.out.println("(1) Default order");
         System.out.println("(2) By title (ascending)");

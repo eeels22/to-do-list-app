@@ -1,10 +1,9 @@
 package app;
+
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Comparator;
+import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 
 /**
@@ -14,7 +13,7 @@ import java.util.stream.Collectors;
  * @version 1.0
  */
 public class TaskList implements Serializable {
-    private ArrayList<Task> tasks;
+    private final ArrayList<Task> tasks;
 
     public TaskList() { //todo load from file
         tasks = new ArrayList<>();
@@ -38,10 +37,11 @@ public class TaskList implements Serializable {
 
     /**
      * Get the task to be edited by finding its title.
+     *
      * @param index the title of the task to be edited
      * @return the task to be edited
      */
-    public Task getTask(int index){
+    public Task getTask(int index) {
         if (index < 0 || index > tasks.size() - 1) {
             System.out.println("Invalid selection, please try again.");
         }
@@ -50,16 +50,15 @@ public class TaskList implements Serializable {
 
     /**
      * Remove a given task from the task list
+     *
      * @param index the index of the task to remove
      */
-    public void removeTask(int index){
+    public void removeTask(int index) {
         try {
             tasks.remove(index);
-        }
-        catch (IndexOutOfBoundsException indexOutOfBoundsException) {
+        } catch (IndexOutOfBoundsException indexOutOfBoundsException) {
             System.out.println("Invalid selection, please try again.");
-        }
-        catch (UnsupportedOperationException unsupportedOperationException){
+        } catch (UnsupportedOperationException unsupportedOperationException) {
             System.out.println("Something went wrong: " + unsupportedOperationException);
         }
 
@@ -74,6 +73,7 @@ public class TaskList implements Serializable {
 
     /**
      * Creates a new task with title, due date and associated project and adds it to to the task list.
+     *
      * @param taskToEdit the existing task to be edited
      */
     public void editTask(Task taskToEdit) {
@@ -89,6 +89,7 @@ public class TaskList implements Serializable {
 
     /**
      * Returns details of each task in the list or a message to say it is empty.
+     *
      * @return details of the task list as a String
      */
     @Override
@@ -104,52 +105,22 @@ public class TaskList implements Serializable {
     }
 
     /**
-     * Sort the tasks by ascending title
-     * @return an ArrayList of tasks in ascending title order
+     * Sort the task list in the the desired order
+     *
+     * @param type       what field to sort on
+     * @param descending whether or not to use descending order
+     * @return a list of tasks in the desired order
      */
-    public ArrayList<Task> sortByTitleAscending () {
+    public List<Task> sortList(int type, boolean descending) {
+        TaskComparator comparator = new TaskComparator(type);
 
-        List<Task> sortedTasks = tasks.stream()
-                .sorted(Comparator.comparing(Task::getTitle,
-                        String.CASE_INSENSITIVE_ORDER))
-                .collect(Collectors.toList());
-        return (ArrayList<Task>) sortedTasks;
-    }
+        List<Task> sortedTasks = tasks;
+        Collections.sort(sortedTasks, comparator);
 
-    /**
-     * Sort the tasks by descending title
-     * @return an ArrayList of tasks in descending title order
-     */
-    public ArrayList<Task> sortByTitleDescending () {
-        List<Task> sortedTasks = tasks.stream()
-                .sorted(Comparator.comparing(Task::getTitle,
-                        String.CASE_INSENSITIVE_ORDER).reversed())
-                .collect(Collectors.toList());
-        return (ArrayList<Task>) sortedTasks;
-    }
+        if (descending)
+            Collections.reverse(sortedTasks);
 
-    /**
-     * Sort the tasks by ascending project
-     * @return an ArrayList of tasks in ascending project order
-     */
-    public ArrayList<Task> sortByProjectAscending () {
-        List<Task> sortedTasks = tasks.stream()
-                .sorted(Comparator.comparing(Task::getProject,
-                        String.CASE_INSENSITIVE_ORDER))
-                .collect(Collectors.toList());
-        return (ArrayList<Task>) sortedTasks;
-    }
-
-    /**
-     * Sort the tasks by descending project
-     * @return an ArrayList of tasks in descending project order
-     */
-    public ArrayList<Task> sortByProjectDescending () {
-        List<Task> sortedTasks = tasks.stream()
-                .sorted(Comparator.comparing(Task::getProject,
-                        String.CASE_INSENSITIVE_ORDER).reversed())
-                .collect(Collectors.toList());
-        return (ArrayList<Task>) sortedTasks;
+        return sortedTasks;
     }
 
 }

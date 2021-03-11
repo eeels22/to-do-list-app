@@ -111,35 +111,35 @@ public class ToDoListApp {
                 System.out.println("Should save and quit");
                 break;
             default:
-                // error message and prompt reprint again?
+                responder.printInvalidInputMessage();
                 break;
         }
     }
 
-        public void generateShowTaskListMenuResponse(int showOptionChosen) {
-            // shift the cursor to the next line so it reads the next input correctly
+        public void generateShowTaskListMenuResponse(int viewOptionChosen) {
+            // shift the cursor
             parser.getNextLine();
-            switch (showOptionChosen) {
+            switch (viewOptionChosen) {
                 case 1:
-                    // in order of creation
+                    // default order
                     System.out.println("\n" + taskList.toString());
                     break;
                 case 2:
                     // by title ascending
                     // sort list
-                    System.out.println("\n" + taskList.toString());
+                    System.out.println("\n" + taskList.sortList(1, false));
                     break;
                 case 3:
                     // by title descending
-                    System.out.println("\n" + taskList.toString());
-                    break;
+                    System.out.println("\n" + taskList.sortList(1, true));
+                   break;
                 case 4:
                     // by project ascending
-                    System.out.println("\n" + taskList.toString());
+                    System.out.println("\n" + taskList.sortList(2, false));
                     break;
                 case 5:
                     // by project descending
-                    System.out.println("\n" + taskList.toString());
+                    System.out.println("\n" + taskList.sortList(2, true));
                     break;
                 default:
                     responder.printInvalidInputMessage();

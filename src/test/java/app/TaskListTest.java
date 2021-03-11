@@ -28,56 +28,56 @@ class TaskListTest {
     }
 
     @Test
-    void sortByTitleAscending() {
-        TaskList tasksToSort = new TaskList();
-        tasksToSort.getTasks().add(new Task("Read about Streams", LocalDate.of(2021, 05, 12), "Learn Java"));
-        tasksToSort.getTasks().add(new Task("Eat lunch", LocalDate.of(2021, 11, 20), "Stay alive"));
-        tasksToSort.getTasks().add(new Task("Call parents", LocalDate.of(2021, 04, 19), "Family"));
-        ArrayList<Task> sortedTasks = tasksToSort.sortByTitleAscending();
-        String actualTitle = sortedTasks.get(0).getTitle();
-        String expectedTitle = "Call parents";
-        assertEquals(expectedTitle, actualTitle);
+    @Disabled
+    void removeTask() {
+
     }
 
     @Test
-    void sortByTitleDescending() {
+    void sortListByTitleAscending() {
         TaskList tasksToSort = new TaskList();
-        tasksToSort.getTasks().add(new Task("Eat lunch", LocalDate.of(2021, 11, 20), "Stay alive"));
         tasksToSort.getTasks().add(new Task("Read about Streams", LocalDate.of(2021, 05, 12), "Learn Java"));
+        tasksToSort.getTasks().add(new Task("Eat lunch", LocalDate.of(2021, 11, 20), "Stay alive"));
         tasksToSort.getTasks().add(new Task("Call parents", LocalDate.of(2021, 04, 19), "Family"));
-        ArrayList<Task> sortedTasks = tasksToSort.sortByTitleDescending();
-        String actualTitle = sortedTasks.get(0).getTitle();
-        String expectedTitle = "Read about Streams";
-        assertEquals(expectedTitle, actualTitle);
+        ArrayList<Task> sortedTasks = (ArrayList<Task>) tasksToSort.sortList(1, false);
+        String actualProject = sortedTasks.get(0).getTitle();
+        String expectedProject = "Call parents";
+        assertEquals(expectedProject, actualProject);
     }
 
     @Test
-    void sortByProjectAscending() {
+    void sortListByTitleDescending() {
         TaskList tasksToSort = new TaskList();
         tasksToSort.getTasks().add(new Task("Read about Streams", LocalDate.of(2021, 05, 12), "Learn Java"));
         tasksToSort.getTasks().add(new Task("Eat lunch", LocalDate.of(2021, 11, 20), "Stay alive"));
         tasksToSort.getTasks().add(new Task("Call parents", LocalDate.of(2021, 04, 19), "Family"));
-        ArrayList<Task> sortedTasks = tasksToSort.sortByProjectAscending();
+        ArrayList<Task> sortedTasks = (ArrayList<Task>) tasksToSort.sortList(1, true);
+        String actualProject = sortedTasks.get(0).getTitle();
+        String expectedProject = "Read about Streams";
+        assertEquals(expectedProject, actualProject);
+    }
+
+    @Test
+    void sortListByProjectAscending() {
+        TaskList tasksToSort = new TaskList();
+        tasksToSort.getTasks().add(new Task("Read about Streams", LocalDate.of(2021, 05, 12), "Learn Java"));
+        tasksToSort.getTasks().add(new Task("Eat lunch", LocalDate.of(2021, 11, 20), "Stay alive"));
+        tasksToSort.getTasks().add(new Task("Call parents", LocalDate.of(2021, 04, 19), "Family"));
+        ArrayList<Task> sortedTasks = (ArrayList<Task>) tasksToSort.sortList(2, false);
         String actualProject = sortedTasks.get(0).getProject();
         String expectedProject = "Family";
         assertEquals(expectedProject, actualProject);
     }
 
     @Test
-    void sortByProjectDescending() {
+    void sortListByProjectDescending() {
         TaskList tasksToSort = new TaskList();
         tasksToSort.getTasks().add(new Task("Read about Streams", LocalDate.of(2021, 05, 12), "Learn Java"));
         tasksToSort.getTasks().add(new Task("Eat lunch", LocalDate.of(2021, 11, 20), "Stay alive"));
         tasksToSort.getTasks().add(new Task("Call parents", LocalDate.of(2021, 04, 19), "Family"));
-        ArrayList<Task> sortedTasks = tasksToSort.sortByProjectDescending();
+        ArrayList<Task> sortedTasks = (ArrayList<Task>) tasksToSort.sortList(2, true);
         String actualProject = sortedTasks.get(0).getProject();
         String expectedProject = "Stay alive";
         assertEquals(expectedProject, actualProject);
-    }
-
-    @Test
-    @Disabled
-    void removeTask() {
-
     }
 }
