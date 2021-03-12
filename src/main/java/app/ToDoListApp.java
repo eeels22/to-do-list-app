@@ -14,6 +14,7 @@ public class ToDoListApp {
     public static Parser parser;
     private Responder responder;
     private TaskList taskList;
+    private boolean usingApp;
 
     /**
      * Creates a to do list app
@@ -22,6 +23,7 @@ public class ToDoListApp {
         responder = new Responder();
         parser = new Parser();
         taskList = new TaskList();
+        usingApp = true;
     }
 
     public static void main(String[] args) {
@@ -40,18 +42,12 @@ public class ToDoListApp {
      * Enters a loop of dialogue with the user until they quit.
      */
     public void start() {
-        boolean usingApp = true;
         responder.printWelcome();
 
-        displayMainMenuAndRespond();
-        // while (usingApp) {
-        // if they choose to quit, set usingApp to false
-        // else
-        // break;
-        // }
-
-        // responder.printGoodbye();
-
+         while (usingApp) {
+             displayMainMenuAndRespond();
+         }
+        responder.printGoodbye();
     }
     /**
      * Prints the main menu options and responds according to the user's choice
@@ -111,6 +107,7 @@ public class ToDoListApp {
                 generateEditOptionsResponse(parser.getNextInt(), taskList.getTask(taskToEdit));
                 break;
             case 4: // save and quit
+                usingApp = false; // move lower down after file handling implemented
                 FileHandler fileHandler = new FileHandler(taskList);
                 fileHandler.saveTaskListToFile();
                 System.out.println("Should save and quit");
@@ -148,24 +145,20 @@ public class ToDoListApp {
             parser.getNextLine();
             switch (viewOptionChosen) {
                 case 1:
-                    // todo skip default order
-                    System.out.println("\n" + taskList.toString());
-                    break;
-                case 2:
                     // by due date ascending
                     // sort list
                     taskList.sortList(1, false);
                     System.out.println("\n" + taskList.toString());
                     break;
-                case 3:
+                case 2:
                     // by due date descending
                     System.out.println("\n" + taskList.sortList(1, true));
                    break;
-                case 4:
+                case 3:
                     // by project ascending
                     System.out.println("\n" + taskList.sortList(2, false));
                     break;
-                case 5:
+                case 4:
                     // by project descending
                     System.out.println("\n" + taskList.sortList(2, true));
                     break;
