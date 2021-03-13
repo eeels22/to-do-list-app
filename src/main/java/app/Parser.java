@@ -9,19 +9,26 @@ import java.util.Scanner;
  * @version 1.0
  */
 public class Parser {
-    private static Scanner reader;
+    private static Scanner scanner;
 
     public Parser() {
-        reader = new Scanner(System.in);
+        scanner = new Scanner(System.in);
     }
 
-    public static String getNextLine() {
-        return reader.nextLine();
+    public static String getNextLine() {  // todo check closing of scanner after each use
+        return scanner.nextLine();
     }
 
     public int getNextInt() {
-        return reader.nextInt();
+        String inputString = scanner.nextLine(); // todo check closing of scanner after each use
+        return Integer.parseInt(inputString);
     }
+
+//    public boolean validateMenuOption(int menuOptionChosen, int minMenuChoice, int maxMenuChoice) {
+//        boolean isValue = false;
+//        String inputString = scanner.nextLine(); // todo check closing of scanner after each use
+//        return isValid;
+//    }
 
 
 }

@@ -1,7 +1,5 @@
 package app;
 
-import java.time.LocalDate;
-
 /**
  * This class implements a to do list application.
  * It is the top level class in this project.
@@ -11,69 +9,51 @@ import java.time.LocalDate;
  * @version 1.0
  */
 public class ToDoListApp {
-    public static Parser parser;
-    private Responder responder;
-    private TaskList taskList;
+    public static Parser parser; // todo should this be public static?
+    private final Printer printer;
+    private final TaskList taskList;
     private boolean usingApp;
 
     /**
      * Creates a to do list app
      */
     public ToDoListApp() {
-        responder = new Responder();
+        printer = new Printer();
         parser = new Parser();
-        taskList = new TaskList();
+        taskList = loadTaskList();
         usingApp = true;
     }
 
     public static void main(String[] args) {
         ToDoListApp toToListApp = new ToDoListApp();
         toToListApp.start();
-
-//        TaskList taskList = new TaskList();
-//        taskList.addTaskAndInitializeField("Eat good", LocalDate.of(2021, 04, 12), "Stay alive");
-//        taskList.addTaskAndInitializeField("Make tea", LocalDate.of(2021, 04, 15), "Be zen");
-//        System.out.println(taskList);
-
     }
 
     /**
-     * Starts the to do list app by printing a welcome message and the main options.
-     * Enters a loop of dialogue with the user until they quit.
+     * Starts the to do list app and remains running until the user quits.
      */
     public void start() {
-        responder.printWelcome();
-
-         while (usingApp) {
-             displayMainMenuAndRespond();
-         }
-        responder.printGoodbye();
-    }
-    /**
-     * Prints the main menu options and responds according to the user's choice
-     */
-    public void displayMainMenuAndRespond() {
-        responder.printMainMenu();
-        generateMainMenuResponse(parser.getNextInt());
+        printer.printWelcome();
+        while (usingApp) {
+            printMainMenuAndPerformChoice();
+        }
+        printer.printGoodbye();
     }
 
     /**
-     * Prints the main menu options and responds according to the user's choice
+     * Prints the main menu options and performs the user's choice
      */
-    public void displayViewTaskListMenuAndRespond() {
-        responder.printViewTaskListMenu();
-        generateShowTaskListMenuResponse(parser.getNextInt());
+    public void printMainMenuAndPerformChoice() {
+        printer.printMainMenu();
+        performMainMenuChoice(parser.getNextInt());
     }
 
-
     /**
-     * Load taskList from file
-     *
-     * UPDATE THIS
+     * Prints the view task menu options and responds to the user's choice
      */
-    public TaskList loadFromFile() {
-        // placeholder
-        return new TaskList();
+    public void printViewTaskListMenuAndPerformChoice() {
+        printer.printViewTaskListMenu();
+        performViewTaskMenuChoice(parser.getNextInt());
     }
 
     /**
@@ -84,88 +64,139 @@ public class ToDoListApp {
     }
 
     /**
-     * Generates the app's response to the main menu selection
+     * Responds to the user's chosen main menu option
      *
      * @param mainOptionChosen the user's chosen menu option
      */
-    public void generateMainMenuResponse(int mainOptionChosen) {
-        // shift the cursor to the next line so it reads the next input correctly
-        parser.getNextLine();
+    public void performMainMenuChoice(int mainOptionChosen) {
         switch (mainOptionChosen) {
             case 1: // view task list
-                displayViewTaskListMenuAndRespond();
+                printViewTaskListMenuAndPerformChoice();
                 break;
             case 2: // add a new task
                 taskList.addTask();
                 break;
             case 3: // edit an existing task
-                // determine which task they want to edit
-                System.out.println(taskList.getAllTitles());
-                int taskToEdit = parser.getNextInt();
-                // determine which operation they want to do (edit details, mark as done, remove)
-                responder.printEditOptions();
-                generateEditOptionsResponse(parser.getNextInt(), taskList.getTask(taskToEdit));
+                try {
+                    int indexTaskToEdit = determineTaskToEdit() - 1; //offset zero-based index
+                    int editChoice = determineEditChoice();
+                    performEditChoice(editChoice, indexTaskToEdit);
+                }
+                catch (NullPointerException nullPointerException){
+                    printer.printLine("There are no existing tasks to edit"); //todo check other possible exceptions
+                }
                 break;
             case 4: // save and quit
-                usingApp = false; // move lower down after file handling implemented
-                FileHandler fileHandler = new FileHandler(taskList);
-                fileHandler.saveTaskListToFile();
-                System.out.println("Should save and quit");
+                saveTaskList();
+                usingApp = false;
                 break;
             default:
-                responder.printInvalidInputMessage();
+                printer.printInvalidInputMessage();
                 break;
         }
     }
 
-    private void generateEditOptionsResponse(int editOptionChosen, Task taskToEdit) {
-        // shift the cursor
-        parser.getNextLine();
-        switch (editOptionChosen) {
-            case 1: // Edit task details
-                // 1. check if there is an existing task to edit - check size of ArrayList tasks
-                // 2. if a task exists, prompt for the title of task to be edited. - getTask
-                // 3. Edit the fields
+//    enum EditOperation{
+//        EditTasK, MarkDone, Remove,
+//    }
 
+    /**
+     * Performs the user's desired edit operation on a task.
+     * @param operationChosen type of editing operation
+     * @param indexTaskToEdit index of the task to be edited
+     */
+    private void performEditChoice(int operationChosen, int indexTaskToEdit) {
+        switch (operationChosen) {
+            case 1: // Edit task details
+                taskList.editTask(indexTaskToEdit);
                 break;
             case 2: // Mark a task as done
-
+                taskList.getTask(indexTaskToEdit).setStatus(true);
                 break;
             case 3: // Remove a task
-
+                taskList.removeTask(indexTaskToEdit);
                 break;
-            default:
-                responder.printInvalidInputMessage();
+            default: // invalid input
+                printer.printInvalidInputMessage();
                 break;
         }
     }
 
-    public void generateShowTaskListMenuResponse(int viewOptionChosen) {
-            // shift the cursor
-            parser.getNextLine();
-            switch (viewOptionChosen) {
-                case 1:
-                    // by due date ascending
-                    // sort list
-                    taskList.sortList(1, false);
-                    System.out.println("\n" + taskList.toString());
-                    break;
-                case 2:
-                    // by due date descending
-                    System.out.println("\n" + taskList.sortList(1, true));
-                   break;
-                case 3:
-                    // by project ascending
-                    System.out.println("\n" + taskList.sortList(2, false));
-                    break;
-                case 4:
-                    // by project descending
-                    System.out.println("\n" + taskList.sortList(2, true));
-                    break;
-                default:
-                    responder.printInvalidInputMessage();
-                    break;
+    public void performViewTaskMenuChoice(int viewOptionChosen) {
+        switch (viewOptionChosen) {
+            case 1:
+                // by due date ascending
+                sortAndPrintTaskList(1, false);
+                break;
+            case 2:
+                // by due date descending
+                sortAndPrintTaskList(1, true);
+                break;
+            case 3:
+                // by project ascending
+                sortAndPrintTaskList(2, false);
+                break;
+            case 4:
+                // by project descending
+                sortAndPrintTaskList(2, true);
+                break;
+            default:
+                printer.printInvalidInputMessage();
+                break;
         }
+    }
+
+    /**
+     * Sort and print task list
+     */
+    public void sortAndPrintTaskList(int type, boolean descending){
+        taskList.sortList(type, descending);
+        printer.printTaskListHeader();
+        printer.printLine("\n" + taskList.toString());
+    }
+
+    /**
+     * Determine which task the user wants to edit, or advises there are no existing tasks.
+     * @return index of the task to be edited
+     */
+    public int determineTaskToEdit() {  //todo return Task?
+        int sizeOfTaskList = taskList.getTasks().size();
+        int indexTaskToEdit;
+        if (sizeOfTaskList == 1) { // only one task, index must be 0
+            indexTaskToEdit = 0;
+        } else if (sizeOfTaskList > 1) { // ask user which task to edit
+            printer.printLine("\nWhich task would you like to edit?" + taskList.getNumberedTaskTitles());
+            printer.printLine("\n>  ");
+            indexTaskToEdit = parser.getNextInt();
+        } else { // no tasks to edit
+            throw new NullPointerException("No existing tasks to edit.");
+        }
+        return indexTaskToEdit;
+        //todo replace return type with Task
+    }
+
+    /**
+     * Determine which operation the user wants to perform on a given task
+     */
+    public int determineEditChoice() { // todo merge with method above? this never needs to be called on its own
+         printer.printEditOptions();
+         return parser.getNextInt();
+    }
+
+    /**
+     * Instructs the FileHandler to load the previous taskList from file
+     */
+    public TaskList loadTaskList() {
+        FileHandler fileHandler = new FileHandler();
+        return fileHandler.loadTaskListFromFile();
+    }
+
+    /**
+     * Instructs the File Handler to save this task list to file
+     */
+    public void saveTaskList() {
+        FileHandler fileHandler = new FileHandler();
+        fileHandler.saveTaskListToFile(taskList);
     }
 
 }

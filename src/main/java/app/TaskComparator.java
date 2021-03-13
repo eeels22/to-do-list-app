@@ -24,7 +24,7 @@ public class TaskComparator implements Comparator<Task>
             case 1: // compare due date
                 return task1.getDueDate().compareTo(task2.getDueDate());
             case 2: // compare project
-                return task1.getProject().compareTo(task2.getProject());
+                return task1.getProject().toLowerCase().compareTo(task2.getProject().toLowerCase());
             default:
                 return -1; // todo check what to return as default
         }
