@@ -1,8 +1,7 @@
-/**
- *
- */
 plugins {
     id 'java'
+    id 'idea'
+    id 'eclipse'
     id 'application'
 }
 
@@ -19,6 +18,9 @@ dependencies {
 
 test {
     useJUnitPlatform()
+    testLogging {
+        events 'PASSED', 'SKIPPED', 'FAILED'
+    }
 }
 
 //May need to include this if 'gradle run' command has an error - see video README.md by Kwabena 6m23s
@@ -27,13 +29,13 @@ test {
 //}
 
 application {
-    mainClass.set("ToDoListApp")
+    mainClass.set("app.ToDoListApp")
 }
 
 jar {
     manifest {
         attributes(
-                'Main-Class': 'ToDoListApp'
+                'Main-Class': 'app.ToDoListApp'
         )
     }
 }
