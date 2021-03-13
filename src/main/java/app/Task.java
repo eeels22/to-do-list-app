@@ -1,4 +1,5 @@
 package app;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -40,12 +41,13 @@ public class Task implements Serializable {
      *
      * @return true if String is valid.
      */
-    private boolean isStringValid(String string) {
+    private boolean isStringValid(String string) { // todo is this even needed?
         return title != null && !title.isEmpty();
     }
 
     /**
      * Return the task title
+     *
      * @return the title field of this Task
      */
     public String getTitle() {
@@ -55,7 +57,7 @@ public class Task implements Serializable {
     /**
      * Assigns the task title if it is valid.
      */
-    public void setTitle(String title) {
+    public void setTitle(String title) { //todo check validity
         if (isStringValid(title)) {
             this.title = title;
         } else {
@@ -66,41 +68,58 @@ public class Task implements Serializable {
     /**
      * Prompts the user to enter a new title and updates the task's title with it.
      */
-    public void editTitle() {
+    public void editTitle() { // todo is this the right class? Task should not have access to parser
         System.out.println("Enter the task title:");
         System.out.print(">  ");
         String title = ToDoListApp.parser.getNextLine();
         this.setTitle(title);
     }
 
+    /**
+     * Returns task´s due date.
+     */
     public LocalDate getDueDate() {
         return this.dueDate;
-    }
-
-    public void setDueDate(LocalDate dueDate) {
-        this.dueDate = dueDate;
     }
 
     /**
      * Updates the task´s due date.
      */
-    public void editDueDate() {
+    public void setDueDate(LocalDate dueDate) { // todo catch invalid inputs
+        this.dueDate = dueDate;
+    }
+
+    /**
+     * Prompts user for the task´s due date and set's it.
+     */
+    public void editDueDate() {  //todo catch invalid inputs
         System.out.println("Enter the due date in the format YYYY-MM-DD:");
         System.out.print(">  ");
-        // add try - catch
         String dateString = ToDoListApp.parser.getNextLine();
         LocalDate dueDate = LocalDate.parse(dateString, DateTimeFormatter.ISO_LOCAL_DATE);
         setDueDate(dueDate);
+
     }
 
+    /**
+     * Returns the task status.
+     */
     public boolean getStatus() {
         return this.isDone;
     }
 
-    public void setStatus(boolean doneOrNot) {
-        isDone = doneOrNot;
+    /**
+     * Sets the task status to the given boolean.
+     *
+     * @param isDone true if done and false if to do
+     */
+    public void setStatus(boolean isDone) {
+        this.isDone = isDone;
     }
 
+    /**
+     * Returns the project this task belongs to.
+     */
     public String getProject() {
         return this.project;
     }
@@ -111,7 +130,7 @@ public class Task implements Serializable {
     public void setProject(String project) {
         if (isStringValid(project)) {
             this.project = project;
-        } else{
+        } else {
             System.out.println("Please enter a valid project name or \"none\"");
         }
     }
@@ -122,7 +141,7 @@ public class Task implements Serializable {
     public void editProject() {
         System.out.println("Enter the project that this task belong to or \"none\" if not applicable:");
         System.out.print(">  ");
-        String project = ToDoListApp.parser.getNextLine();
+        String project = ToDoListApp.parser.getNextLine(); // todo is this in the right class
         setProject(project);
     }
 
@@ -133,7 +152,7 @@ public class Task implements Serializable {
      */
     @Override
     public String toString() {
-        return "Task: " + title + "\nDue: " + dueDate + "\nStatus: " + statusToString() + "\nProject: " + project + "\n";
+        return "\nTask: " + title + "\nDue: " + dueDate + "\nStatus: " + statusToString() + "\nProject: " + project;
     }
 
     /**
@@ -145,24 +164,16 @@ public class Task implements Serializable {
         return isDone ? "done" : "to do";
     }
 
-//    /**
-//     * Produces a String representation of the task project
-//     *
-//     * @return the name of the project associated with the task or "not assigned"
-//     */
-//    private String projectToString() {
-//        return (project.isEmpty()) ? "not assigned" : project;
-//    }
-
     /**
      * Checks if a given task's fields matches those of this task.
+     *
      * @param taskObject the task to compare to the current task
      * @return true if all fields are the same, false if not.
      */
     @Override
-    public boolean equals( Object taskObject ) {
-        if ( this == taskObject ) return true;
-        if ( taskObject == null || getClass() != taskObject.getClass() ) return false;
+    public boolean equals(Object taskObject) {
+        if (this == taskObject) return true;
+        if (taskObject == null || getClass() != taskObject.getClass()) return false;
         Task task = (Task) taskObject;
         boolean sameTitle = title.equals(task.title);
         boolean sameDueDate = dueDate.equals(task.dueDate);
@@ -170,6 +181,7 @@ public class Task implements Serializable {
         boolean sameProject = project.equals(task.project);
         return sameTitle && sameDueDate && sameStatus && sameProject;
     }
+
     /**
      * Produces a String representation of the task status
      *
@@ -180,8 +192,12 @@ public class Task implements Serializable {
         return Objects.hash(title, dueDate, isDone, project);
     }
 
-
-
-
-
+//    /**
+//     * Produces a String representation of the task project
+//     *
+//     * @return the name of the project associated with the task or "not assigned"
+//     */
+//    private String projectToString() {
+//        return (project.isEmpty()) ? "not assigned" : project;
+//    }
 }

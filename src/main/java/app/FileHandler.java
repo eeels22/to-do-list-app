@@ -20,16 +20,15 @@ public class FileHandler {
     /**
      * Constructor for the file handler.
      *
-     * @param taskList The task list to save and load.
      */
-    public FileHandler(TaskList taskList) {
-        this.taskList = taskList;
+    public FileHandler() {
+
     }
 
     /**
      * Saves the task list to a file. Prints an error message if an exception is caught.
      */
-    public void saveTaskListToFile() {
+    public void saveTaskListToFile(TaskList taskList) {
 
         try {
             FileOutputStream fileOutputStream = new FileOutputStream(path + fileName);
@@ -60,10 +59,11 @@ public class FileHandler {
             objectInputStream.close();
             fileInputStream.close();
 
+        } catch (EOFException eofException) { // nothing in file so instantiate a new TaskList
+            return new TaskList();
         } catch (IOException | ClassNotFoundException exception) {
             System.out.println("Oops, there's a problem with loading the file: " + exception);
-            // Could the message here be that the task list is empty?
-        }
+        } // todo is there a better way to recover?
         return taskList;
     }
 }

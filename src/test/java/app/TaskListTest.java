@@ -8,7 +8,26 @@ import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Test class for TaskList.
+ *
+ * @author En-Chi Liu
+ * @version 1.0
+ */
 class TaskListTest {
+    private TaskList taskList = new TaskList();
+
+    /**
+     * Set up TaskList and create three tasks.
+     * This method is executed once before every test case in this class.
+     */
+    @BeforeEach
+    public void setUp() {
+        taskList.getTasks().add(new Task("Read about Streams", LocalDate.of(2021, 05, 12), "Learn Java"));
+        taskList.getTasks().add(new Task("Eat lunch", LocalDate.of(2021, 11, 20), "Stay alive"));
+        taskList.getTasks().add(new Task("Call parents", LocalDate.of(2021, 04, 19), "Family"));
+    }
+
 
     @Test
     void addTask() {
@@ -19,27 +38,29 @@ class TaskListTest {
     }
 
     @Test
-    void testToString() {
-        TaskList taskList1 = new TaskList();
-        taskList1.getTasks().add(new Task("Eat lunch", LocalDate.of(2021, 11, 20), "Stay alive"));
-        taskList1.getTasks().add(new Task("Read about Streams", LocalDate.of(2021, 05, 12), "Learn Java"));
-        taskList1.toString();
-        assertEquals("Task: Eat lunch\nDue: 2021-11-20\nStatus: to do\nProject: Stay alive\nTask: Read about Streams\nDue: 2021-05-12\nStatus: to do\nProject: Learn Java\n", taskList1.toString());
+    void removeFirstTask() {
+        taskList.removeTask(0);
+        String expectedTitleFirstTask = "Eat lunch";
+        String actualTitleFirstTask = taskList.getTask(0).getTitle();
+        assertEquals(expectedTitleFirstTask, actualTitleFirstTask);
     }
 
     @Test
-    @Disabled
-    void removeTask() {
-
+    void removeSecondTask() {
+        taskList.removeTask(1);
+        String expectedTitleSecondTask = "Call parents";
+        String actualTitleSecondTask = taskList.getTask(1).getTitle();
+        assertEquals(expectedTitleSecondTask, actualTitleSecondTask);
+    }
+    @Test
+    void removeLastTask() {
+        taskList.removeTask(2);
+        assertEquals(2, taskList.getTasks().size());
     }
 
     @Test
     void sortListByDueDateAscending() {
-        TaskList tasksToSort = new TaskList();
-        tasksToSort.getTasks().add(new Task("Read about Streams", LocalDate.of(2021, 05, 12), "Learn Java"));
-        tasksToSort.getTasks().add(new Task("Eat lunch", LocalDate.of(2021, 11, 20), "Stay alive"));
-        tasksToSort.getTasks().add(new Task("Call parents", LocalDate.of(2021, 04, 19), "Family"));
-        ArrayList<Task> sortedTasks = (ArrayList<Task>) tasksToSort.sortList(1, false);
+        ArrayList<Task> sortedTasks = taskList.sortList(1, false);
         String actualProject = sortedTasks.get(0).getTitle();
         String expectedProject = "Call parents";
         assertEquals(expectedProject, actualProject);
@@ -47,11 +68,7 @@ class TaskListTest {
 
     @Test
     void sortListByDueDateDescending() {
-        TaskList tasksToSort = new TaskList();
-        tasksToSort.getTasks().add(new Task("Read about Streams", LocalDate.of(2021, 05, 12), "Learn Java"));
-        tasksToSort.getTasks().add(new Task("Eat lunch", LocalDate.of(2021, 11, 20), "Stay alive"));
-        tasksToSort.getTasks().add(new Task("Call parents", LocalDate.of(2021, 04, 19), "Family"));
-        ArrayList<Task> sortedTasks = (ArrayList<Task>) tasksToSort.sortList(1, true);
+        ArrayList<Task> sortedTasks = (ArrayList<Task>) taskList.sortList(1, true);
         String actualProject = sortedTasks.get(0).getTitle();
         String expectedProject = "Eat lunch";
         assertEquals(expectedProject, actualProject);
@@ -59,11 +76,7 @@ class TaskListTest {
 
     @Test
     void sortListByProjectAscending() {
-        TaskList tasksToSort = new TaskList();
-        tasksToSort.getTasks().add(new Task("Read about Streams", LocalDate.of(2021, 05, 12), "Learn Java"));
-        tasksToSort.getTasks().add(new Task("Eat lunch", LocalDate.of(2021, 11, 20), "Stay alive"));
-        tasksToSort.getTasks().add(new Task("Call parents", LocalDate.of(2021, 04, 19), "Family"));
-        ArrayList<Task> sortedTasks = (ArrayList<Task>) tasksToSort.sortList(2, false);
+        ArrayList<Task> sortedTasks = (ArrayList<Task>) taskList.sortList(2, false);
         String actualProject = sortedTasks.get(0).getProject();
         String expectedProject = "Family";
         assertEquals(expectedProject, actualProject);
@@ -71,13 +84,22 @@ class TaskListTest {
 
     @Test
     void sortListByProjectDescending() {
-        TaskList tasksToSort = new TaskList();
-        tasksToSort.getTasks().add(new Task("Read about Streams", LocalDate.of(2021, 05, 12), "Learn Java"));
-        tasksToSort.getTasks().add(new Task("Eat lunch", LocalDate.of(2021, 11, 20), "Stay alive"));
-        tasksToSort.getTasks().add(new Task("Call parents", LocalDate.of(2021, 04, 19), "Family"));
-        ArrayList<Task> sortedTasks = (ArrayList<Task>) tasksToSort.sortList(2, true);
+        ArrayList<Task> sortedTasks = (ArrayList<Task>) taskList.sortList(2, true);
         String actualProject = sortedTasks.get(0).getProject();
         String expectedProject = "Stay alive";
         assertEquals(expectedProject, actualProject);
+    }
+
+    @Test
+    void getAllTitles() {
+
+    }
+
+    @Test
+    void getNumberOfTasks() {
+    }
+
+    @Test
+    void getNumberOfDoneTasks() {
     }
 }
