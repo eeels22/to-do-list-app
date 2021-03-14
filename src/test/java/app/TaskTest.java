@@ -46,9 +46,7 @@ public class TaskTest {
     @Test
     @Disabled
     void editTitle() {
-        Task task1 = new Task();
-        task1.setTitle("Learn JUnit5");
-        assertEquals("Learn JUnit5", task1.getTitle());
+
     }
 
     @Test

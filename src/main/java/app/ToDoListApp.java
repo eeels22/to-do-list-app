@@ -103,7 +103,7 @@ public class ToDoListApp {
      * @param operationChosen type of editing operation
      * @param indexTaskToEdit index of the task to be edited
      */
-    private void performEditChoice(int operationChosen, int indexTaskToEdit) {
+    public void performEditChoice(int operationChosen, int indexTaskToEdit) {
         switch (operationChosen) {
             case 1:
                 editTaskDetails(indexTaskToEdit);

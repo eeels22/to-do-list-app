@@ -47,20 +47,6 @@ public class Printer {
     }
 
     /**
-     *
-     * */
-    public void promptUser(String printString) { // todo
-        System.out.println(printString);
-    }
-
-    /**
-     *
-     * */
-    public void printInfo(String printString) { // todo
-        System.out.println(printString);
-    }
-
-    /**
      * Prints the main menu options.
      */
     public void printMainMenu() {
@@ -185,6 +171,20 @@ public class Printer {
      */
     public void printTaskList(TaskList taskList) { // todo check use
         System.out.println(taskList);
+    }
+
+    /**
+     *
+     * */
+    public void promptUser(String printString) { // todo
+        System.out.println(printString);
+    }
+
+    /**
+     *
+     * */
+    public void printInfo(String printString) { // todo
+        System.out.println(printString);
     }
 
 

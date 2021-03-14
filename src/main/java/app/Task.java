@@ -18,15 +18,6 @@ public class Task implements Serializable {
     private String project; // a project that the task belongs to (may be empty)
 
     /**
-     * Default task constructor.
-     */
-    public Task() {
-        title = "";
-        isDone = false;
-        project = "";
-    }
-
-    /**
      * Constructs a task with a title, due date and associated project.
      */
     public Task(String title, LocalDate dueDate, String project) {
