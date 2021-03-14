@@ -15,7 +15,7 @@ import java.time.format.DateTimeFormatter;
  * @version 1.0
  */
 public class ToDoListApp {
-    public static Parser parser; // todo should this be public static?
+    private final Parser parser; // todo should this be public static?
     private final Printer printer;
     private final TaskList taskList;
     private boolean usingApp;
@@ -98,7 +98,7 @@ public class ToDoListApp {
     }
 
     /**
-     * Performs the user's desired edit operation on a task.
+     * Performs the user's desired edit operation on a chosen task.
      *
      * @param operationChosen type of editing operation
      * @param indexTaskToEdit index of the task to be edited
@@ -106,8 +106,7 @@ public class ToDoListApp {
     private void performEditChoice(int operationChosen, int indexTaskToEdit) {
         switch (operationChosen) {
             case 1:
-                printer.printHeaderForEditingAnExistingTask();
-                // taskList.editTask(indexTaskToEdit); //todo update
+                editTaskDetails(indexTaskToEdit);
                 break;
             case 2: // Mark a task as done
                 taskList.getTask(indexTaskToEdit).setDoneStatus(true); // todo add confirmation line
@@ -163,11 +162,11 @@ public class ToDoListApp {
         int indexTaskToEdit;
         if (sizeOfTaskList == 1) { // only one task, index must be 0
             indexTaskToEdit = 0;
-        } else if (sizeOfTaskList > 1) { // ask user which task to edit
+        } else if (sizeOfTaskList > 1) { // user picks task to edit
             printer.printLine("\nWhich task would you like to edit?" + taskList.getNumberedTaskTitles());
             printer.print("\n>  ");
             indexTaskToEdit = getValidatedMenuChoice(sizeOfTaskList);
-        } else { // no tasks to edit
+        } else { // no tasks available to edit
             throw new NullPointerException("No existing tasks to edit.");
         }
         return indexTaskToEdit;
@@ -196,7 +195,6 @@ public class ToDoListApp {
             printer.printLine("Oops, there's a problem with loading the file. Creating a new task list instead...");
             return new TaskList();
         }
-
     }
 
     /**
@@ -227,7 +225,7 @@ public class ToDoListApp {
                 menuChoice = parser.getNextInt();
             }
             return menuChoice;
-        } catch (NumberFormatException numberFormatException) { //todo valid choices not recognised
+        } catch (NumberFormatException numberFormatException) {
             printer.printInvalidInputMessage();
             return getValidatedMenuChoice(menuSize);
         }
@@ -239,7 +237,7 @@ public class ToDoListApp {
      *
      * @return a nn-empty title String.
      */
-    public String getValidatedTitle() { // todo is this the right class? Task should not have access to parser
+    public String getValidatedTitle() {
         String title = Parser.getNextLine();
         while (title.isEmpty()) {
             printer.printPromptForTitle();
@@ -266,6 +264,22 @@ public class ToDoListApp {
     /**
      * Performs the user's chosen edit operation on the user's chosen task.
      */
+    public void editTaskDetails(int indexTaskToEdit) {
+        Task taskToEdit = taskList.getTask(indexTaskToEdit);
+        printer.printHeaderForEditingAnExistingTask();
+        String title = determineTitle();
+        taskToEdit.setTitle(title);
+        LocalDate dueDate = determineDueDate();
+        taskToEdit.setDueDate(dueDate);
+        String project = determineProject();
+        taskToEdit.setProject(project);
+        printer.printHeaderForTaskUpdated();
+        printer.printLine(taskToEdit.toString());
+    }
+
+    /**
+     * Performs the user's chosen edit operation on the user's chosen task.
+     */
     public void editAnExistingTask() {
         try {
             int indexTaskToEdit = determineTaskToEdit() - 1; //offset zero-based menu index
@@ -280,16 +294,13 @@ public class ToDoListApp {
      * Adds a new task based on user inputs.
      */
     public void addNewTask() {
-        printer.printHeaderForAddingANewTask();
-        // determine field values
+        printer.printHeaderForAddingANewTask(); // determine field values
         String title = determineTitle();
         LocalDate dueDate = determineDueDate();
         String project = determineProject();
-        // instantiate task and add to list
-        Task task = new Task(title, dueDate, project);
+        Task task = new Task(title, dueDate, project); // instantiate task and add to list
         taskList.getTasks().add(task);
-        // confirm
-        printer.printHeaderForNewTaskAdded();
+        printer.printHeaderForNewTaskAdded(); // confirm
         printer.printLine(task.toString());
     }
 
@@ -310,7 +321,7 @@ public class ToDoListApp {
     }
 
     /**
-     * Returns a valid project name
+     * Returns a valid project name, which may be empty.
      */
     public String determineProject() {
         printer.printPromptForProject();

@@ -68,7 +68,7 @@ public class TaskList implements Serializable {
             return "Your task list is empty.";
         } else {
             for (Task task : tasks) {
-                taskListStringBuilder.append(task.toString() + "\n");
+                taskListStringBuilder.append(task.toString()).append("\n");
             }
             return taskListStringBuilder.toString();
         }
@@ -86,7 +86,7 @@ public class TaskList implements Serializable {
         } else {
             for (int index = 0; index < tasks.size(); index++) {
                 int menuNumber = index + 1;
-                taskTitles.append("\n(" + menuNumber + ") " + tasks.get(index).getTitle());
+                taskTitles.append("\n(").append(menuNumber).append(") ").append(tasks.get(index).getTitle());
             }
             return taskTitles.toString();
         }
@@ -102,7 +102,7 @@ public class TaskList implements Serializable {
     public ArrayList<Task> sortList(int type, boolean descending) {
         TaskComparator comparator = new TaskComparator(type);
 
-        Collections.sort(tasks, comparator);
+        tasks.sort(comparator);
 
         if (descending)
             Collections.reverse(tasks);
@@ -127,7 +127,7 @@ public class TaskList implements Serializable {
     public int getNumberOfDoneTasks() {
         int numDoneTasks = 0;
         for (Task task : tasks) {
-            if (task.getDoneStatus() == true) {
+            if (task.getDoneStatus()) {
                 numDoneTasks++;
             }
         }

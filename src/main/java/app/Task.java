@@ -2,7 +2,6 @@ package app;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 
@@ -13,10 +12,10 @@ import java.util.Objects;
  * @version 1.0
  */
 public class Task implements Serializable {
-    private String title;
-    private LocalDate dueDate;
-    private boolean isDone;
-    private String project;
+    private String title; // title of the task
+    private LocalDate dueDate; // deadline to do the task
+    private boolean isDone; // has the task has been done?
+    private String project; // a project that the task belongs to (may be empty)
 
     /**
      * Default task constructor.
@@ -49,12 +48,8 @@ public class Task implements Serializable {
     /**
      * Assigns the task title if it is valid.
      */
-    public void setTitle(String title) { //todo validity checking should occur in App class where parser is available
-//        if (isStringValid(title)) {
-            this.title = title;
-//        } else {
-//            System.out.println("Please enter a valid title.");
-//        }
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     /**
@@ -67,7 +62,7 @@ public class Task implements Serializable {
     /**
      * Updates the task´s due date.
      */
-    public void setDueDate(LocalDate dueDate) { // todo catch invalid inputs in App class
+    public void setDueDate(LocalDate dueDate) {
         this.dueDate = dueDate;
     }
 
@@ -89,6 +84,7 @@ public class Task implements Serializable {
 
     /**
      * Returns the project this task belongs to if it is not empty, otherwise return "not assigned".
+     *
      * @return the project name or "not assigned"
      */
     public String getProject() {
@@ -100,11 +96,7 @@ public class Task implements Serializable {
      * Assigns the task to a project if it is valid.
      */
     public void setProject(String project) {
-//        if (isStringValid(project)) { todo validity checking should happen in App class
-            this.project = project;
-//        } else {
-//            System.out.println("Please enter a valid project name or \"none\"");
-//        }
+        this.project = project;
     }
 
     /**
@@ -153,50 +145,5 @@ public class Task implements Serializable {
     public int hashCode() {
         return Objects.hash(title, dueDate, isDone, project);
     }
-
-//    /**
-//     * Produces a String representation of the task project
-//     *
-//     * @return the name of the project associated with the task or "not assigned"
-//     */
-//    private String projectToString() {
-//        return (project.isEmpty()) ? "not assigned" : project;
-//    }
-//
-//    /**
-//     * Produces a String representation of the task title
-//     *
-//     * @return the name of the project associated with the task or "not assigned"
-//     */
-//    private String titleToString() {
-//        return (title.isEmpty()) ? "not assigned" : title;
-//    }
-
-
-    //    /**
-//     * Checks for a valid String input.
-//     *
-//     * @return true if String is valid.
-//     */
-//    private boolean isStringValid(String string) {
-//        return title != null && !title.isEmpty();
-//    }
-
-//    /**
-//     * Prompts user for the task´s due date and set's it.
-//     */
-//    public void editDueDate() {
-//        String dateString = ToDoListApp.parser.getNextLine();
-//        LocalDate dueDate = LocalDate.parse(dateString, DateTimeFormatter.ISO_LOCAL_DATE);
-//        setDueDate(dueDate);
-//    }
-
-    //    /**
-//     * Update the project that the task belongs to.
-//     */
-//    public void editProject() {
-//        String project = ToDoListApp.parser.getNextLine();
-//        setProject(project);
-//    }
 
 }

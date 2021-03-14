@@ -8,12 +8,21 @@ package app;
 public class Printer {
 
     /**
-     * Prints the welcome message when the app is started.
+     * Prints a welcome message.
      */
     public void printWelcome() {
         System.out.println("\n***************************************");
         System.out.println("WELCOME TO JOTTER! Let's get organised.");
         System.out.println("***************************************");
+    }
+
+    /**
+     * Prints a goodbye message.
+     */
+    public void printGoodbye() {
+        System.out.println("\n********************************************");
+        System.out.println("THANKS FOR USING JOTTER. See you again soon!");
+        System.out.println("********************************************");
     }
 
     /**
@@ -24,13 +33,6 @@ public class Printer {
     }
 
     /**
-     * Prints the cue for user input.
-     */
-    public void printInputCue() {  //
-        System.out.print(">  ");
-    }
-
-    /**
      * Prints the desired string.
      */
     public void print(String printString) {
@@ -38,21 +40,28 @@ public class Printer {
     }
 
     /**
+     * Prints a visual cue for user to enter an input.
+     */
+    public void printInputCue() {  //
+        System.out.print(">  ");
+    }
+
+    /**
      *
      * */
-    public void promptUser(String printString) {
+    public void promptUser(String printString) { // todo
         System.out.println(printString);
     }
 
     /**
      *
      * */
-    public void printInfo(String printString) {
+    public void printInfo(String printString) { // todo
         System.out.println(printString);
     }
 
     /**
-     * Prints the top-level menu options.
+     * Prints the main menu options.
      */
     public void printMainMenu() {
         System.out.println("\nMAIN MENU");
@@ -80,7 +89,7 @@ public class Printer {
     }
 
     /**
-     * Prints the three different options to edit a task.
+     * Prints the menu for options to edit a task.
      */
     public void printEditOptions() {
         System.out.println("\nEDIT OPTIONS");
@@ -98,14 +107,6 @@ public class Printer {
     public void printTaskListHeader() {
         System.out.println("\nYOUR TASK LIST");
         System.out.println("==============");
-    }
-
-    /**
-     * Prints error message regarding an invalid input
-     */
-    public void printInvalidInputMessage() {
-        System.out.println("Sorry, that input is invalid, please try again.");
-        printInputCue();
     }
 
     /**
@@ -133,6 +134,22 @@ public class Printer {
     }
 
     /**
+     * Prints the 'New task added' header
+     */
+    public void printHeaderForTaskUpdated() {
+        System.out.println("\nTASK UPDATED");
+        System.out.print("============");
+    }
+
+    /**
+     * Prints a message advising that the user input is invalid and to try again.
+     */
+    public void printInvalidInputMessage() {
+        System.out.println("Sorry, that input is invalid, please try again.");
+        printInputCue();
+    }
+
+    /**
      * Prints prompt for user to enter a task title.
      */
     public void printPromptForTitle() {
@@ -147,8 +164,6 @@ public class Printer {
         System.out.println("Enter the due date in the format YYYY-MM-DD:");
         printInputCue();
     }
-
-
 
     /**
      * Prints prompt for user to enter a task project.
@@ -172,12 +187,5 @@ public class Printer {
         System.out.println(taskList);
     }
 
-    /**
-     * Prints a goodbye message.
-     */
-    public void printGoodbye() {
-        System.out.println("\n********************************************");
-        System.out.println("THANKS FOR USING JOTTER. See you again soon!");
-        System.out.println("********************************************");
-    }
+
 }
