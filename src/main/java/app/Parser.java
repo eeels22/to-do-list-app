@@ -22,7 +22,7 @@ public class Parser {
      *
      * @return the user's string input
      */
-    public static String getNextLine() {  // todo check closing of scanner after each use
+    public static String getNextLine() {
         return scanner.nextLine();
     }
 

@@ -104,7 +104,7 @@ public class Printer {
      * Prints error message regarding an invalid input
      */
     public void printInvalidInputMessage() {
-        System.out.println("\nSorry, that input is invalid, please try again.");
+        System.out.println("Sorry, that input is invalid, please try again.");
         printInputCue();
     }
 
@@ -121,7 +121,7 @@ public class Printer {
      */
     public void printHeaderForNewTaskAdded() {
         System.out.println("\nNEW TASK ADDED");
-        System.out.println("==============");
+        System.out.print("==============");
     }
 
     /**
@@ -136,7 +136,7 @@ public class Printer {
      * Prints prompt for user to enter a task title.
      */
     public void printPromptForTitle() {
-        System.out.println("\nEnter the task title (required):");
+        System.out.println("Enter the task title (required):");
         printInputCue();
     }
 
@@ -144,7 +144,7 @@ public class Printer {
      * Prints prompt for user to enter a due date.
      */
     public void printPromptForDueDate() {
-        System.out.println("\nEnter the due date in the format YYYY-MM-DD:");
+        System.out.println("Enter the due date in the format YYYY-MM-DD:");
         printInputCue();
     }
 
@@ -154,7 +154,7 @@ public class Printer {
      * Prints prompt for user to enter a task project.
      */
     public void printPromptForProject() {
-        System.out.println("\nEnter the project that this task belong to (optional):");
+        System.out.println("Enter the project that this task belong to (optional):");
         printInputCue();
     }
 
@@ -176,6 +176,8 @@ public class Printer {
      * Prints a goodbye message.
      */
     public void printGoodbye() {
-        System.out.println("\nThanks for using Jotter. See you again soon!");
+        System.out.println("\n********************************************");
+        System.out.println("THANKS FOR USING JOTTER. See you again soon!");
+        System.out.println("********************************************");
     }
 }

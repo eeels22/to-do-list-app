@@ -83,26 +83,7 @@ public class ToDoListApp {
                 viewTaskListByChosenSortingOrder();
                 break;
             case 2:
-                printer.printHeaderForAddingANewTask();
-
-                // title
-                printer.printPromptForTitle();
-                String title = getValidatedTitle();
-
-                // due date
-                printer.printPromptForDueDate();
-                LocalDate dueDate = getValidatedLocalDate();
-
-                // project
-                printer.printPromptForProject();
-                String project = Parser.getNextLine(); // todo check it's okay to be empty
-
-                // create task and add to list
-                Task task = new Task(title, dueDate, project);
-                taskList.getTasks().add(task);
-                printer.printHeaderForNewTaskAdded();
-                printer.printLine(task.toString());
-
+                addNewTask();
                 break;
             case 3:
                 editAnExistingTask();
@@ -299,33 +280,41 @@ public class ToDoListApp {
      * Adds a new task based on user inputs.
      */
     public void addNewTask() {
-        try {
-            printer.printHeaderForAddingANewTask();
-            // title
-            printer.printPromptForTitle();
-            String title = getValidatedTitle();
-            // due date
-            printer.printPromptForDueDate();
-            LocalDate dueDate = getValidatedLocalDate();
-            // project
-            printer.printPromptForProject();
-            String project = Parser.getNextLine();
-            // create task and add to list
-            Task task = new Task(title, dueDate, project);
-            taskList.getTasks().add(task);
-            printer.printHeaderForNewTaskAdded();
-            printer.printLine(task.toString());
-        } catch (NullPointerException nullPointerException) {//todo update
-            printer.printLine("There are no existing tasks to edit"); //todo update
-        }
+        printer.printHeaderForAddingANewTask();
+        // determine field values
+        String title = determineTitle();
+        LocalDate dueDate = determineDueDate();
+        String project = determineProject();
+        // instantiate task and add to list
+        Task task = new Task(title, dueDate, project);
+        taskList.getTasks().add(task);
+        // confirm
+        printer.printHeaderForNewTaskAdded();
+        printer.printLine(task.toString());
     }
 
     /**
-     * Adds a new task based on user inputs.
+     * Returns a valid task title
      */
-    public void editTitle() { // todo
+    public String determineTitle() {
         printer.printPromptForTitle();
-        String title = getValidatedTitle();
+        return getValidatedTitle();
+    }
+
+    /**
+     * Returns a valid due date
+     */
+    public LocalDate determineDueDate() {
+        printer.printPromptForDueDate();
+        return getValidatedLocalDate();
+    }
+
+    /**
+     * Returns a valid project name
+     */
+    public String determineProject() {
+        printer.printPromptForProject();
+        return Parser.getNextLine();
     }
 
     /**
