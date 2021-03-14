@@ -17,11 +17,18 @@ public class Printer {
     }
 
     /**
+     * Prints the desired string and moves the cursor to the next line.
+     */
+    public void printLine(String printString) {  // todo replace all Sout with this method
+        System.out.println(printString);
+    }
+
+    /**
      * Prints the desired string.
      */
-    public void printLine(String printString) { // todo is this needed?
-        System.out.println(printString);
-    } // todo replace all Sout with this method
+    public void print(String printString) {
+        System.out.print(printString);
+    }
 
     /**
      *
@@ -41,14 +48,14 @@ public class Printer {
      * Prints the top-level menu options.
      */
     public void printMainMenu() {
-        printLine("\nMAIN MENU");
-        printLine("=========");
-        printLine("Please select an option:");
-        printLine("(1) View task list");
-        printLine("(2) Add a new task");
-        printLine("(3) Edit an existing task");
-        printLine("(4) Save and quit\n");
-        printLine(">  ");
+        System.out.println("\nMAIN MENU");
+        System.out.println("=========");
+        System.out.println("Please select an option:");
+        System.out.println("(1) View task list");
+        System.out.println("(2) Add a new task");
+        System.out.println("(3) Edit an existing task");
+        System.out.println("(4) Save and quit\n");
+        System.out.print(">  ");
     }
 
     /**

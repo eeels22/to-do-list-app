@@ -9,13 +9,12 @@ import java.util.Scanner;
  * @version 1.0
  */
 public class Parser {
-    private static Scanner scanner;
+    private static final Scanner scanner = new Scanner(System.in);
 
     /**
-     * Constructs a Parser and instantiate a Scanner with the input source: System.in
+     * Default Parser constructor
      */
     public Parser() {
-        scanner = new Scanner(System.in);
     }
 
     /**
@@ -24,27 +23,20 @@ public class Parser {
      */
     public static String getNextLine() {  // todo check closing of scanner after each use
         return scanner.nextLine();
-    } // todo change to non-static?
+    }
 
     /**
      * Gets the next integer user input.
      * @return the user's integer input
      */
     public int getNextInt() {
-        String inputString = scanner.nextLine(); // todo check closing of scanner after each use
+        String inputString = scanner.nextLine();
         return Integer.parseInt(inputString);
-    }
-
-     /**
-     * Closes the scanner.
-     */
-    public void close() {
-        scanner.close();
     }
 
 //    public boolean validateMenuOption(int menuOptionChosen, int minMenuChoice, int maxMenuChoice) {
 //        boolean isValue = false;
-//        String inputString = scanner.nextLine(); // todo check closing of scanner after each use
+//        String inputString = scanner.nextLine();
 //        return isValid;
 //    }
 

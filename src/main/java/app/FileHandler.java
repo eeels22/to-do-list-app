@@ -1,4 +1,5 @@
 package app;
+
 import java.io.*;
 
 /**
@@ -19,7 +20,6 @@ public class FileHandler {
 
     /**
      * Constructor for the file handler.
-     *
      */
     public FileHandler() {
 
@@ -28,25 +28,20 @@ public class FileHandler {
     /**
      * Saves the task list to a file. Prints an error message if an exception is caught.
      */
-    public void saveTaskListToFile(TaskList taskList) {
+    public void saveTaskListToFile(TaskList taskList) throws IOException {
 
-        try {
-            FileOutputStream fileOutputStream = new FileOutputStream(path + fileName);
-            ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
 
-            objectOutputStream.writeObject(taskList);
+        FileOutputStream fileOutputStream = new FileOutputStream(path + fileName);
+        ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
 
-            objectOutputStream.close();
-            fileOutputStream.close();
+        objectOutputStream.writeObject(taskList);
 
-        } catch (IOException exception) {
-            System.out.println("Oops, there's a problem with saving the file: " + exception);
-        }
+        objectOutputStream.close();
+        fileOutputStream.close();
     }
 
     /**
      * Loads a task list from a file. Prints an error message if an exception is caught.
-     *
      */
     public TaskList loadTaskListFromFile() throws IOException, ClassNotFoundException {
 

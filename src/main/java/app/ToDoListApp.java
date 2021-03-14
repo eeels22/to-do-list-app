@@ -89,9 +89,8 @@ public class ToDoListApp {
                     printer.printLine("There are no existing tasks to edit"); //todo check other possible exceptions
                 }
                 break;
-            case 4: // save, close the scanner and quit
+            case 4: // save and quit
                 saveTaskList();
-                parser.close();
                 usingApp = false;
                 break;
             default:
@@ -211,8 +210,14 @@ public class ToDoListApp {
      * Instructs the File Handler to save this task list to file
      */
     public void saveTaskList() {
-        FileHandler fileHandler = new FileHandler();
-        fileHandler.saveTaskListToFile(taskList);
+        try {
+            FileHandler fileHandler = new FileHandler();
+            fileHandler.saveTaskListToFile(taskList);
+        }
+        catch (IOException exception) {
+            printer.printLine("Oops, there's a problem with saving the file: " + exception);
+        }
+
     }
 
 }
