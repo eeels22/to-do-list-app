@@ -48,7 +48,8 @@ public class ToDoListApp {
      */
     public void printMainMenuAndPerformChoice() {
         printer.printMainMenu();
-        performMainMenuChoice(parser.getNextInt());
+        int menuChoice = getValidatedMenuChoice(4);
+        performMainMenuChoice(menuChoice);
     }
 
     /**
@@ -169,7 +170,7 @@ public class ToDoListApp {
             indexTaskToEdit = 0;
         } else if (sizeOfTaskList > 1) { // ask user which task to edit
             printer.printLine("\nWhich task would you like to edit?" + taskList.getNumberedTaskTitles());
-            printer.printLine("\n>  ");
+            printer.print("\n>  ");
             indexTaskToEdit = parser.getNextInt();
         } else { // no tasks to edit
             throw new NullPointerException("No existing tasks to edit.");
@@ -219,5 +220,26 @@ public class ToDoListApp {
         }
 
     }
+
+    /**
+     * Checks if the user's menu choice is within range.
+     * @param maxMenuNumber the maximum valid menu choice
+     * @param menuChoice the user's menu input
+     * @return true if the menu choice is within range, or false if not.
+     */
+    public boolean checkMenuChoiceIsInRange(int maxMenuNumber, int menuChoice){
+        return menuChoice >= 1 && menuChoice <= maxMenuNumber;
+    }
+
+
+    public int getValidatedMenuChoice(int maxMenuNumber){
+        int menuChoice = parser.getNextInt();
+        while (!checkMenuChoiceIsInRange(maxMenuNumber, menuChoice)) {
+            printer.printInvalidInputMessage();
+            menuChoice = parser.getNextInt();
+        }
+        return menuChoice;
+    }
+
 
 }

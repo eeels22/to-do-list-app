@@ -29,7 +29,7 @@ public class Parser {
      * Gets the next integer user input.
      * @return the user's integer input
      */
-    public int getNextInt() {
+    public int getNextInt() throws NumberFormatException {
         String inputString = scanner.nextLine();
         return Integer.parseInt(inputString);
     }

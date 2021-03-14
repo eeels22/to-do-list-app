@@ -97,7 +97,8 @@ public class Printer {
      * Prints error message regarding an invalid input
      */
     public void printInvalidInputMessage() {
-        System.out.println("\nInvalid input, please try again.");
+        System.out.println("\nSorry, that input is invalid, please try again.");
+        System.out.print(">  ");
     }
 
     /**
