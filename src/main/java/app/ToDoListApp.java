@@ -1,5 +1,8 @@
 package app;
 
+import java.io.EOFException;
+import java.io.IOException;
+
 /**
  * This class implements a to do list application.
  * It is the top level class in this project.
@@ -86,8 +89,9 @@ public class ToDoListApp {
                     printer.printLine("There are no existing tasks to edit"); //todo check other possible exceptions
                 }
                 break;
-            case 4: // save and quit
+            case 4: // save, close the scanner and quit
                 saveTaskList();
+                parser.close();
                 usingApp = false;
                 break;
             default:
@@ -187,8 +191,20 @@ public class ToDoListApp {
      * Instructs the FileHandler to load the previous taskList from file
      */
     public TaskList loadTaskList() {
-        FileHandler fileHandler = new FileHandler();
-        return fileHandler.loadTaskListFromFile();
+        TaskList loadedTaskList;
+        try{
+            FileHandler fileHandler = new FileHandler();
+            return fileHandler.loadTaskListFromFile();
+        }
+        catch(EOFException eofException){
+            printer.printLine("Creating a new task list... ");
+            return new TaskList();
+        }
+        catch(IOException | ClassNotFoundException exception){
+            printer.printLine("Oops, there's a problem with loading the file. Creating a new task list instead...");
+            return new TaskList();
+        }
+
     }
 
     /**

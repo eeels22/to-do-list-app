@@ -48,22 +48,16 @@ public class FileHandler {
      * Loads a task list from a file. Prints an error message if an exception is caught.
      *
      */
-    public TaskList loadTaskListFromFile() {
+    public TaskList loadTaskListFromFile() throws IOException, ClassNotFoundException {
 
-        try {
-            FileInputStream fileInputStream = new FileInputStream(path + fileName);
-            ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+        FileInputStream fileInputStream = new FileInputStream(path + fileName);
+        ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
 
-            taskList = (TaskList) objectInputStream.readObject();
+        taskList = (TaskList) objectInputStream.readObject();
 
-            objectInputStream.close();
-            fileInputStream.close();
+        objectInputStream.close();
+        fileInputStream.close();
 
-        } catch (EOFException eofException) { // nothing in file so instantiate a new TaskList
-            return new TaskList();
-        } catch (IOException | ClassNotFoundException exception) {
-            System.out.println("Oops, there's a problem with loading the file: " + exception);
-        } // todo is there a better way to recover?
         return taskList;
     }
 }
