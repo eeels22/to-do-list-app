@@ -48,7 +48,7 @@ public class ToDoListApp {
      */
     public void printMainMenuAndPerformChoice() {
         printer.printMainMenu();
-        int menuChoice = getValidatedMenuChoice(4);
+        int menuChoice = getValidatedMenuChoice(4); //todo update param if menu size changes
         performMainMenuChoice(menuChoice);
     }
 
@@ -57,7 +57,8 @@ public class ToDoListApp {
      */
     public void printViewTaskListMenuAndPerformChoice() {
         printer.printViewTaskListMenu();
-        performViewTaskMenuChoice(parser.getNextInt());
+        int menuChoice = getValidatedMenuChoice(4); //todo update param if menu size changes
+        performViewTaskMenuChoice(menuChoice);
     }
 
     /**
@@ -85,8 +86,7 @@ public class ToDoListApp {
                     int indexTaskToEdit = determineTaskToEdit() - 1; //offset zero-based index
                     int editChoice = determineEditChoice();
                     performEditChoice(editChoice, indexTaskToEdit);
-                }
-                catch (NullPointerException nullPointerException){
+                } catch (NullPointerException nullPointerException) {
                     printer.printLine("There are no existing tasks to edit"); //todo check other possible exceptions
                 }
                 break;
@@ -106,6 +106,7 @@ public class ToDoListApp {
 
     /**
      * Performs the user's desired edit operation on a task.
+     *
      * @param operationChosen type of editing operation
      * @param indexTaskToEdit index of the task to be edited
      */
@@ -153,7 +154,7 @@ public class ToDoListApp {
     /**
      * Sort and print task list
      */
-    public void sortAndPrintTaskList(int type, boolean descending){
+    public void sortAndPrintTaskList(int type, boolean descending) {
         taskList.sortList(type, descending);
         printer.printTaskListHeader();
         printer.printLine("\n" + taskList.toString());
@@ -161,6 +162,7 @@ public class ToDoListApp {
 
     /**
      * Determine which task the user wants to edit, or advises there are no existing tasks.
+     *
      * @return index of the task to be edited
      */
     public int determineTaskToEdit() {  //todo return Task?
@@ -171,7 +173,7 @@ public class ToDoListApp {
         } else if (sizeOfTaskList > 1) { // ask user which task to edit
             printer.printLine("\nWhich task would you like to edit?" + taskList.getNumberedTaskTitles());
             printer.print("\n>  ");
-            indexTaskToEdit = parser.getNextInt();
+            indexTaskToEdit = getValidatedMenuChoice(sizeOfTaskList);
         } else { // no tasks to edit
             throw new NullPointerException("No existing tasks to edit.");
         }
@@ -183,8 +185,9 @@ public class ToDoListApp {
      * Determine which operation the user wants to perform on a given task
      */
     public int determineEditChoice() { // todo merge with method above? this never needs to be called on its own
-         printer.printEditOptions();
-         return parser.getNextInt();
+        printer.printEditOptions();
+        int menuChoice = getValidatedMenuChoice(3);
+        return menuChoice;
     }
 
     /**
@@ -192,15 +195,13 @@ public class ToDoListApp {
      */
     public TaskList loadTaskList() {
         TaskList loadedTaskList;
-        try{
+        try {
             FileHandler fileHandler = new FileHandler();
             return fileHandler.loadTaskListFromFile();
-        }
-        catch(EOFException eofException){
+        } catch (EOFException eofException) {
             printer.printLine("Creating a new task list... ");
             return new TaskList();
-        }
-        catch(IOException | ClassNotFoundException exception){
+        } catch (IOException | ClassNotFoundException exception) {
             printer.printLine("Oops, there's a problem with loading the file. Creating a new task list instead...");
             return new TaskList();
         }
@@ -214,8 +215,7 @@ public class ToDoListApp {
         try {
             FileHandler fileHandler = new FileHandler();
             fileHandler.saveTaskListToFile(taskList);
-        }
-        catch (IOException exception) {
+        } catch (IOException exception) {
             printer.printLine("Oops, there's a problem with saving the file: " + exception);
         }
 
@@ -223,12 +223,13 @@ public class ToDoListApp {
 
     /**
      * Gets the user's validated menu choice input.
-     * @param maxMenuNumber the maximum valid menu choice
+     *
+     * @param menuSize number of menu options
      * @return true if the menu choice is within range, or false if not.
      */
-    public int getValidatedMenuChoice(int maxMenuNumber){
+    public int getValidatedMenuChoice(int menuSize) {
         int menuChoice = parser.getNextInt();
-        while (!(menuChoice >= 1 && menuChoice <= maxMenuNumber)) {
+        while (!(menuChoice >= 1 && menuChoice <= menuSize)) {
             printer.printInvalidInputMessage();
             menuChoice = parser.getNextInt();
         }
