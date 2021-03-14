@@ -23,7 +23,7 @@ public class TaskTest {
         assertEquals("Eat lunch", task1.getTitle());
         assertEquals(LocalDate.of(2021, 11, 20), task1.getDueDate());
         assertEquals("Stay alive", task1.getProject());
-        assertFalse(task1.getStatus());
+        assertFalse(task1.getDoneStatus());
     }
 
 
@@ -77,31 +77,31 @@ public class TaskTest {
     @DisplayName("Get status should return false (to do)")
     void getStatusShouldReturnFalse() {
         Task task1 = new Task("Eat lunch", LocalDate.of(2021, 11, 20), "Stay alive");
-        assertFalse(task1.getStatus());
+        assertFalse(task1.getDoneStatus());
     }
 
     @Test
     @DisplayName("Get status should return true (done)")
     void getStatusShouldReturnTrue() {
         Task task1 = new Task("Eat lunch", LocalDate.of(2021, 11, 20), "Stay alive");
-        task1.setStatus(true);
-        assertTrue(task1.getStatus());
+        task1.setDoneStatus(true);
+        assertTrue(task1.getDoneStatus());
     }
 
     @Test
     @DisplayName("Set status to true (done)")
     void setStatusToTrue() {
         Task task1 = new Task("Eat lunch", LocalDate.of(2021, 11, 20), "Stay alive");
-        task1.setStatus(true);
-        assertTrue(task1.getStatus());
+        task1.setDoneStatus(true);
+        assertTrue(task1.getDoneStatus());
     }
 
     @Test
     @DisplayName("Set status to false (done)")
     void setStatusToFalse() {
         Task task1 = new Task("Eat lunch", LocalDate.of(2021, 11, 20), "Stay alive");
-        task1.setStatus(false);
-        assertFalse(task1.getStatus());
+        task1.setDoneStatus(false);
+        assertFalse(task1.getDoneStatus());
     }
 
     @Test
@@ -167,7 +167,7 @@ public class TaskTest {
     @DisplayName("Two tasks should not be equal due to statuses not matching")
     void testEqualsShouldBeFalseStatusNotMatching() {
         Task task = new Task("Eat lunch", LocalDate.of(2021, 11, 20), "Stay alive");
-        task.setStatus(true);
+        task.setDoneStatus(true);
         boolean isEqualShouldBeFalse = task.equals(new Task("Eat lunch", LocalDate.of(2021, 11, 20), "Stay alive"));
         assertFalse(isEqualShouldBeFalse);
     }

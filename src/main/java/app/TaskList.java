@@ -1,7 +1,6 @@
 package app;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -12,7 +11,7 @@ import java.util.Collections;
  * @author En-Chi Liu
  * @version 1.0
  */
-public class TaskList implements Serializable { //todo refactor out printing
+public class TaskList implements Serializable {
     private ArrayList<Task> tasks;
 
     /**
@@ -21,30 +20,6 @@ public class TaskList implements Serializable { //todo refactor out printing
     public TaskList() { //todo load from file
         tasks = new ArrayList<>();
     }
-
-    /**
-     * Creates a new default task, prompts user for the title, due date and associated project and adds it to to the task list.
-     */
-    public void addTask() {
-        System.out.println("\nADDING A NEW TASK");
-        System.out.println("=================");
-        Task task1 = new Task();
-        task1.editTitle();
-        task1.editDueDate();
-        task1.editProject();
-        System.out.println("\nNEW TASK ADDED");
-        System.out.println("==============");
-        System.out.println(task1.toString());
-        tasks.add(task1);
-    }
-
-//    /**
-//     * Creates a new task with title, due date and associated project and adds it to to the task list.
-//     */
-//    public void addTaskAndInitializeField(String title, LocalDate dueDate, String project) {
-//        Task task1 = new Task(title, dueDate, project);
-//        tasks.add(task1);
-//    }
 
     /**
      * Get the task to be edited by finding its title.
@@ -79,22 +54,6 @@ public class TaskList implements Serializable { //todo refactor out printing
      */
     public ArrayList<Task> getTasks() {
         return tasks;
-    }
-
-    /**
-     * Edits an existing task's title, due date and project fields.
-     *
-     * @param index the index of the task to be edited
-     */
-    public void editTask(int index) {
-        System.out.println("\nEDITING AN EXISTING TASK");
-        System.out.println("========================");
-        tasks.get(index).editTitle();
-        tasks.get(index).editDueDate();
-        tasks.get(index).editProject();
-        System.out.println("\nTASK EDITS SAVED");
-        System.out.println("================");
-        System.out.println(tasks.get(index).toString());
     }
 
     /**
@@ -151,14 +110,24 @@ public class TaskList implements Serializable { //todo refactor out printing
         return tasks;
     }
 
+    /**
+     * Gets the number of tasks in the task list
+     *
+     * @return the number of tasks
+     */
     public int getNumberOfTasks() {
         return tasks.size();
     }
 
+    /**
+     * Gets the number of tasks that are marked as done in the task list
+     *
+     * @return the number of done tasks
+     */
     public int getNumberOfDoneTasks() {
         int numDoneTasks = 0;
         for (Task task : tasks) {
-            if (task.getStatus() == true) {
+            if (task.getDoneStatus() == true) {
                 numDoneTasks++;
             }
         }

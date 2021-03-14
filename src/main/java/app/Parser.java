@@ -19,6 +19,7 @@ public class Parser {
 
     /**
      * Gets the next line of user input from the Scanner and returns it as a string.
+     *
      * @return the user's string input
      */
     public static String getNextLine() {  // todo check closing of scanner after each use
@@ -27,19 +28,13 @@ public class Parser {
 
     /**
      * Gets the next integer user input.
+     *
      * @return the user's integer input
      */
     public int getNextInt() throws NumberFormatException {
         String inputString = scanner.nextLine();
         return Integer.parseInt(inputString);
     }
-
-//    public boolean validateMenuOption(int menuOptionChosen, int minMenuChoice, int maxMenuChoice) {
-//        boolean isValue = false;
-//        String inputString = scanner.nextLine();
-//        return isValid;
-//    }
-
 
 }
 

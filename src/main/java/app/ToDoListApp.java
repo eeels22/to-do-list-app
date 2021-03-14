@@ -2,6 +2,9 @@ package app;
 
 import java.io.EOFException;
 import java.io.IOException;
+import java.time.DateTimeException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 /**
  * This class implements a to do list application.
@@ -37,6 +40,7 @@ public class ToDoListApp {
      */
     public void start() {
         printer.printWelcome();
+        getNumberOfDoneTasksOutOfTotal();
         while (usingApp) {
             printMainMenuAndPerformChoice();
         }
@@ -55,7 +59,7 @@ public class ToDoListApp {
     /**
      * Prints the view task menu options and responds to the user's choice
      */
-    public void printViewTaskListMenuAndPerformChoice() {
+    public void viewTaskListByChosenSortingOrder() {
         printer.printViewTaskListMenu();
         int menuChoice = getValidatedMenuChoice(4); //todo update param if menu size changes
         performViewTaskMenuChoice(menuChoice);
@@ -75,34 +79,42 @@ public class ToDoListApp {
      */
     public void performMainMenuChoice(int mainOptionChosen) {
         switch (mainOptionChosen) {
-            case 1: // view task list
-                printViewTaskListMenuAndPerformChoice();
+            case 1:
+                viewTaskListByChosenSortingOrder();
                 break;
-            case 2: // add a new task
-                taskList.addTask();
+            case 2:
+                printer.printHeaderForAddingANewTask();
+
+                // title
+                printer.printPromptForTitle();
+                String title = getValidatedTitle();
+
+                // due date
+                printer.printPromptForDueDate();
+                LocalDate dueDate = getValidatedLocalDate();
+
+                // project
+                printer.printPromptForProject();
+                String project = Parser.getNextLine(); // todo check it's okay to be empty
+
+                // create task and add to list
+                Task task = new Task(title, dueDate, project);
+                taskList.getTasks().add(task);
+                printer.printHeaderForNewTaskAdded();
+                printer.printLine(task.toString());
+
                 break;
-            case 3: // edit an existing task
-                try {
-                    int indexTaskToEdit = determineTaskToEdit() - 1; //offset zero-based index
-                    int editChoice = determineEditChoice();
-                    performEditChoice(editChoice, indexTaskToEdit);
-                } catch (NullPointerException nullPointerException) {
-                    printer.printLine("There are no existing tasks to edit"); //todo check other possible exceptions
-                }
+            case 3:
+                editAnExistingTask();
                 break;
-            case 4: // save and quit
+            case 4:
                 saveTaskList();
                 usingApp = false;
                 break;
             default:
-                printer.printInvalidInputMessage();
                 break;
         }
     }
-
-//    enum EditOperation{
-//        EditTasK, MarkDone, Remove,
-//    }
 
     /**
      * Performs the user's desired edit operation on a task.
@@ -112,17 +124,17 @@ public class ToDoListApp {
      */
     private void performEditChoice(int operationChosen, int indexTaskToEdit) {
         switch (operationChosen) {
-            case 1: // Edit task details
-                taskList.editTask(indexTaskToEdit);
+            case 1:
+                printer.printHeaderForEditingAnExistingTask();
+                // taskList.editTask(indexTaskToEdit); //todo update
                 break;
             case 2: // Mark a task as done
-                taskList.getTask(indexTaskToEdit).setStatus(true);
+                taskList.getTask(indexTaskToEdit).setDoneStatus(true); // todo add confirmation line
                 break;
-            case 3: // Remove a task
-                taskList.removeTask(indexTaskToEdit);
+            case 3:
+                taskList.removeTask(indexTaskToEdit); // todo add confirmation line
                 break;
-            default: // invalid input
-                printer.printInvalidInputMessage();
+            default:
                 break;
         }
     }
@@ -186,20 +198,18 @@ public class ToDoListApp {
      */
     public int determineEditChoice() { // todo merge with method above? this never needs to be called on its own
         printer.printEditOptions();
-        int menuChoice = getValidatedMenuChoice(3);
-        return menuChoice;
+        return getValidatedMenuChoice(3);
     }
 
     /**
      * Instructs the FileHandler to load the previous taskList from file
      */
     public TaskList loadTaskList() {
-        TaskList loadedTaskList;
         try {
             FileHandler fileHandler = new FileHandler();
             return fileHandler.loadTaskListFromFile();
         } catch (EOFException eofException) {
-            printer.printLine("Creating a new task list... ");
+            printer.printLine("No task list saved. Creating a new task list... ");
             return new TaskList();
         } catch (IOException | ClassNotFoundException exception) {
             printer.printLine("Oops, there's a problem with loading the file. Creating a new task list instead...");
@@ -228,12 +238,103 @@ public class ToDoListApp {
      * @return true if the menu choice is within range, or false if not.
      */
     public int getValidatedMenuChoice(int menuSize) {
-        int menuChoice = parser.getNextInt();
-        while (!(menuChoice >= 1 && menuChoice <= menuSize)) {
+        try {
+            int menuChoice = parser.getNextInt();
+            boolean integerInRange = menuChoice >= 1 && menuChoice <= menuSize;
+            while (!integerInRange) {
+                printer.printInvalidInputMessage();
+                menuChoice = parser.getNextInt();
+            }
+            return menuChoice;
+        } catch (NumberFormatException numberFormatException) { //todo valid choices not recognised
             printer.printInvalidInputMessage();
-            menuChoice = parser.getNextInt();
+            return getValidatedMenuChoice(menuSize);
         }
-        return menuChoice;
+    }
+
+
+    /**
+     * Prompts the user to enter a new title and returns a valid title.
+     *
+     * @return a nn-empty title String.
+     */
+    public String getValidatedTitle() { // todo is this the right class? Task should not have access to parser
+        String title = Parser.getNextLine();
+        while (title.isEmpty()) {
+            printer.printPromptForTitle();
+            title = Parser.getNextLine();
+        }
+        return title;
+    }
+
+    /**
+     * Gets the user's validated menu choice input.
+     *
+     * @return a valid local date.
+     */
+    public LocalDate getValidatedLocalDate() {
+        try {
+            String dueDateInput = Parser.getNextLine();
+            return LocalDate.parse(dueDateInput, DateTimeFormatter.ISO_LOCAL_DATE);
+        } catch (DateTimeException dateTimeException) {
+            printer.printInvalidInputMessage();
+            return getValidatedLocalDate();
+        }
+    }
+
+    /**
+     * Performs the user's chosen edit operation on the user's chosen task.
+     */
+    public void editAnExistingTask() {
+        try {
+            int indexTaskToEdit = determineTaskToEdit() - 1; //offset zero-based menu index
+            int editChoice = determineEditChoice();
+            performEditChoice(editChoice, indexTaskToEdit);
+        } catch (NullPointerException nullPointerException) {
+            printer.printLine("There are no existing tasks to edit"); //todo check other possible exceptions
+        }
+    }
+
+    /**
+     * Adds a new task based on user inputs.
+     */
+    public void addNewTask() {
+        try {
+            printer.printHeaderForAddingANewTask();
+            // title
+            printer.printPromptForTitle();
+            String title = getValidatedTitle();
+            // due date
+            printer.printPromptForDueDate();
+            LocalDate dueDate = getValidatedLocalDate();
+            // project
+            printer.printPromptForProject();
+            String project = Parser.getNextLine();
+            // create task and add to list
+            Task task = new Task(title, dueDate, project);
+            taskList.getTasks().add(task);
+            printer.printHeaderForNewTaskAdded();
+            printer.printLine(task.toString());
+        } catch (NullPointerException nullPointerException) {//todo update
+            printer.printLine("There are no existing tasks to edit"); //todo update
+        }
+    }
+
+    /**
+     * Adds a new task based on user inputs.
+     */
+    public void editTitle() { // todo
+        printer.printPromptForTitle();
+        String title = getValidatedTitle();
+    }
+
+    /**
+     * Prints how many tasks are on the list and how many of them are done.
+     */
+    public void getNumberOfDoneTasksOutOfTotal() {
+        int numTasks = taskList.getNumberOfTasks();
+        int numDoneTasks = taskList.getNumberOfDoneTasks();
+        printer.printLine("\nYou have " + numTasks + " tasks of which " + numDoneTasks + " are done.");
     }
 
 

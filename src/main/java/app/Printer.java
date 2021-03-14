@@ -11,7 +11,7 @@ public class Printer {
      * Prints the welcome message when the app is started.
      */
     public void printWelcome() {
-        System.out.println("***************************************");
+        System.out.println("\n***************************************");
         System.out.println("WELCOME TO JOTTER! Let's get organised.");
         System.out.println("***************************************");
     }
@@ -21,6 +21,13 @@ public class Printer {
      */
     public void printLine(String printString) {  // todo replace all Sout with this method
         System.out.println(printString);
+    }
+
+    /**
+     * Prints the cue for user input.
+     */
+    public void printInputCue() {  //
+        System.out.print(">  ");
     }
 
     /**
@@ -55,7 +62,7 @@ public class Printer {
         System.out.println("(2) Add a new task");
         System.out.println("(3) Edit an existing task");
         System.out.println("(4) Save and quit\n");
-        System.out.print(">  ");
+        printInputCue();
     }
 
     /**
@@ -69,7 +76,7 @@ public class Printer {
         System.out.println("(2) Due date (Furthest first)");
         System.out.println("(3) Project (A to Z)");
         System.out.println("(4) Project (Z to A)\n");
-        System.out.print(">  ");
+        printInputCue();
     }
 
     /**
@@ -82,7 +89,7 @@ public class Printer {
         System.out.println("(1) Edit task details");
         System.out.println("(2) Mark task as done");
         System.out.println("(3) Remove task\n");
-        System.out.print(">  ");
+        printInputCue();
     }
 
     /**
@@ -98,22 +105,64 @@ public class Printer {
      */
     public void printInvalidInputMessage() {
         System.out.println("\nSorry, that input is invalid, please try again.");
-        System.out.print(">  ");
+        printInputCue();
     }
 
     /**
-     * Prints instructions for adding a new task.
+     * Prints the 'Adding a new task' header
      */
-
-    public static void printInstructionsToAddTask() {
-        System.out.println("Enter the task title:");
-    } // todo check use
+    public void printHeaderForAddingANewTask() {
+        System.out.println("\nADDING A NEW TASK");
+        System.out.println("=================");
+    }
 
     /**
-     * Prints a goodbye message.
+     * Prints the 'New task added' header
      */
-    public void printNumberedTaskTitles() {
-        System.out.println("Thanks for using Jotter. See you again soon!");
+    public void printHeaderForNewTaskAdded() {
+        System.out.println("\nNEW TASK ADDED");
+        System.out.println("==============");
+    }
+
+    /**
+     * Prints the 'Editing an existing task' header
+     */
+    public void printHeaderForEditingAnExistingTask() {
+        System.out.println("\nEDITING AN EXISTING TASK");
+        System.out.println("========================");
+    }
+
+    /**
+     * Prints prompt for user to enter a task title.
+     */
+    public void printPromptForTitle() {
+        System.out.println("\nEnter the task title (required):");
+        printInputCue();
+    }
+
+    /**
+     * Prints prompt for user to enter a due date.
+     */
+    public void printPromptForDueDate() {
+        System.out.println("\nEnter the due date in the format YYYY-MM-DD:");
+        printInputCue();
+    }
+
+
+
+    /**
+     * Prints prompt for user to enter a task project.
+     */
+    public void printPromptForProject() {
+        System.out.println("\nEnter the project that this task belong to (optional):");
+        printInputCue();
+    }
+
+    /**
+     *
+     */
+    public void printNumberedTaskTitles() {//todo update
+        System.out.println("\n");
     }
 
     /**
