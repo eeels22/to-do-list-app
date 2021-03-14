@@ -222,19 +222,13 @@ public class ToDoListApp {
     }
 
     /**
-     * Checks if the user's menu choice is within range.
+     * Gets the user's validated menu choice input.
      * @param maxMenuNumber the maximum valid menu choice
-     * @param menuChoice the user's menu input
      * @return true if the menu choice is within range, or false if not.
      */
-    public boolean checkMenuChoiceIsInRange(int maxMenuNumber, int menuChoice){
-        return menuChoice >= 1 && menuChoice <= maxMenuNumber;
-    }
-
-
     public int getValidatedMenuChoice(int maxMenuNumber){
         int menuChoice = parser.getNextInt();
-        while (!checkMenuChoiceIsInRange(maxMenuNumber, menuChoice)) {
+        while (!(menuChoice >= 1 && menuChoice <= maxMenuNumber)) {
             printer.printInvalidInputMessage();
             menuChoice = parser.getNextInt();
         }
