@@ -1,4 +1,4 @@
-package app;
+package app.model;
 import app.model.Task;
 import app.model.TaskList;
 import org.junit.jupiter.api.BeforeEach;
@@ -27,36 +27,6 @@ class TaskListTest {
         taskList.getTasks().add(new Task("Read about Streams", LocalDate.of(2021, 05, 12), "Learn Java"));
         taskList.getTasks().add(new Task("Eat lunch", LocalDate.of(2021, 11, 20), "Stay alive"));
         taskList.getTasks().add(new Task("Call parents", LocalDate.of(2021, 04, 19), "Family"));
-    }
-
-
-    @Test
-    void addTask() {
-    }
-
-    @Test
-    void getTasks() {
-    }
-
-    @Test
-    void removeFirstTask() {
-        taskList.removeTask(0);
-        String expectedTitleFirstTask = "Eat lunch";
-        String actualTitleFirstTask = taskList.getTask(0).getTitle();
-        assertEquals(expectedTitleFirstTask, actualTitleFirstTask);
-    }
-
-    @Test
-    void removeSecondTask() {
-        taskList.removeTask(1);
-        String expectedTitleSecondTask = "Call parents";
-        String actualTitleSecondTask = taskList.getTask(1).getTitle();
-        assertEquals(expectedTitleSecondTask, actualTitleSecondTask);
-    }
-    @Test
-    void removeLastTask() {
-        taskList.removeTask(2);
-        assertEquals(2, taskList.getTasks().size());
     }
 
     @Test
@@ -92,15 +62,12 @@ class TaskListTest {
     }
 
     @Test
-    void getAllTitles() {
-
-    }
-
-    @Test
-    void getNumberOfTasks() {
-    }
-
-    @Test
-    void getNumberOfDoneTasks() {
+    void getNumberOfDoneTasksShouldReturn1WhenOneTaskIsDone() {
+        Task doneTask = new Task("Test app", LocalDate.of(2021, 05, 12), "Programming");
+        doneTask.setDoneStatus(true);
+        taskList.getTasks().add(doneTask);
+        int actualNumberOfDoneTask = taskList.getNumberOfDoneTasks();
+        int expectedNumberOfDoneTasks = 1;
+        assertEquals(expectedNumberOfDoneTasks, actualNumberOfDoneTask);
     }
 }

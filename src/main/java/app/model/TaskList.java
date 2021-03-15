@@ -31,10 +31,7 @@ public class TaskList implements Serializable {
      * @return the task to be edited
      */
     public Task getTask(int index) {
-        if (index < 0 || index > tasks.size() - 1) {
-            System.out.println("Invalid selection, please try again.");
-        }
-        return tasks.get(index); // placeholder
+        return tasks.get(index);
     }
 
     /**
@@ -43,13 +40,7 @@ public class TaskList implements Serializable {
      * @param index the index of the task to remove
      */
     public void removeTask(int index) {
-        try {
-            tasks.remove(index);
-        } catch (IndexOutOfBoundsException indexOutOfBoundsException) {
-            System.out.println("Invalid selection, please try again.");
-        } catch (UnsupportedOperationException unsupportedOperationException) {
-            System.out.println("Something went wrong: " + unsupportedOperationException);
-        }
+        tasks.remove(index);
     }
 
     /**

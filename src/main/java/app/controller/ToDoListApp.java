@@ -65,7 +65,7 @@ public class ToDoListApp {
      */
     public void runViewTaskListMenu() {
         printer.printViewTaskListMenu();
-        int menuChoice = getValidatedMenuChoice(4); //todo update param if menu size changes
+        int menuChoice = getValidatedMenuChoice(4);
         performViewTaskMenuChoice(menuChoice);
     }
 
@@ -87,7 +87,7 @@ public class ToDoListApp {
                 runViewTaskListMenu();
                 break;
             case 2:
-                addNewTask();
+                addNewTaskAndConfirm();
                 break;
             case 3:
                 editAnExistingTask();
@@ -113,10 +113,10 @@ public class ToDoListApp {
                 editTaskDetailsAndConfirm(indexTaskToEdit);
                 break;
             case 2:
-                markTaskAsDoneAndConfirm(indexTaskToEdit); //todo add confirmation line
+                markTaskAsDoneAndConfirm(indexTaskToEdit);
                 break;
             case 3:
-                removeTaskAndConfirm(indexTaskToEdit); //todo add confirmation line
+                removeTaskAndConfirm(indexTaskToEdit);
                 break;
             default:
                 break;
@@ -156,24 +156,24 @@ public class ToDoListApp {
     }
 
     /**
-     * Determine which task the user wants to edit, or advises there are no existing tasks.
+     * Depending on th which task the user wants to edit, or advises there are no existing tasks.
      *
      * @return index of the task to be edited
      */
-    public int determineTaskToEdit() {  //todo could be named "runTaskToEditMenu    also refactor out methods
+    public int determineTaskToEdit() throws NullPointerException {  //todo could be named "runTaskToEditMenu    also refactor out methods eg     getUserChoiceOfTaskToEdit
         int sizeOfTaskList = taskList.getTasks().size();
         int indexTaskToEdit;
         if (sizeOfTaskList == 1) { // only one task, index must be 0
             indexTaskToEdit = 0;
-        } else if (sizeOfTaskList > 1) { // user picks task to edit
-            printer.printLine("\nWhich task would you like to edit?" + taskList.getNumberedTaskTitles());
-            printer.print("\n>  ");
+        } else if (sizeOfTaskList > 1) { // user picks task to edit from numbered list of task titles
+            printer.printPromptForTaskToEdit(taskList.getNumberedTaskTitles());
             indexTaskToEdit = getValidatedMenuChoice(sizeOfTaskList);
         } else { // no tasks available to edit
-            throw new NullPointerException("No existing tasks to edit.");
+            throw new NullPointerException();
         }
         return indexTaskToEdit;
     }
+
 
     /**
      * Determine which operation the user wants to perform on a given task
@@ -207,7 +207,7 @@ public class ToDoListApp {
             FileHandler fileHandler = new FileHandler();
             fileHandler.saveTaskListToFile(taskList);
         } catch (IOException exception) {
-            printer.printLine("Oops, there's a problem with saving the file: " + exception);
+            printer.printLine("Sorry, there was a problem with saving the file: " + exception);
         }
     }
 
@@ -236,8 +236,7 @@ public class ToDoListApp {
      * @throws IllegalArgumentException if the menu choice is not valid
      */
     public void validateMenuChoice(int menuSize, int menuChoice) throws IllegalArgumentException {
-        if (menuChoice >= 1 && menuChoice <= menuSize) { // if choice is valid, do nothing
-        } else {
+        if (menuChoice < 1 || menuChoice > menuSize) {
             throw new IllegalArgumentException();
         }
     }
@@ -259,11 +258,11 @@ public class ToDoListApp {
     }
 
     /**
-     *
+     * Checks if the title is empty and throws an exception if true.
+     * @throws IllegalArgumentException if the title is empty.
      */
     public void validateTitle(String title) throws IllegalArgumentException {
-        if (!title.isEmpty()) { // if the user has given a title, do nothing
-        } else {
+        if (title.isEmpty()) {
             throw new IllegalArgumentException();
         }
     }
@@ -308,14 +307,14 @@ public class ToDoListApp {
             int editChoice = determineEditChoice();
             performEditChoice(editChoice, indexTaskToEdit);
         } catch (NullPointerException nullPointerException) {
-            printer.printLine("There are no existing tasks to edit"); //todo check other possible exceptions
+            printer.printLine("There are no existing tasks to edit");
         }
     }
 
     /**
      * Adds a new task based on user inputs.
      */
-    public void addNewTask() {
+    public void addNewTaskAndConfirm() {
         printer.printHeaderForAddingANewTask(); // determine field values
         String title = determineTitle();
         LocalDate dueDate = determineDueDate();
@@ -331,7 +330,7 @@ public class ToDoListApp {
      *
      * @param indexDoneTask the index of the task that is done
      */
-    public void markTaskAsDoneAndConfirm(int indexDoneTask) {
+    public void markTaskAsDoneAndConfirm(int indexDoneTask) { // todo bespoke message
         taskList.getTask(indexDoneTask).setDoneStatus(true);
         printer.printHeaderForTaskUpdated();
     }

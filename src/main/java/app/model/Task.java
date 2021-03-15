@@ -105,7 +105,7 @@ public class Task implements Serializable {
      *
      * @return task status String as "done" or "to do"
      */
-    private String statusToString() {
+    public String statusToString() {
         return isDone ? "done" : "to do";
     }
 

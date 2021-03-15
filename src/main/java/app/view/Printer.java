@@ -145,6 +145,15 @@ public class Printer {
         printInputCue();
     }
 
+
+    /**
+     * Prints prompt for user to select a task to edit.
+     */
+    public void printPromptForTaskToEdit(String numberedTaskTitles) {
+        System.out.println("\nWhich task would you like to edit?" + numberedTaskTitles);
+        printInputCue();
+    }
+
     /**
      * Prints prompt for user to enter a task title.
      */
@@ -175,7 +184,7 @@ public class Printer {
      * @param numDoneTasks number of tasks that are done
      */
     public void printTaskListOverview(int numTasks, int numDoneTasks) {
-        System.out.println("\nYou have " + numTasks + " tasks of which " + numDoneTasks + " are done.");
+        System.out.println("\nTotal tasks: " + numTasks + "\nTasks to do: " + numDoneTasks);
     }
 
     /**

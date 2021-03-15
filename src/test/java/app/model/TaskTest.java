@@ -1,4 +1,4 @@
-package app;
+package app.model;
 import app.model.Task;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
