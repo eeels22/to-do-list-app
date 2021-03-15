@@ -29,13 +29,13 @@ test {
 //}
 
 application {
-    mainClass.set("app.ToDoListApp")
+    mainClass.set("app.controller.ToDoListApp")
 }
 
 jar {
     manifest {
         attributes(
-                'Main-Class': 'app.ToDoListApp'
+                'Main-Class': 'app.controller.ToDoListApp'
         )
     }
 }

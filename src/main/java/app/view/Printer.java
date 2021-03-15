@@ -1,4 +1,7 @@
-package app;
+package app.view;
+
+import app.model.TaskList;
+
 /**
  * The Responder is responsible for printing information to the terminal.
  *
@@ -108,7 +111,7 @@ public class Printer {
      */
     public void printHeaderForNewTaskAdded() {
         System.out.println("\nNEW TASK ADDED");
-        System.out.print("==============");
+        System.out.println("==============");
     }
 
     /**
@@ -124,7 +127,14 @@ public class Printer {
      */
     public void printHeaderForTaskUpdated() {
         System.out.println("\nTASK UPDATED");
-        System.out.print("============");
+        System.out.println("============");
+    }
+
+    /**
+     * Prints confirmation of task removal.
+     */
+    public void printConfirmationTaskRemoved() {
+        System.out.println("\nTask removed.");
     }
 
     /**
@@ -160,6 +170,15 @@ public class Printer {
     }
 
     /**
+     * Prints how many tasks there are and how many are done.
+     * @param numTasks total number of tasks
+     * @param numDoneTasks number of tasks that are done
+     */
+    public void printTaskListOverview(int numTasks, int numDoneTasks) {
+        System.out.println("\nYou have " + numTasks + " tasks of which " + numDoneTasks + " are done.");
+    }
+
+    /**
      *
      */
     public void printNumberedTaskTitles() {//todo update
@@ -186,6 +205,7 @@ public class Printer {
     public void printInfo(String printString) { // todo
         System.out.println(printString);
     }
+
 
 
 }

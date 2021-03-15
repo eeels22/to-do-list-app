@@ -1,4 +1,7 @@
-package app;
+package app.model;
+
+import app.model.Task;
+import app.model.TaskComparator;
 
 import java.io.Serializable;
 import java.util.ArrayList;

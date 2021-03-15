@@ -1,4 +1,8 @@
-package app;
+package app.controller;
+
+import app.model.Task;
+import app.model.TaskList;
+import app.view.Printer;
 
 import java.io.EOFException;
 import java.io.IOException;
@@ -7,7 +11,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 /**
- * This class implements a to do list application.
+ * This class implements a to do list application. // todo break down into more classes?
  * It is the top level class in this project.
  * The app communicates via text input and output in the terminal.
  *
@@ -40,9 +44,9 @@ public class ToDoListApp {
      */
     public void start() {
         printer.printWelcome();
-        getNumberOfDoneTasksOutOfTotal();
+        printer.printTaskListOverview(taskList.getNumberOfTasks(), taskList.getNumberOfDoneTasks());
         while (usingApp) {
-            printMainMenuAndPerformChoice();
+            runMainMenu();
         }
         printer.printGoodbye();
     }
@@ -50,16 +54,16 @@ public class ToDoListApp {
     /**
      * Prints the main menu options and performs the user's choice
      */
-    public void printMainMenuAndPerformChoice() {
+    public void runMainMenu() {
         printer.printMainMenu();
-        int menuChoice = getValidatedMenuChoice(4); //todo update param if menu size changes
+        int menuChoice = getValidatedMenuChoice(4);
         performMainMenuChoice(menuChoice);
     }
 
     /**
      * Prints the view task menu options and responds to the user's choice
      */
-    public void viewTaskListByChosenSortingOrder() {
+    public void runViewTaskListMenu() {
         printer.printViewTaskListMenu();
         int menuChoice = getValidatedMenuChoice(4); //todo update param if menu size changes
         performViewTaskMenuChoice(menuChoice);
@@ -80,7 +84,7 @@ public class ToDoListApp {
     public void performMainMenuChoice(int mainOptionChosen) {
         switch (mainOptionChosen) {
             case 1:
-                viewTaskListByChosenSortingOrder();
+                runViewTaskListMenu();
                 break;
             case 2:
                 addNewTask();
@@ -106,13 +110,13 @@ public class ToDoListApp {
     public void performEditChoice(int operationChosen, int indexTaskToEdit) {
         switch (operationChosen) {
             case 1:
-                editTaskDetails(indexTaskToEdit);
+                editTaskDetailsAndConfirm(indexTaskToEdit);
                 break;
-            case 2: // Mark a task as done
-                taskList.getTask(indexTaskToEdit).setDoneStatus(true); // todo add confirmation line
+            case 2:
+                markTaskAsDoneAndConfirm(indexTaskToEdit); //todo add confirmation line
                 break;
             case 3:
-                taskList.removeTask(indexTaskToEdit); // todo add confirmation line
+                removeTaskAndConfirm(indexTaskToEdit); //todo add confirmation line
                 break;
             default:
                 break;
@@ -138,7 +142,6 @@ public class ToDoListApp {
                 sortAndPrintTaskList(2, true);
                 break;
             default:
-                printer.printInvalidInputMessage();
                 break;
         }
     }
@@ -157,7 +160,7 @@ public class ToDoListApp {
      *
      * @return index of the task to be edited
      */
-    public int determineTaskToEdit() {  //todo return Task?
+    public int determineTaskToEdit() {  //todo could be named "runTaskToEditMenu    also refactor out methods
         int sizeOfTaskList = taskList.getTasks().size();
         int indexTaskToEdit;
         if (sizeOfTaskList == 1) { // only one task, index must be 0
@@ -170,7 +173,6 @@ public class ToDoListApp {
             throw new NullPointerException("No existing tasks to edit.");
         }
         return indexTaskToEdit;
-        //todo replace return type with Task
     }
 
     /**
@@ -207,7 +209,6 @@ public class ToDoListApp {
         } catch (IOException exception) {
             printer.printLine("Oops, there's a problem with saving the file: " + exception);
         }
-
     }
 
     /**
@@ -219,18 +220,27 @@ public class ToDoListApp {
     public int getValidatedMenuChoice(int menuSize) {
         try {
             int menuChoice = parser.getNextInt();
-            boolean integerInRange = menuChoice >= 1 && menuChoice <= menuSize;
-            while (!integerInRange) {
-                printer.printInvalidInputMessage();
-                menuChoice = parser.getNextInt();
-            }
+            validateMenuChoice(menuSize, menuChoice);
             return menuChoice;
-        } catch (NumberFormatException numberFormatException) {
+        } catch (IllegalArgumentException illegalArgumentException) {
             printer.printInvalidInputMessage();
             return getValidatedMenuChoice(menuSize);
         }
     }
 
+    /**
+     * Checks if the menu choice is valid and throws an exception if it is invalid.
+     *
+     * @param menuSize   number of menu options
+     * @param menuChoice user's chosen menu option
+     * @throws IllegalArgumentException if the menu choice is not valid
+     */
+    public void validateMenuChoice(int menuSize, int menuChoice) throws IllegalArgumentException {
+        if (menuChoice >= 1 && menuChoice <= menuSize) { // if choice is valid, do nothing
+        } else {
+            throw new IllegalArgumentException();
+        }
+    }
 
     /**
      * Prompts the user to enter a new title and returns a valid title.
@@ -238,12 +248,24 @@ public class ToDoListApp {
      * @return a nn-empty title String.
      */
     public String getValidatedTitle() {
-        String title = Parser.getNextLine();
-        while (title.isEmpty()) {
+        try {
+            String title = Parser.getNextLine();
+            validateTitle(title);
+            return title;
+        } catch (IllegalArgumentException illegalArgumentException) {
             printer.printPromptForTitle();
-            title = Parser.getNextLine();
+            return getValidatedTitle();
         }
-        return title;
+    }
+
+    /**
+     *
+     */
+    public void validateTitle(String title) throws IllegalArgumentException {
+        if (!title.isEmpty()) { // if the user has given a title, do nothing
+        } else {
+            throw new IllegalArgumentException();
+        }
     }
 
     /**
@@ -264,7 +286,7 @@ public class ToDoListApp {
     /**
      * Performs the user's chosen edit operation on the user's chosen task.
      */
-    public void editTaskDetails(int indexTaskToEdit) {
+    public void editTaskDetailsAndConfirm(int indexTaskToEdit) {
         Task taskToEdit = taskList.getTask(indexTaskToEdit);
         printer.printHeaderForEditingAnExistingTask();
         String title = determineTitle();
@@ -305,6 +327,27 @@ public class ToDoListApp {
     }
 
     /**
+     * Marks a task as done.
+     *
+     * @param indexDoneTask the index of the task that is done
+     */
+    public void markTaskAsDoneAndConfirm(int indexDoneTask) {
+        taskList.getTask(indexDoneTask).setDoneStatus(true);
+        printer.printHeaderForTaskUpdated();
+    }
+
+    /**
+     * Remove a task from the task list.
+     *
+     * @param indexTaskToRemove the index of the task that is done
+     */
+    public void removeTaskAndConfirm(int indexTaskToRemove) {
+        taskList.removeTask(indexTaskToRemove);
+        printer.printConfirmationTaskRemoved();
+    }
+
+
+    /**
      * Returns a valid task title
      */
     public String determineTitle() {
@@ -327,15 +370,5 @@ public class ToDoListApp {
         printer.printPromptForProject();
         return Parser.getNextLine();
     }
-
-    /**
-     * Prints how many tasks are on the list and how many of them are done.
-     */
-    public void getNumberOfDoneTasksOutOfTotal() {
-        int numTasks = taskList.getNumberOfTasks();
-        int numDoneTasks = taskList.getNumberOfDoneTasks();
-        printer.printLine("\nYou have " + numTasks + " tasks of which " + numDoneTasks + " are done.");
-    }
-
 
 }

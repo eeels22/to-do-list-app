@@ -1,4 +1,6 @@
-package app;
+package app.model;
+
+import app.model.Task;
 
 import java.util.Comparator;
 
