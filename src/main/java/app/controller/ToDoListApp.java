@@ -174,7 +174,6 @@ public class ToDoListApp {
         return indexTaskToEdit;
     }
 
-
     /**
      * Determine which operation the user wants to perform on a given task
      */
@@ -190,7 +189,7 @@ public class ToDoListApp {
         try {
             FileHandler fileHandler = new FileHandler();
             return fileHandler.loadTaskListFromFile();
-        } catch (EOFException eofException) {
+        } catch (EOFException eofException) { // todo move to file handler
             printer.printLine("No task list saved. Creating a new task list... ");
             return new TaskList();
         } catch (IOException | ClassNotFoundException exception) {
@@ -206,7 +205,7 @@ public class ToDoListApp {
         try {
             FileHandler fileHandler = new FileHandler();
             fileHandler.saveTaskListToFile(taskList);
-        } catch (IOException exception) {
+        } catch (IOException exception) { // todo move to file handler
             printer.printLine("Sorry, there was a problem with saving the file: " + exception);
         }
     }
@@ -344,7 +343,6 @@ public class ToDoListApp {
         taskList.removeTask(indexTaskToRemove);
         printer.printConfirmationTaskRemoved();
     }
-
 
     /**
      * Returns a valid task title

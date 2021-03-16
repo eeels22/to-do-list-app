@@ -13,8 +13,6 @@ import java.io.*;
 
 public class FileHandler {
 
-    // The task list on which input and output operations are performed
-    private TaskList taskList;
     // The path in the root directory where the file is located
     private String path = "src/main/resources/";
     // File name and extension
@@ -28,33 +26,25 @@ public class FileHandler {
     }
 
     /**
-     * Saves the task list to a file. Prints an error message if an exception is caught.
+     * Saves the task list to a file.
      */
     public void saveTaskListToFile(TaskList taskList) throws IOException {
-
-
         FileOutputStream fileOutputStream = new FileOutputStream(path + fileName);
         ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
-
         objectOutputStream.writeObject(taskList);
-
         objectOutputStream.close();
         fileOutputStream.close();
     }
 
     /**
-     * Loads a task list from a file. Prints an error message if an exception is caught.
+     * Loads a task list from a file.
      */
     public TaskList loadTaskListFromFile() throws IOException, ClassNotFoundException {
-
         FileInputStream fileInputStream = new FileInputStream(path + fileName);
         ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
-
-        taskList = (TaskList) objectInputStream.readObject();
-
+        TaskList taskList = (TaskList) objectInputStream.readObject();
         objectInputStream.close();
         fileInputStream.close();
-
         return taskList;
     }
 }
