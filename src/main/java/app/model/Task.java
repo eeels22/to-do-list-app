@@ -6,15 +6,15 @@ import java.util.Objects;
 
 
 /**
- * Models a task with a task title, due date, status and project.
+ * Models a task with a task title, due date, done status and project.
  *
  * @author En-Chi Liu
  * @version 1.0
  */
 public class Task implements Serializable {
     private String title; // title of the task
-    private LocalDate dueDate; // deadline to do the task
-    private boolean isDone; // has the task has been done?
+    private LocalDate dueDate; // task deadline
+    private boolean isDone; // whether the task has been done
     private String project; // a project that the task belongs to (may be empty)
 
     /**
@@ -52,6 +52,8 @@ public class Task implements Serializable {
 
     /**
      * Updates the task´s due date.
+     *
+     * @param dueDate a date when the task is due by
      */
     public void setDueDate(LocalDate dueDate) {
         this.dueDate = dueDate;
@@ -67,7 +69,7 @@ public class Task implements Serializable {
     /**
      * Sets the task status to the given boolean.
      *
-     * @param isDone true if done and false if to do
+     * @param isDone true if done and false if not
      */
     public void setDoneStatus(boolean isDone) {
         this.isDone = isDone;
@@ -84,7 +86,9 @@ public class Task implements Serializable {
     }
 
     /**
-     * Assigns the task to a project if it is valid.
+     * Assigns the task to a project
+     *
+     * @param project name of a project, which may be empty
      */
     public void setProject(String project) {
         this.project = project;
@@ -93,7 +97,7 @@ public class Task implements Serializable {
     /**
      * Produces a String representation of the task details
      *
-     * @return a String with details of the task on separate lines
+     * @return a String with details of the task on new lines
      */
     @Override
     public String toString() {
@@ -128,9 +132,9 @@ public class Task implements Serializable {
     }
 
     /**
-     * Produces a String representation of the task status
+     * Generates a hash code for the task
      *
-     * @return task status String as "done" or "to do"
+     * @return hashcode for the task
      */
     @Override
     public int hashCode() {

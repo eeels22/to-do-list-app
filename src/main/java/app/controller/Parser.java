@@ -3,7 +3,7 @@ package app.controller;
 import java.util.Scanner;
 
 /**
- * The Parser is responsible for processing user input.
+ * The Parser is responsible for getting user input.
  *
  * @author En-Chi Liu
  * @version 1.0
@@ -30,8 +30,9 @@ public class Parser {
      * Gets the next integer user input.
      *
      * @return the user's integer input
+     * @throws NumberFormatException if no integer was entered
      */
-    public int getNextInt() throws NumberFormatException {
+    public static int getNextInt() throws NumberFormatException {
         String inputString = scanner.nextLine();
         return Integer.parseInt(inputString);
     }

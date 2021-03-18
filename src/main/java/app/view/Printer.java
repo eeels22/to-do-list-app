@@ -1,7 +1,5 @@
 package app.view;
 
-import app.model.TaskList;
-
 /**
  * The Responder is responsible for printing information to the terminal.
  *
@@ -186,35 +184,4 @@ public class Printer {
     public void printTaskListOverview(int numTasks, int numDoneTasks) {
         System.out.println("\nTotal tasks: " + numTasks + "\nTasks to do: " + numDoneTasks);
     }
-
-    /**
-     *
-     */
-    public void printNumberedTaskTitles() {//todo update
-        System.out.println("\n");
-    }
-
-    /**
-     * Prints each task in the task list in default order.
-     */
-    public void printTaskList(TaskList taskList) { // todo check use
-        System.out.println(taskList);
-    }
-
-    /**
-     *
-     * */
-    public void promptUser(String printString) { // todo
-        System.out.println(printString);
-    }
-
-    /**
-     *
-     * */
-    public void printInfo(String printString) { // todo
-        System.out.println(printString);
-    }
-
-
-
 }
