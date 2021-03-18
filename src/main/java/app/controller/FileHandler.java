@@ -19,33 +19,40 @@ public class FileHandler {
     private String fileName = "taskList.txt";
 
     /**
-     * Constructor for the file handler.
+     * Default constructor for the file handler.
      */
     public FileHandler() {
+    }
 
+    /**
+     * Loads a task list from a file.
+     */
+    public TaskList loadTaskListFromFile() {
+        try {
+            FileInputStream fileInputStream = new FileInputStream(path + fileName);
+            ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+            TaskList taskList = (TaskList) objectInputStream.readObject();
+            objectInputStream.close();
+            fileInputStream.close();
+            return taskList;
+        } catch (IOException | ClassNotFoundException exception) {
+            return new TaskList();
+        }
     }
 
     /**
      * Saves the task list to a file.
      */
     public void saveTaskListToFile(TaskList taskList) throws IOException {
-        FileOutputStream fileOutputStream = new FileOutputStream(path + fileName);
-        ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
-        objectOutputStream.writeObject(taskList);
-        objectOutputStream.close();
-        fileOutputStream.close();
+        try {
+            FileOutputStream fileOutputStream = new FileOutputStream(path + fileName);
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
+            objectOutputStream.writeObject(taskList);
+            objectOutputStream.close();
+            fileOutputStream.close();
+        } catch (IOException exception) {
+        }
     }
 
-    /**
-     * Loads a task list from a file.
-     */
-    public TaskList loadTaskListFromFile() throws IOException, ClassNotFoundException {
-        FileInputStream fileInputStream = new FileInputStream(path + fileName);
-        ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
-        TaskList taskList = (TaskList) objectInputStream.readObject();
-        objectInputStream.close();
-        fileInputStream.close();
-        return taskList;
-    }
 }
 

@@ -19,6 +19,7 @@ import java.time.format.DateTimeFormatter;
  */
 public class ToDoListApp {
     private final Printer printer;
+    private FileHandler fileHandler;
     private final TaskList taskList;
     private boolean usingApp;
 
@@ -26,9 +27,10 @@ public class ToDoListApp {
      * Creates a to do list app
      */
     public ToDoListApp() {
-        printer = new Printer();
-        taskList = loadTaskList();
-        usingApp = true;
+        printer = new Printer(); // printer responsible for text output
+        fileHandler = new FileHandler();
+        taskList = fileHandler.loadTaskListFromFile(); // loads the previous task list from file
+        usingApp = true; // this remains true until user saves and quits
     }
 
     public static void main(String[] args) {
@@ -43,7 +45,7 @@ public class ToDoListApp {
         printer.printWelcome();
         printer.printTaskListOverview(taskList.getNumberOfTasks(), taskList.getNumberOfDoneTasks());
         while (usingApp) {
-            runMainMenu();
+            runMainMenu(); // returns to the main menu after each completed operation
         }
         printer.printGoodbye();
     }
@@ -83,7 +85,7 @@ public class ToDoListApp {
                 editAnExistingTask();
                 break;
             case 4:
-                saveTaskList();
+                save();
                 usingApp = false;
                 break;
             default:
@@ -92,27 +94,10 @@ public class ToDoListApp {
     }
 
     /**
-     * Performs the user's desired edit operation on a chosen task.
+     * Displays the task list in the sort order specified.
      *
-     * @param operationChosen type of editing operation
-     * @param indexTaskToEdit index of the task to be edited
+     * @param viewOptionChosen the desired order to view the task list items
      */
-    public void performEditChoice(int operationChosen, int indexTaskToEdit) {
-        switch (operationChosen) {
-            case 1:
-                editTaskDetailsAndConfirm(indexTaskToEdit);
-                break;
-            case 2:
-                markTaskAsDoneAndConfirm(indexTaskToEdit);
-                break;
-            case 3:
-                removeTaskAndConfirm(indexTaskToEdit);
-                break;
-            default:
-                break;
-        }
-    }
-
     public void performViewTaskMenuChoice(int viewOptionChosen) {
         switch (viewOptionChosen) {
             case 1:
@@ -137,7 +122,32 @@ public class ToDoListApp {
     }
 
     /**
-     * Sort and print task list
+     * Performs the user's desired edit operation on a chosen task.
+     *
+     * @param operationChosen type of editing operation
+     * @param indexTaskToEdit index of the task to be edited
+     */
+    public void performEditMenuChoice(int operationChosen, int indexTaskToEdit) {
+        switch (operationChosen) {
+            case 1:
+                editTaskDetailsAndConfirm(indexTaskToEdit);
+                break;
+            case 2:
+                markTaskAsDoneAndConfirm(indexTaskToEdit);
+                break;
+            case 3:
+                removeTaskAndConfirm(indexTaskToEdit);
+                break;
+            default:
+                break;
+        }
+    }
+
+    /**
+     * Sort the task list according to given instructions and prints it.
+     *
+     * @param type       what field to sort on
+     * @param descending whether or not to reverse the natural order
      */
     public void sortAndPrintTaskList(int type, boolean descending) {
         taskList.sortList(type, descending);
@@ -146,11 +156,48 @@ public class ToDoListApp {
     }
 
     /**
-     * Depending on th which task the user wants to edit, or advises there are no existing tasks.
+     * Performs the user's chosen edit operation on the user's chosen task.
+     */
+    public void editTaskDetailsAndConfirm(int indexTaskToEdit) {
+        Task taskToEdit = taskList.getTask(indexTaskToEdit); // retrieve the task to edit
+        printer.printHeaderForEditingAnExistingTask();
+        String title = determineTitle(); // prompts for and updates task fields
+        taskToEdit.setTitle(title);
+        LocalDate dueDate = determineDueDate();
+        taskToEdit.setDueDate(dueDate);
+        String project = determineProject();
+        taskToEdit.setProject(project);
+        printer.printHeaderForTaskUpdated(); // prints confirmation
+        printer.printLine(taskToEdit.toString());
+    }
+
+    /**
+     * Marks a task as done.
+     *
+     * @param indexDoneTask the index of the task that is done
+     */
+    public void markTaskAsDoneAndConfirm(int indexDoneTask) {
+        taskList.getTask(indexDoneTask).setDoneStatus(true);
+        printer.printHeaderForTaskUpdated();
+    }
+
+    /**
+     * Remove a task from the task list.
+     *
+     * @param indexTaskToRemove the index of the task that is done
+     */
+    public void removeTaskAndConfirm(int indexTaskToRemove) {
+        taskList.removeTask(indexTaskToRemove);
+        printer.printConfirmationTaskRemoved();
+    }
+
+    /**
+     * Determines the task to be edited and returns its index.
      *
      * @return index of the task to be edited
+     * @throws NumberFormatException if there are no tasks in the list
      */
-    public int runTaskToEditMenu() throws NullPointerException {
+    public int determineTaskToEdit() throws NullPointerException {
         int listSize = taskList.getTasks().size();
         int indexTaskToEdit;
         if (listSize == 0) { // no tasks available to edit
@@ -179,34 +226,6 @@ public class ToDoListApp {
     public int determineEditChoice() {
         printer.printEditOptions();
         return getValidMenuChoiceFromUser(3);
-    }
-
-    /**
-     * Instructs the FileHandler to load the previous taskList from file
-     */
-    public TaskList loadTaskList() {
-        try {
-            FileHandler fileHandler = new FileHandler();
-            return fileHandler.loadTaskListFromFile();
-        } catch (EOFException eofException) { // todo move to file handler
-            printer.printLine("No task list saved. Creating a new task list... ");
-            return new TaskList();
-        } catch (IOException | ClassNotFoundException exception) {
-            printer.printLine("Oops, there's a problem with loading the file. Creating a new task list instead...");
-            return new TaskList();
-        }
-    }
-
-    /**
-     * Instructs the File Handler to save this task list to file
-     */
-    public void saveTaskList() {
-        try {
-            FileHandler fileHandler = new FileHandler();
-            fileHandler.saveTaskListToFile(taskList);
-        } catch (IOException exception) { // todo move to file handler
-            printer.printLine("Sorry, there was a problem with saving the file: " + exception);
-        }
     }
 
     /**
@@ -260,27 +279,11 @@ public class ToDoListApp {
     /**
      * Performs the user's chosen edit operation on the user's chosen task.
      */
-    public void editTaskDetailsAndConfirm(int indexTaskToEdit) {
-        Task taskToEdit = taskList.getTask(indexTaskToEdit); // retrieve the task to edit
-        printer.printHeaderForEditingAnExistingTask();
-        String title = determineTitle(); // prompts for and updates task fields
-        taskToEdit.setTitle(title);
-        LocalDate dueDate = determineDueDate();
-        taskToEdit.setDueDate(dueDate);
-        String project = determineProject();
-        taskToEdit.setProject(project);
-        printer.printHeaderForTaskUpdated(); // prints confirmation
-        printer.printLine(taskToEdit.toString());
-    }
-
-    /**
-     * Performs the user's chosen edit operation on the user's chosen task.
-     */
     public void editAnExistingTask() {
         try {
-            int indexTaskToEdit = runTaskToEditMenu() - 1; //offset zero-based menu index
+            int indexTaskToEdit = determineTaskToEdit() - 1; // offset one-based menu index
             int editChoice = determineEditChoice();
-            performEditChoice(editChoice, indexTaskToEdit);
+            performEditMenuChoice(editChoice, indexTaskToEdit);
         } catch (NullPointerException nullPointerException) {
             printer.printLine("There are no existing tasks to edit");
         }
@@ -290,34 +293,14 @@ public class ToDoListApp {
      * Adds a new task based on user inputs.
      */
     public void addNewTaskAndConfirm() {
-        printer.printHeaderForAddingANewTask(); // determine field values
-        String title = determineTitle();
+        printer.printHeaderForAddingANewTask();
+        String title = determineTitle(); // determine field values...
         LocalDate dueDate = determineDueDate();
         String project = determineProject();
         Task task = new Task(title, dueDate, project); // instantiate task and add to list
         taskList.getTasks().add(task);
         printer.printHeaderForNewTaskAdded(); // confirm
         printer.printLine(task.toString());
-    }
-
-    /**
-     * Marks a task as done.
-     *
-     * @param indexDoneTask the index of the task that is done
-     */
-    public void markTaskAsDoneAndConfirm(int indexDoneTask) {
-        taskList.getTask(indexDoneTask).setDoneStatus(true);
-        printer.printHeaderForTaskUpdated();
-    }
-
-    /**
-     * Remove a task from the task list.
-     *
-     * @param indexTaskToRemove the index of the task that is done
-     */
-    public void removeTaskAndConfirm(int indexTaskToRemove) {
-        taskList.removeTask(indexTaskToRemove);
-        printer.printConfirmationTaskRemoved();
     }
 
     /**
@@ -342,6 +325,25 @@ public class ToDoListApp {
     public String determineProject() {
         printer.printPromptForProject();
         return Parser.getNextLine();
+    }
+
+    /**
+     * Returns the task list.
+     */
+    public TaskList getTaskList() {
+        return taskList;
+    }
+
+    /**
+     * Saves the current task list to file and .
+     */
+    private void save() {
+        try {
+            fileHandler.saveTaskListToFile(taskList);
+        }
+        catch (IOException ioException) {
+            printer.printLine("Sorry, there has been a problem saving to file.");
+        }
     }
 
 }
