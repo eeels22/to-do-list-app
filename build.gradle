@@ -23,10 +23,9 @@ test {
     }
 }
 
-//May need to include this if 'gradle run' command has an error - see video README.md by Kwabena 6m23s
-//run {
-//    //standardInput = System.in
-//}
+run {
+    standardInput = System.in
+}
 
 application {
     mainClass.set("app.controller.ToDoListApp")
