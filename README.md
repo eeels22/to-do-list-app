@@ -1,6 +1,5 @@
 # Jotter: to do list app
 Welcome to Jotter, a simple to do list app that you can run from the command line.
-The app is a work in progress, so functionality is limited just now (5 March 2021).
 
 ## Getting started
 Jotter can be run directly via Gradle or via a generated jar file.
@@ -11,7 +10,7 @@ In the root folder, start Jotter with the following command:
 gradle run --console plain
 ```
 ### Run with jar file
-Generate the jar file with Gradle's build command.
+First, generate the jar file with Gradle's build command.
 ```bash
 gradle build
 ```
@@ -21,24 +20,31 @@ java -jar build/libs/to-do-list-app-1.0-SNAPSHOT.jar
 ```
 
 ## Using this app
-At the moment, the app just prints a welcome screen with the main options.
-In future releases, you will be able to:
+This app helps you track the tasks you need to do. Here's how:
+
+![Main menu](src/main/resources/jotterWelcome.png)
 
 ### View task list
-View the task list and sort by title or project.
+View the task list - choose to view the tasks by title or project (ascending or descending order).
+
+![View task list menu](src/main/resources/jotterViewTaskListMenu.png)
 
 ### Add tasks
-Add tasks and give them a title, due date and a project that it belongs to.
+Add tasks and give them a title, due date, and (optionally) a project that it belongs to.
 
-1: Start screenshot to be added
+![Adding a new task](src/main/resources/jotterAddANewTask.png)
 
 ### Edit tasks
-Edit tasks, mark tasks as done or remove tasks.
+You can edit tasks. 
+First, choose which task you want to edit. 
 
-2: Edit task screenshot to be added
+![Menu to choose which task to edit](src/main/resources/jotterWhichTaskToEdit.png)
 
+Then choose whether to edit the task details, mark it as done or remove it completely.
+
+![Edit options menu](src/main/resources/jotterEditOptions.png)
 ### Save and quit task list
 Save the current task list and restart the app with the task list restored.
 
 ## Authors and acknowledgments
-Thank you to the staff and teaching assistants of SDA for sharing their knowledge. Thanks also to David J Barnes and Michel Kölling, authors of 'Objects First with Java' for providing code inspiration in the World of Zuul, Tech Support and Address Book projects.
+Thank you to the staff and teaching assistants of SDA for sharing their knowledge. Thanks also to David J Barnes and Michel Kölling, authors of 'Objects First with Java' for providing code inspiration.
