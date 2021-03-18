@@ -44,14 +44,11 @@ public class FileHandler {
      * Saves the task list to a file.
      */
     public void saveTaskListToFile(TaskList taskList) throws IOException {
-        try {
-            FileOutputStream fileOutputStream = new FileOutputStream(path + fileName);
-            ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
-            objectOutputStream.writeObject(taskList);
-            objectOutputStream.close();
-            fileOutputStream.close();
-        } catch (IOException exception) {
-        }
+        FileOutputStream fileOutputStream = new FileOutputStream(path + fileName);
+        ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
+        objectOutputStream.writeObject(taskList);
+        objectOutputStream.close();
+        fileOutputStream.close();
     }
 
 }

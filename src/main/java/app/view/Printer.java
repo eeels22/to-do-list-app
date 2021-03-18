@@ -34,13 +34,6 @@ public class Printer {
     }
 
     /**
-     * Prints the desired string.
-     */
-    public void print(String printString) {
-        System.out.print(printString);
-    }
-
-    /**
      * Prints a visual cue for user to enter an input.
      */
     public void printInputCue() {  //

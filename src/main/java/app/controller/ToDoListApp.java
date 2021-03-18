@@ -4,7 +4,6 @@ import app.model.Task;
 import app.model.TaskList;
 import app.view.Printer;
 
-import java.io.EOFException;
 import java.io.IOException;
 import java.time.DateTimeException;
 import java.time.LocalDate;
@@ -19,7 +18,7 @@ import java.time.format.DateTimeFormatter;
  */
 public class ToDoListApp {
     private final Printer printer;
-    private FileHandler fileHandler;
+    private final FileHandler fileHandler;
     private final TaskList taskList;
     private boolean usingApp;
 
@@ -100,20 +99,16 @@ public class ToDoListApp {
      */
     public void performViewTaskMenuChoice(int viewOptionChosen) {
         switch (viewOptionChosen) {
-            case 1:
-                // by due date ascending
+            case 1: // by due date ascending
                 sortAndPrintTaskList(1, false);
                 break;
-            case 2:
-                // by due date descending
+            case 2: // by due date descending
                 sortAndPrintTaskList(1, true);
                 break;
-            case 3:
-                // by project ascending
+            case 3: // by project ascending
                 sortAndPrintTaskList(2, false);
                 break;
-            case 4:
-                // by project descending
+            case 4: // by project descending
                 sortAndPrintTaskList(2, true);
                 break;
             default:
@@ -342,7 +337,7 @@ public class ToDoListApp {
             fileHandler.saveTaskListToFile(taskList);
         }
         catch (IOException ioException) {
-            printer.printLine("Sorry, there has been a problem saving to file.");
+            printer.printLine("Sorry, a problem occurred when saving to file.");
         }
     }
 

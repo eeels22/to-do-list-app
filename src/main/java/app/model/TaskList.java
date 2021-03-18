@@ -95,12 +95,10 @@ public class TaskList implements Serializable {
      */
     public ArrayList<Task> sortList(int type, boolean descending) {
         TaskComparator comparator = new TaskComparator(type);
-
         tasks.sort(comparator);
-
-        if (descending)
+        if (descending) {
             Collections.reverse(tasks);
-
+        }
         return tasks;
     }
 

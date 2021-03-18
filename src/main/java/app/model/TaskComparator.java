@@ -28,15 +28,14 @@ public class TaskComparator implements Comparator<Task>
      * @return a negative integer, zero, or a positive integer as the first argument is less than, equal to, or greater than the second.
      */
     @Override
-    public int compare(Task task1, Task task2)
-    {
+    public int compare(Task task1, Task task2) {
         switch (type) {
             case 1: // compare due date
                 return task1.getDueDate().compareTo(task2.getDueDate());
             case 2: // compare project
                 return task1.getProject().toLowerCase().compareTo(task2.getProject().toLowerCase());
             default:
-                return 0; // todo throw exception instead? (what type of exception) and try catch in method calling this
+                return 0; // todo cannot throw exception
         }
     }
 }
