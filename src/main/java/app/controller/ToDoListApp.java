@@ -27,7 +27,7 @@ public class ToDoListApp {
      */
     public ToDoListApp() {
         printer = new Printer(); // printer responsible for text output
-        fileHandler = new FileHandler();
+        fileHandler = new FileHandler(); // handles loading and saving to file
         taskList = fileHandler.loadTaskListFromFile(); // loads the previous task list from file
         usingApp = true; // this remains true until user saves and quits
     }

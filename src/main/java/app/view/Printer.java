@@ -136,7 +136,6 @@ public class Printer {
         printInputCue();
     }
 
-
     /**
      * Prints prompt for user to select a task to edit.
      */
