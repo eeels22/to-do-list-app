@@ -81,7 +81,6 @@ public class Task implements Serializable {
      * @return the project name or "not assigned"
      */
     public String getProject() {
-
         return (project.isEmpty()) ? "not assigned" : project;
     }
 

@@ -335,13 +335,6 @@ public class ToDoListApp {
     }
 
     /**
-     * Returns the task list.
-     */
-    public TaskList getTaskList() {
-        return taskList;
-    }
-
-    /**
      * Saves the current task list to file or prints an error message if an exception was caught.
      */
     private void save() {

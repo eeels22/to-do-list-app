@@ -51,7 +51,7 @@ Finally, you can save the current task list and quit. Your task list will be ava
 
 ## Documentation
 ### Class diagram
-The class diagram is available at the repository root: `jotterClassDiagram.png`
+Two class diagrams can be found in the `diagrams` folder. One gives an overview of the class dependencies and the other includes class member details.
 
 ### Javadocs
 You can view the javadocs for this project by navigating to `javadoc/index.html` from the repository root.
