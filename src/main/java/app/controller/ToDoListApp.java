@@ -325,7 +325,7 @@ public class ToDoListApp {
     }
 
     /**
-     * Returns a valid project name, which may be empty.
+     * Returns a valid project name from the user, which may be empty.
      *
      * @return a string, which may be empty
      */
