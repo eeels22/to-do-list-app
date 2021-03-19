@@ -102,7 +102,7 @@ public class Printer {
      */
     public void printHeaderForNewTaskAdded() {
         System.out.println("\nNEW TASK ADDED");
-        System.out.println("==============");
+        System.out.print("==============");
     }
 
     /**
@@ -142,6 +142,7 @@ public class Printer {
      */
     public void printPromptForTaskToEdit(String numberedTaskTitles) {
         System.out.println("\nWhich task would you like to edit?" + numberedTaskTitles);
+        System.out.println();
         printInputCue();
     }
 
@@ -175,6 +176,6 @@ public class Printer {
      * @param numDoneTasks number of tasks that are done
      */
     public void printTaskListOverview(int numTasks, int numDoneTasks) {
-        System.out.println("\nTotal tasks: " + numTasks + "\nTasks to do: " + numDoneTasks);
+        System.out.println("\nTotal tasks: " + numTasks + "\nDone tasks: " + numDoneTasks);
     }
 }

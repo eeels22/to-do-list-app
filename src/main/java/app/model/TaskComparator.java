@@ -19,7 +19,10 @@ public class TaskComparator implements Comparator<Task>
      */
     public TaskComparator(int type)
     {
-        this.type = type;
+        if (type == 1 || type == 2) {
+            this.type = type;
+        } else
+            throw new IllegalArgumentException();
     }
 
     /**
@@ -35,7 +38,7 @@ public class TaskComparator implements Comparator<Task>
             case 2: // compare project
                 return task1.getProject().toLowerCase().compareTo(task2.getProject().toLowerCase());
             default:
-                return 0; // todo cannot throw exception
+                return 0; // should not reach here as type is checked during construction
         }
     }
 }

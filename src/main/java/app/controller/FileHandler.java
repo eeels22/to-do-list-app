@@ -25,7 +25,7 @@ public class FileHandler {
     }
 
     /**
-     * Loads a task list from a file.
+     * Loads an existing task list from a file or creates a new one if an exception was caught.
      */
     public TaskList loadTaskListFromFile() {
         try {
@@ -42,6 +42,8 @@ public class FileHandler {
 
     /**
      * Saves the task list to a file.
+     *
+     * @throws IOException if something went wrong
      */
     public void saveTaskListToFile(TaskList taskList) throws IOException {
         FileOutputStream fileOutputStream = new FileOutputStream(path + fileName);

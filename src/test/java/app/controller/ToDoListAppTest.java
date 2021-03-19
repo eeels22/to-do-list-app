@@ -38,14 +38,6 @@ class ToDoListAppTest {
     }
 
     @Test
-    void loadTaskList() {
-    }
-
-    @Test
-    void saveTaskList() {
-    }
-
-    @Test
     void getValidMenuChoiceFromUser() {
     }
 
@@ -75,5 +67,9 @@ class ToDoListAppTest {
 
     @Test
     void determineProject() {
+    }
+
+    @Test
+    void save() {
     }
 }

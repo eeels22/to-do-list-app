@@ -32,6 +32,9 @@ public class ToDoListApp {
         usingApp = true; // this remains true until user saves and quits
     }
 
+    /**
+     * Main method creates a ToDoListApp and runs the app.
+     */
     public static void main(String[] args) {
         ToDoListApp toToListApp = new ToDoListApp();
         toToListApp.runApp();
@@ -208,6 +211,7 @@ public class ToDoListApp {
     /**
      * Prompts the user for which task they want to edit and returns its index.
      *
+     * @param listSize number of tasks in the task list
      * @return index of the task to be edited
      */
     public int getUserChoiceOfTaskToEdit(int listSize) {
@@ -216,7 +220,9 @@ public class ToDoListApp {
     }
 
     /**
-     * Determine which operation the user wants to perform on a given task
+     * Determine which edit operation the user wants to perform on a given task
+     *
+     * @return menu number of the chosen edit operation
      */
     public int determineEditChoice() {
         printer.printEditOptions();
@@ -227,7 +233,7 @@ public class ToDoListApp {
      * Gets the user's validated menu choice input.
      *
      * @param menuSize number of menu options
-     * @return true if the menu choice is within range, or false if not.
+     * @return the user's valid menu choice.
      */
     public int getValidMenuChoiceFromUser(int menuSize) {
         try {
@@ -243,7 +249,7 @@ public class ToDoListApp {
     /**
      * Prompts the user to enter a new title and returns a valid title.
      *
-     * @return a nn-empty title String.
+     * @return a non-empty title String.
      */
     public String getValidTitleFromUser() {
         try {
@@ -259,7 +265,7 @@ public class ToDoListApp {
     /**
      * Gets the user's validated menu choice input.
      *
-     * @return a valid local date.
+     * @return a valid LocalDate.
      */
     public LocalDate getValidLocalDateFromUser() {
         try {
@@ -300,6 +306,8 @@ public class ToDoListApp {
 
     /**
      * Returns a valid task title
+     *
+     * @return a non-empty string
      */
     public String determineTitle() {
         printer.printPromptForTitle();
@@ -308,6 +316,8 @@ public class ToDoListApp {
 
     /**
      * Returns a valid due date
+     *
+     * @return a LocalDate
      */
     public LocalDate determineDueDate() {
         printer.printPromptForDueDate();
@@ -316,6 +326,8 @@ public class ToDoListApp {
 
     /**
      * Returns a valid project name, which may be empty.
+     *
+     * @return a string, which may be empty
      */
     public String determineProject() {
         printer.printPromptForProject();
@@ -330,7 +342,7 @@ public class ToDoListApp {
     }
 
     /**
-     * Saves the current task list to file and .
+     * Saves the current task list to file or prints an error message if an exception was caught.
      */
     private void save() {
         try {
